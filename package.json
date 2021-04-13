@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "cy:open": "node_modules/.bin/cypress open",
-    "cy:run:chrome": "node_modules/.bin/cypress run --config-file cypress.json --spec \"cypress/integration/*.spec.js\" --browser chrome"
+    "cy:run:dev": "node_modules/.bin/cypress run --config-file cypress-dev.json --spec \"cypress/integration/*.spec.js\" --browser chrome"
   },
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",

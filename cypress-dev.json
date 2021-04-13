@@ -1,6 +1,6 @@
 {
-    "projectId": "",
-    "baseUrl": "https://www.saucedemo.com",
+    "projectId": "cehfrg",
+    "baseUrl": "https://dev.qfortress.ai/fortress-mssp/sign-in",
     "includeShadowDom": true,
     "defaultCommandTimeout": 10000,
     "execTimeout": 60000,
