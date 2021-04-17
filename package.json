@@ -11,13 +11,13 @@
     "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
     "posttest": "npm run combine-reports && npm run generate-report",
     "test:dev": "npm run pretest && npm run cy:run:dev || npm run posttest",
-    "cy:open": "node_modules/.bin/cypress open"
+    "open:dev": "node_modules/.bin/cypress open --config-file cypress-dev.json"
   },
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",
   "devDependencies": {
     "authenticator": "^1.1.5",
-    "cypress": "^6.9.1",
+    "cypress": "^7.1.0",
     "cypress-multi-reporters": "^1.5.0",
     "mocha": "^8.3.2",
     "mochawesome": "^6.2.2",
