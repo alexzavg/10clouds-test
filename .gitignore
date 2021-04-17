@@ -1,6 +1,6 @@
 package-lock.json
 node_modules
 cypress/videos
-cypress/reports
 cypress/screenshots
 cypress/results
+cypress/reports

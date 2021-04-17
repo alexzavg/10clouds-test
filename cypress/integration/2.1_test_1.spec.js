@@ -8,9 +8,9 @@ import {
    order_completion_info
 } from '../support/app-data';
 
-describe('2.1 -> test case #1', function() {
+describe('First test', function() {
 
-   it('should purchase [Sauce Labs Backpack] as a [standard_user]', function() {
+   it('should purchase Sauce Labs Backpack as a standard user', function() {
    
       cy.visit('/');
    

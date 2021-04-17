@@ -1,6 +1,6 @@
 {
-    "projectId": "cehfrg",
-    "baseUrl": "https://dev.qfortress.ai/fortress-mssp/sign-in",
+    "projectId": "",
+    "baseUrl": "https://www.saucedemo.com",
     "includeShadowDom": true,
     "defaultCommandTimeout": 10000,
     "execTimeout": 60000,
@@ -8,10 +8,22 @@
     "pageLoadTimeout": 60000,
     "requestTimeout": 30000,
     "responseTimeout": 30000,
-    "screenshotOnRunFailure": true,
-    "trashAssetsBeforeRuns": true,
-    "screenshotsFolder": "cypress/screenshots",
     "videosFolder": "cypress/videos",
+    "integrationFolder": "cypress/integration",
+    "screenshotsFolder": "cypress/reports/mochareports/assets",
+    "screenshotOnRunFailure": true,
+    "reporter": "cypress-multi-reporters",
+        "reporterOptions": {
+            "reporterEnabled": "mochawesome",
+            "mochawesomeReporterOptions": {
+                "reportDir": "cypress/reports/mocha",
+                "quite": true,
+                "overwrite": false,
+                "html": false,
+                "json": true
+            }
+        },
+    "trashAssetsBeforeRuns": true,
     "video": true,
     "videoUploadOnPasses": false,
     "chromeWebSecurity": false,

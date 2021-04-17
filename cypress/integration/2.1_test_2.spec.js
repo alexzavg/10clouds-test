@@ -1,8 +1,8 @@
 import {URLs, creds} from '../support/app-data';
 
-describe('2.1 -> test case #2', function() {
+describe('Second test', function() {
  
-    it('should login as a [standard_user]', function() {
+    it('should login as a standard user', function() {
     
        cy.login(creds.username, creds.password);
  
