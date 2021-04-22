@@ -32,9 +32,9 @@ describe('Login & Logout', function() {
         cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
         
         formattedToken = generateToken(formattedKey);
-        console.log('Google OTP is:', formattedToken);
+        cy.log('Google OTP is:', formattedToken);
         let array = Array.from(formattedToken);
-        console.log(array);
+        cy.log(array);
 
         cy.get(signInPage.firstNumField).type(array[0]);
         cy.get(signInPage.secondNumField).type(array[1]);

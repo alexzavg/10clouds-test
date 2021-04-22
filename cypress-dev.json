@@ -25,6 +25,7 @@
         },
     "trashAssetsBeforeRuns": true,
     "video": true,
+    "videoCompression": 0,
     "videoUploadOnPasses": false,
     "chromeWebSecurity": false,
     "userAgent": null,
