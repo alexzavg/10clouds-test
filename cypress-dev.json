@@ -1,6 +1,6 @@
 {
     "projectId": "",
-    "baseUrl": "https://www.saucedemo.com",
+    "baseUrl": "https://dev.qfortress.ai",
     "includeShadowDom": true,
     "defaultCommandTimeout": 10000,
     "execTimeout": 60000,
@@ -35,5 +35,17 @@
         "runMode": 1,
         "openMode": 0
     },
-    "env": {}
+    "env": {
+        "urls": {
+            "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in",
+            "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard"
+        },
+        "users": {
+            "first": {
+                "email": "me41zavgorodnii+52@gmail.com",
+                "password": "wa12aszx34",
+                "formattedKey": "HNM7U4DYGNVR4J5ZJUP3WHV2HEO2AAKRYZZOUXN2BGJ7ONGZFYHQ"
+            }
+        }
+    }
 }

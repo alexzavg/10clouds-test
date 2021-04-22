@@ -6,7 +6,7 @@
   "scripts": {
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
     "pretest": "npm run clean:reports",
-    "cy:run:dev": "node_modules/.bin/cypress run --config-file cypress-dev.json --spec \"cypress/integration/*.spec.js\" --browser chrome",
+    "cy:run:dev": "node_modules/.bin/cypress run --config-file cypress-dev.json --spec \"cypress/integration/fortress/*.spec.js\" --browser chrome",
     "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
     "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
     "posttest": "npm run combine-reports && npm run generate-report",
