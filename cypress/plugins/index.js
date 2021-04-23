@@ -23,4 +23,6 @@ module.exports = (on, config) => {
       return launchOptions
     }
   })
+
+  require('cypress-terminal-report/src/installLogsPrinter')(on);
 }

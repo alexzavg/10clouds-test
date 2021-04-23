@@ -19,6 +19,7 @@
     "authenticator": "^1.1.5",
     "cypress": "^7.1.0",
     "cypress-multi-reporters": "^1.5.0",
+    "cypress-terminal-report": "^3.1.0",
     "mocha": "^8.3.2",
     "mochawesome": "^6.2.2",
     "mochawesome-merge": "^4.2.0",

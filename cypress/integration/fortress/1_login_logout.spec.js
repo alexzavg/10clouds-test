@@ -1,7 +1,7 @@
-import {signInPage} from './../../pages/sign-in.js';
-import {dashboardPage} from './../../pages/dashboard.js';
-import {navbar} from './../../pages/navbar.js';
-import {requests} from './../../support/requests.js';
+import {signInPage} from '../../pages/sign-in.js';
+import {dashboardPage} from '../../pages/dashboard.js';
+import {navbar} from '../../pages/navbar.js';
+import {requests} from '../../support/requests.js';
 
 const {generateToken} = require('authenticator');
 

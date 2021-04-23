@@ -38,6 +38,7 @@
     },
     "env": {
         "urls": {
+            "signUp": "https://dev-signup.qfortress.ai/sign-up",
             "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in",
             "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard"
         },

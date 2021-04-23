@@ -1,4 +1,4 @@
 export const navbar = {
-    "user": ".mat-menu-trigger > .icon-wrapper > img",
-    "logout": ".logout"
+    'user': '.mat-menu-trigger > .icon-wrapper > img',
+    'logout': '.logout'
 }
