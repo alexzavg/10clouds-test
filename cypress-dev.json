@@ -38,8 +38,8 @@
     },
     "env": {
         "urls": {
-            "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in-1",
-            "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard-1"
+            "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in",
+            "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard"
         },
         "users": {
             "first": {
