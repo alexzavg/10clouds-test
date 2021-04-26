@@ -2,7 +2,7 @@
     "projectId": "",
     "baseUrl": "https://dev.qfortress.ai",
     "includeShadowDom": true,
-    "defaultCommandTimeout": 10000,
+    "defaultCommandTimeout": 30000,
     "execTimeout": 60000,
     "taskTimeout": 60000,
     "pageLoadTimeout": 60000,
