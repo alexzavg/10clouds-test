@@ -14,5 +14,9 @@ export const signUpPage = {
     'zipField': '[formcontrolname="zip"]',
     'passwordField': '[formcontrolname="password"]',
     'confirmPasswordField': '[formcontrolname="confirmPassword"]',
-    'emailCodeField': '[formcontrolname="code"]'
+    'emailCodeField': '[formcontrolname="code"]',
+    'btnContinueStep1': '.action-wrapper > .mat-focus-indicator',
+    'btnContinueStep2': '#cdk-step-content-0-1 > .step-item > .action-wrapper > .row > :nth-child(2) > .mat-focus-indicator',
+    'btnContinueStep3': '#cdk-step-content-0-2 > .step-item > .action-wrapper > .row > :nth-child(2) > .mat-focus-indicator',
+    'btnContinueStep4': '#cdk-step-content-0-3 > .step-item > .action-wrapper > .row > :nth-child(2) > .mat-focus-indicator'
 }

@@ -4,7 +4,6 @@ import {requests} from '../../support/requests.js';
 import {getRandomCharLength, getRandomNumberLength} from '../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
-let imaps = require('imap-simple');
 
 describe('Sign Up New Customer', function() {
 
@@ -30,25 +29,6 @@ describe('Sign Up New Customer', function() {
     const mailSubject = 'Fortress - Email verification';
     const mailBody = 'Please verify your email by providing the following code';
 
-    let fetchOptions = {
-        bodies: ['TEXT'],
-        markSeen: false
-    };
-
-    let config = {
-        imap: {
-            user: 'zavgorodniialexander16@gmail.com',
-            password: 'WA12aszx34',
-            host: 'imap.gmail.com',
-            port: 993,
-            tls: true,
-            tlsOptions: { "servername": "imap.gmail.com" },
-            markSeen: true,
-            authTimeout: 120000
-        }
-    };
-
-    let messageSince, confirmationCode;
     let formattedKey, formattedToken;
 
     it('should sign up as new customer', function() {
@@ -56,6 +36,27 @@ describe('Sign Up New Customer', function() {
         cy.visit(signUpLink);
 
         cy.get(signUpPage.firstNameField).type(firstName);
+        cy.get(signUpPage.lastNameField).type(lastName);
+        cy.get(signUpPage.emailField).type(email);
+        cy.get(signUpPage.phoneNumberField).type(phoneNumber);
+        cy.get(signUpPage.personalUrlField).type(personalUrl);
+        cy.get(signUpPage.btnContinueStep1).click();
+
+        cy.get(signUpPage.companyNameField).type(companyName);
+        cy.get(signUpPage.taxNumberField).type(taxNumber);
+        cy.get(signUpPage.numberOfEmployeesField).type(numberOfEmployees);
+        cy.get(signUpPage.companyWebAddressField).type(companyWebAddress);
+        cy.get(signUpPage.btnContinueStep2).click();
+
+        cy.get(signUpPage.countryDropdown).select(country).should('have.value', 'UA');
+        cy.get(signUpPage.stateDropdown).select(state).should('have.value', '53');
+        cy.get(signUpPage.cityField).type(city);
+        cy.get(signUpPage.zipField).type(zip);
+        cy.get(signUpPage.btnContinueStep3).click();
+
+        cy.get(signUpPage.passwordField).type(password);
+        cy.get(signUpPage.confirmPasswordField).type(password);
+        cy.get(signUpPage.btnContinueStep4);
 
     });
 
