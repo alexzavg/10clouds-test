@@ -2,7 +2,7 @@
     "projectId": "",
     "baseUrl": "https://dev.qfortress.ai",
     "includeShadowDom": true,
-    "defaultCommandTimeout": 30000,
+    "defaultCommandTimeout": 60000,
     "execTimeout": 60000,
     "taskTimeout": 60000,
     "pageLoadTimeout": 60000,
@@ -37,10 +37,19 @@
         "openMode": 0
     },
     "env": {
+        "MAILOSAUR_API_KEY": "ddaoroSOmnYVWN5b",
+        "MAILOSAUR_SERVER_ID": "odgv3oo6",
         "urls": {
             "signUp": "https://dev-signup.qfortress.ai/sign-up",
+            "confirm": "https://dev-signup.qfortress.ai/confirm",
+            "complete": "https://dev-signup.qfortress.ai/complete",
             "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in",
             "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard"
+        },
+        "customers": {
+            "first": {
+                "name": "fortress-mssp"
+            }
         },
         "users": {
             "first": {
