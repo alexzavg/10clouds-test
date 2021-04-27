@@ -11,13 +11,14 @@ describe('Login & Logout', function() {
     const dashboardLink = Cypress.env('urls').dashboard;
     const login = Cypress.env('users').first.email;
     const password = Cypress.env('users').first.password;
+    const customerName = Cypress.env('customers').first.name;
     const formattedKey = Cypress.env('users').first.formattedKey;
     
     let formattedToken;
  
     it('should login to Fortress with 2FA and logout via Navbar', function() {
 
-        cy.intercept(requests['auth-cognito']).as('auth-cognito');
+        cy.intercept('/auth/cognito-pool-settings?siteUrl=' + customerName).as('auth-cognito');
         cy.intercept(requests['sign-in']).as('sign-in');
         cy.intercept(requests['user-me']).as('user-me');
         cy.intercept(requests['customer-status']).as('customer-status');
@@ -25,6 +26,7 @@ describe('Login & Logout', function() {
 
         cy.visit(signInLink);
 
+        cy.url().should('eq', signInLink);
         cy.get(signInPage.loginField).type(login);
         cy.get(signInPage.passwordField).type(password);
         cy.get(signInPage.btnSignInFirst).click();
@@ -42,7 +44,6 @@ describe('Login & Logout', function() {
         cy.get(signInPage.fourthNumField).type(array[3]);
         cy.get(signInPage.fifthNumField).type(array[4]);
         cy.get(signInPage.sixthNumField).type(array[5]);
-        
         cy.get(signInPage.btnSignInSecond).click();
 
         cy.wait('@sign-in').its('response.statusCode').should('eq', 200);

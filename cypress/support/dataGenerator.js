@@ -17,3 +17,14 @@ export function getRandomCharLength(length) {
     }
     return char;
 };
+
+/**
+* Get current time in ISO format 2019-02-12T15:24:15.731Z
+*/
+export function getCurrentTimeISO() {
+    var date = new Date();
+    date.setTime(Date.now());
+    var time = date.toISOString();
+    console.log(time);
+    return time;
+};
