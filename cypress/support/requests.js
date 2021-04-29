@@ -7,5 +7,8 @@ export const requests = {
     "catalog-packages": "/catalog/packages",
     'service-licenses-order': '/service-licenses/order',
     'services': '/services',
-    'service-licenses-policies': '/service-licenses/policies'
+    'service-licenses-policies': '/service-licenses/policies',
+    'role-search': '/role/search',
+    'device-search': '/device/search',
+    'user-search': '/user/search'
 }

@@ -44,7 +44,8 @@
             "confirm": "https://dev-signup.qfortress.ai/confirm",
             "complete": "https://dev-signup.qfortress.ai/complete",
             "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in",
-            "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard"
+            "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard",
+            "users": "https://dev.qfortress.ai/fortress-mssp/settings/users"
         },
         "customers": {
             "first": {

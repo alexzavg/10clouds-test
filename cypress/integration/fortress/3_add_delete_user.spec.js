@@ -1,5 +1,6 @@
 import {signInPage} from '../../pages/sign-in.js';
 import {dashboardPage} from '../../pages/dashboard.js';
+import {usersPage} from '../../pages/users.js';
 import {navbar} from '../../pages/navbar.js';
 import {requests} from '../../support/requests.js';
 import {
@@ -10,9 +11,11 @@ import {
 
 const {generateToken} = require('authenticator');
 
-describe.only('Add & Delete New User', function() {
+describe('Add & Delete New User', function() {
 
     const signInLink = Cypress.env('urls').signIn;
+    const dashboardLink = Cypress.env('urls').dashboard;
+    const usersLink = Cypress.env('urls').users;
     const adminLogin = Cypress.env('users').second.email;
     const adminPassword = Cypress.env('users').second.password;
     const adminFormattedKey = Cypress.env('users').second.formattedKey;
@@ -21,6 +24,8 @@ describe.only('Add & Delete New User', function() {
     const newUserFirstName = 'cypress' + getRandomCharLength(8);
     const newUserEmail = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const newUserPhoneNumber = '+38093' + getRandomNumberLength(7);
+    const role = 'Organization Admin',
+    const roleId = '48f3c9c0-3495-11eb-a909-79ed4890744c',
     const newUserPassword = getRandomCharLength(4) + getRandomNumberLength(4);
 
     const currentTime = getCurrentTimeISO();
@@ -29,6 +34,10 @@ describe.only('Add & Delete New User', function() {
     let temporaryPassword;
 
     it('should add new user, setup MFA, login and remove him', function() {
+
+        cy.intercept(requests['role-search']).as('role-search');
+        cy.intercept(requests['device-search']).as('device-search');
+        cy.intercept(requests['user-search']).as('user-search');
 
         cy.visit(signInLink);
 
@@ -51,35 +60,53 @@ describe.only('Add & Delete New User', function() {
         cy.get(signInPage.btnSignInSecond).click();
 
         cy.get(dashboardPage.scoreValue).should('be.visible');
+        cy.url().should('eq', dashboardLink);
 
-        /*
-            TODO go to users page & add user
-        */
+        // menu categories text isn't displayed when navbar is expanded, workaround:
+        cy.get(navbar.fortressLogoTop).click();
+        cy.wait(1000);
 
-        cy.get(navbar.user).click();
-        cy.get(navbar.logout).click();
+        cy.get(navbar.settings).click();
+        cy.get(navbar.adminConfiguration).click();
+        cy.get(navbar.users).click();
+
+        cy.wait('@role-search').its('response.statusCode').should('eq', 200);
+        cy.wait('@user-search').its('response.statusCode').should('eq', 200);
+        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+
+        cy.url().should('eq', usersLink);
+        cy.get(usersPage.btnAddUser).click();
+        cy.get(usersPage.firstNameField).type(newUserFirstName).should('have.value', newUserFirstName);
+        cy.get(usersPage.lastNameField).type(newUserFirstName).should('have.value', newUserFirstName);
+        cy.get(usersPage.emailfield).type(newUserEmail).should('have.value', newUserEmail);
+        cy.get(usersPage.phoneField).type(newUserPhoneNumber).should('have.value', newUserPhoneNumber);
+        cy.get(usersPage.roleDropdown).select(role).should('have.value', roleId);
+        cy.get(usersPage.btnAdd).click();
+
+        // cy.get(navbar.user).click();
+        // cy.get(navbar.logout).click();
     
-        cy.mailosaurGetMessage(serverId, {
-            sentFrom: 'no-reply@verificationemail.com',
-            sentTo: newUserEmail,
-            subject: 'Your temporary password'
-        }, {
-            receivedAfter: new Date(currentTime),
-            timeout: 60000
-        }).then(mail => {
-            const body = mail.html.body;
-            temporaryPassword = body.split('temporary password is ')[1].slice(0,8); // get temporary password from email
-            cy.log('Temporary password is', temporaryPassword);
+        // cy.mailosaurGetMessage(serverId, {
+        //     sentFrom: 'no-reply@verificationemail.com',
+        //     sentTo: newUserEmail,
+        //     subject: 'Your temporary password'
+        // }, {
+        //     receivedAfter: new Date(currentTime),
+        //     timeout: 60000
+        // }).then(mail => {
+        //     const body = mail.html.body;
+        //     temporaryPassword = body.split('temporary password is ')[1].slice(0,8); // get temporary password from email
+        //     cy.log('Temporary password is', temporaryPassword);
 
-            cy.url().should('eq', signInLink);
-            cy.get(signInPage.loginField).type(newUserEmail);
-            cy.get(signInPage.passwordField).type(temporaryPassword);
-            cy.get(signInPage.btnSignInFirst).click();
+        //     cy.url().should('eq', signInLink);
+        //     cy.get(signInPage.loginField).type(newUserEmail);
+        //     cy.get(signInPage.passwordField).type(temporaryPassword);
+        //     cy.get(signInPage.btnSignInFirst).click();
 
-            /*
-                TODO setup new password, setup MFA, login & logout by new user
-            */
-        });
+        //     /*
+        //         TODO setup new password, setup MFA, login & logout by new user
+        //     */
+        // });
 
     });
 
