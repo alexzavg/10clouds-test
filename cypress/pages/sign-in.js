@@ -8,5 +8,7 @@ export const signInPage = {
     'fourthNumField' : '#mat-input-5',
     'fifthNumField' : '#mat-input-6',
     'sixthNumField' : '#mat-input-7',
-    'btnSignInSecond' : ':nth-child(2) > .mat-focus-indicator'
+    'btnSignInSecond' : ':nth-child(2) > .mat-focus-indicator',
+    'newPasswordField': '#newPassword',
+    'confirmPasswordField': '#confirmPassword'
 }
