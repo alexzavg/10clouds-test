@@ -98,7 +98,7 @@ describe('Sign Up New Customer', function() {
         cy.get(signUpPage.btnSignIn).click();
 
         cy.url().should('eq', signInLink);
-        cy.get(signInPage.loginField).type(email);
+        cy.get(signInPage.loginField).type(email).should('have.value', email);
         cy.get(signInPage.passwordField).type(password);
         cy.get(signInPage.btnSignInFirst).click();
 

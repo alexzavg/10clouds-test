@@ -38,12 +38,12 @@ describe('Login & Logout', function() {
         let array = Array.from(formattedToken);
         cy.log(array);
 
-        cy.get(signInPage.firstNumField).type(array[0]);
-        cy.get(signInPage.secondNumField).type(array[1]);
-        cy.get(signInPage.thirdNumField).type(array[2]);
-        cy.get(signInPage.fourthNumField).type(array[3]);
-        cy.get(signInPage.fifthNumField).type(array[4]);
-        cy.get(signInPage.sixthNumField).type(array[5]);
+        cy.get(signInPage.firstNumField).type(array[0]).should('have.value', array[0]);
+        cy.get(signInPage.secondNumField).type(array[1]).should('have.value', array[1]);
+        cy.get(signInPage.thirdNumField).type(array[2]).should('have.value', array[2]);
+        cy.get(signInPage.fourthNumField).type(array[3]).should('have.value', array[3]);
+        cy.get(signInPage.fifthNumField).type(array[4]).should('have.value', array[4]);
+        cy.get(signInPage.sixthNumField).type(array[5]).should('have.value', array[5]);
         cy.get(signInPage.btnSignInSecond).click();
 
         cy.wait('@sign-in').its('response.statusCode').should('eq', 200);
