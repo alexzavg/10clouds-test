@@ -5,5 +5,7 @@ export const usersPage = {
     'emailfield': '[formcontrolname="email"]',
     'phoneField': '[formcontrolname="phoneNumber"]',
     'roleDropdown': '[formcontrolname="roleId"]',
-    'btnAdd': '[type="submit"]'
+    'btnAdd': '[type="submit"]',
+    'amount': '.amount',
+    'spinner': '.spinner-path__inner'
 }

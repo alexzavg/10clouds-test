@@ -24,12 +24,13 @@ describe('Add & Delete New User', function() {
     const newUserFirstName = 'cypress' + getRandomCharLength(8);
     const newUserEmail = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const newUserPhoneNumber = '+38093' + getRandomNumberLength(7);
-    const role = 'Organization Admin',
-    const roleId = '48f3c9c0-3495-11eb-a909-79ed4890744c',
+    const role = 'Organization Admin';
+    const roleId = '48f3c9c0-3495-11eb-a909-79ed4890744c';
     const newUserPassword = getRandomCharLength(4) + getRandomNumberLength(4);
 
     const currentTime = getCurrentTimeISO();
 
+    let usersAmountBefore;
     let adminFormattedToken, newUserFormattedToken;
     let temporaryPassword;
 
@@ -75,13 +76,24 @@ describe('Add & Delete New User', function() {
         cy.wait('@device-search').its('response.statusCode').should('eq', 200);
 
         cy.url().should('eq', usersLink);
-        cy.get(usersPage.btnAddUser).click();
-        cy.get(usersPage.firstNameField).type(newUserFirstName).should('have.value', newUserFirstName);
-        cy.get(usersPage.lastNameField).type(newUserFirstName).should('have.value', newUserFirstName);
-        cy.get(usersPage.emailfield).type(newUserEmail).should('have.value', newUserEmail);
-        cy.get(usersPage.phoneField).type(newUserPhoneNumber).should('have.value', newUserPhoneNumber);
-        cy.get(usersPage.roleDropdown).select(role).should('have.value', roleId);
-        cy.get(usersPage.btnAdd).click();
+        cy.get(usersPage.spinner).should('not.exist');
+
+        // collapse navbar to see users counter
+        cy.get(navbar.fortressLogoTop).click();
+        cy.wait(1000);
+
+        cy.get(usersPage.amount).text().then((value) => {
+            usersAmountBefore = +value;
+            cy.log(usersAmountBefore)
+        });
+
+        // cy.get(usersPage.btnAddUser).click();
+        // cy.get(usersPage.firstNameField).type(newUserFirstName).should('have.value', newUserFirstName);
+        // cy.get(usersPage.lastNameField).type(newUserFirstName).should('have.value', newUserFirstName);
+        // cy.get(usersPage.emailfield).type(newUserEmail).should('have.value', newUserEmail);
+        // cy.get(usersPage.phoneField).type(newUserPhoneNumber).should('have.value', newUserPhoneNumber);
+        // cy.get(usersPage.roleDropdown).select(role).should('have.value', roleId);
+        // cy.get(usersPage.btnAdd).click();
 
         // cy.get(navbar.user).click();
         // cy.get(navbar.logout).click();
