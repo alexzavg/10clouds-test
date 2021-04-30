@@ -37,8 +37,8 @@
         "openMode": 0
     },
     "env": {
-        "MAILOSAUR_API_KEY": "ddaoroSOmnYVWN5b",
-        "MAILOSAUR_SERVER_ID": "odgv3oo6",
+        "MAILOSAUR_API_KEY": "wVQvfele7aeMbo5I",
+        "MAILOSAUR_SERVER_ID": "u9eitg8h",
         "urls": {
             "signUp": "https://dev-signup.qfortress.ai/sign-up",
             "confirm": "https://dev-signup.qfortress.ai/confirm",
