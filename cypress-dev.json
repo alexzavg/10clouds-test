@@ -33,7 +33,7 @@
     "viewportHeight": 1080,
     "waitForAnimations": true,
     "retries": {
-        "runMode": 1,
+        "runMode": 0,
         "openMode": 0
     },
     "env": {
