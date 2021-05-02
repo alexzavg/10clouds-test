@@ -1,4 +1,5 @@
 import {signInPage} from '../../pages/sign-in.js';
+import {dashboardPage} from '../../pages/dashboard.js';
 import {usersPage} from '../../pages/users.js';
 import {navbar} from '../../pages/navbar.js';
 import {requests} from '../../support/requests.js';
@@ -13,6 +14,7 @@ const {generateToken} = require('authenticator');
 describe('Add & Delete New User', function() {
 
     const signInLink = Cypress.env('urls').signIn;
+    const dashboardLink = Cypress.env('urls').dashboard;
     const usersLink = Cypress.env('urls').users;
     const adminLogin = Cypress.env('users').second.email;
     const adminPassword = Cypress.env('users').second.password;
@@ -98,38 +100,38 @@ describe('Add & Delete New User', function() {
 
             cy.get(usersPage.spinner).should('not.exist');
             cy.get(usersPage.amount).its('length').should('be.gt', 0);
-
             // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-241
             // usersAmountAfter = String(usersAmountBefore+1);
             // cy.get(usersPage.amount).should('contain.text', usersAmountAfter);
-        });
 
-        cy.get(navbar.user).click();
-        cy.get(navbar.logout).click();
+            cy.get(navbar.user).click();
+            cy.get(navbar.logout).click();
     
-        cy.mailosaurGetMessage(serverId, {
-            sentFrom: 'no-reply@verificationemail.com',
-            sentTo: newUserEmail,
-            subject: 'Your temporary password'
-        }, {
-            receivedAfter: new Date(currentTime),
-            timeout: 60000
-        }).then(mail => {
-            const body = mail.html.body;
-            temporaryPassword = body.split('temporary password is ')[1].slice(0,8); // get temporary password from email
-            cy.log('Temporary password is', temporaryPassword);
+            cy.mailosaurGetMessage(serverId, {
+                sentFrom: 'no-reply@verificationemail.com',
+                sentTo: newUserEmail,
+                subject: 'Your temporary password'
+            }, {
+                receivedAfter: new Date(currentTime),
+                timeout: 60000
+            }).then(mail => {
+                const body = mail.html.body;
+                temporaryPassword = body.split('temporary password is ')[1].slice(0,8); // get temporary password from email
+                cy.log('Temporary password is', temporaryPassword);
 
-            cy.url().should('eq', signInLink);
-            cy.get(signInPage.loginField).type(newUserEmail);
-            cy.get(signInPage.passwordField).type(temporaryPassword);
-            cy.get(signInPage.btnSignInFirst).click();
+                cy.url().should('eq', signInLink);
+                cy.get(signInPage.loginField).type(newUserEmail);
+                cy.get(signInPage.passwordField).type(temporaryPassword);
+                cy.get(signInPage.btnSignInFirst).click();
 
-            cy.get(signInPage.newPasswordField).type(newUserPassword);
-            cy.get(signInPage.confirmPasswordField).type(newUserPassword);
+                cy.get(signInPage.newPasswordField).type(newUserPassword);
+                cy.get(signInPage.confirmPasswordField).type(temporaryPassword);
 
-            /*
-                TODO setup MFA, login & logout by new user
-            */
+                /*
+                    TODO setup new password, setup MFA, login & logout by new user
+                */
+            });
+
         });
 
     });

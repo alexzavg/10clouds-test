@@ -10,5 +10,8 @@ export const signInPage = {
     'sixthNumField' : '#mat-input-7',
     'btnSignInSecond' : ':nth-child(2) > .mat-focus-indicator',
     'newPasswordField': '#newPassword',
-    'confirmPasswordField': '#confirmPassword'
+    'confirmPasswordField': '#confirmPassword',
+    'btnConfirmNewPassword': 'sign-in-new-password > [type="submit"]',
+    'otpTokenBlock': '[class="code text-left"]',
+    'btnNext': 'fortress-sign-in-totp-qrcode > [type="submit"]'
 }

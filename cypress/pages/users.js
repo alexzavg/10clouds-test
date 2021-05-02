@@ -7,5 +7,6 @@ export const usersPage = {
     'roleDropdown': '[formcontrolname="roleId"]',
     'btnAdd': '[type="submit"]',
     'amount': '.amount',
-    'spinner': '.spinner-path__inner'
+    'spinner': '.spinner-path__inner',
+    'searchField': 'fortress-search-input > [data-placeholder="Search"]'
 }
