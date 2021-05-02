@@ -1,5 +1,4 @@
 import {signInPage} from '../../pages/sign-in.js';
-import {dashboardPage} from '../../pages/dashboard.js';
 import {usersPage} from '../../pages/users.js';
 import {navbar} from '../../pages/navbar.js';
 import {requests} from '../../support/requests.js';
@@ -14,7 +13,6 @@ const {generateToken} = require('authenticator');
 describe('Add & Delete New User', function() {
 
     const signInLink = Cypress.env('urls').signIn;
-    const dashboardLink = Cypress.env('urls').dashboard;
     const usersLink = Cypress.env('urls').users;
     const adminLogin = Cypress.env('users').second.email;
     const adminPassword = Cypress.env('users').second.password;
@@ -41,16 +39,15 @@ describe('Add & Delete New User', function() {
 
         cy.visit(signInLink);
 
+        adminFormattedToken = generateToken(adminFormattedKey);
+        cy.log('Admin User Google OTP is:', adminFormattedToken);
+        let array = Array.from(adminFormattedToken);
+
         cy.url().should('eq', signInLink);
         cy.get(signInPage.loginField).type(adminLogin);
         cy.get(signInPage.passwordField).type(adminPassword);
         cy.get(signInPage.btnSignInFirst).click();
         
-        adminFormattedToken = generateToken(adminFormattedKey);
-        cy.log('Admin User Google OTP is:', adminFormattedToken);
-        let array = Array.from(adminFormattedToken);
-        cy.log(array);
-
         cy.get(signInPage.firstNumField).type(array[0]);
         cy.get(signInPage.secondNumField).type(array[1]);
         cy.get(signInPage.thirdNumField).type(array[2]);
@@ -126,11 +123,52 @@ describe('Add & Delete New User', function() {
 
                 cy.get(signInPage.newPasswordField).type(newUserPassword);
                 cy.get(signInPage.confirmPasswordField).type(temporaryPassword);
+                cy.get(signInPage.btnConfirmNewPassword).click();
 
-                /*
-                    TODO setup new password, setup MFA, login & logout by new user
-                */
+                cy.get(signInPage.otpTokenBlock).text().then((value) => {
+                    newUserFormattedToken = generateToken(value);
+                    cy.log('New User Google OTP is:', newUserFormattedToken);
+                    let array = Array.from(newUserFormattedToken);
+                    cy.get(signInPage.btnNext).click();
+
+                    cy.get(signInPage.firstNumField).type(array[0]);
+                    cy.get(signInPage.secondNumField).type(array[1]);
+                    cy.get(signInPage.thirdNumField).type(array[2]);
+                    cy.get(signInPage.fourthNumField).type(array[3]);
+                    cy.get(signInPage.fifthNumField).type(array[4]);
+                    cy.get(signInPage.sixthNumField).type(array[5]);
+                    cy.get(signInPage.btnSignInSecond).click();
+
+                    cy.get(navbar.user).click();
+                    cy.get(navbar.logout).click();
+                });
+                
             });
+
+            adminFormattedToken = generateToken(adminFormattedKey);
+            cy.log('Admin User Google OTP is:', adminFormattedToken);
+            let array = Array.from(adminFormattedToken);
+
+            cy.url().should('eq', signInLink);
+            cy.get(signInPage.loginField).type(adminLogin);
+            cy.get(signInPage.passwordField).type(adminPassword);
+            cy.get(signInPage.btnSignInFirst).click();
+
+            cy.get(signInPage.firstNumField).type(array[0]);
+            cy.get(signInPage.secondNumField).type(array[1]);
+            cy.get(signInPage.thirdNumField).type(array[2]);
+            cy.get(signInPage.fourthNumField).type(array[3]);
+            cy.get(signInPage.fifthNumField).type(array[4]);
+            cy.get(signInPage.sixthNumField).type(array[5]);
+            cy.get(signInPage.btnSignInSecond).click();
+
+            cy.visit(usersLink);
+            cy.get(usersPage.searchField).type(newUserFirstName+'{enter}');
+            // todo wait for user in table to appear & delete him
+
+            // cy.get(usersPage.spinner).should('not.exist');
+            // cy.get(usersPage.amount).its('length').should('be.gt', 0);
+            // checkNumberOfUsers();
 
         });
 

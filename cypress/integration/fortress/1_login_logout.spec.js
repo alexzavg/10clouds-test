@@ -26,17 +26,17 @@ describe('Login & Logout', function() {
 
         cy.visit(signInLink);
 
+        formattedToken = generateToken(formattedKey);
+        cy.log('Google OTP is:', formattedToken);
+        let array = Array.from(formattedToken);
+        cy.log(array);
+
         cy.url().should('eq', signInLink);
         cy.get(signInPage.loginField).type(login);
         cy.get(signInPage.passwordField).type(password);
         cy.get(signInPage.btnSignInFirst).click();
 
         cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
-        
-        formattedToken = generateToken(formattedKey);
-        cy.log('Google OTP is:', formattedToken);
-        let array = Array.from(formattedToken);
-        cy.log(array);
 
         cy.get(signInPage.firstNumField).type(array[0]).should('have.value', array[0]);
         cy.get(signInPage.secondNumField).type(array[1]).should('have.value', array[1]);
