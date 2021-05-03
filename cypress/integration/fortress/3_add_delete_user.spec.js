@@ -122,7 +122,7 @@ describe('Add & Delete New User', function() {
                 cy.get(signInPage.btnSignInFirst).click();
 
                 cy.get(signInPage.newPasswordField).type(newUserPassword);
-                cy.get(signInPage.confirmPasswordField).type(temporaryPassword);
+                cy.get(signInPage.confirmPasswordField).type(newUserPassword);
                 cy.get(signInPage.btnConfirmNewPassword).click();
 
                 cy.get(signInPage.otpTokenBlock).text().then((value) => {
@@ -149,7 +149,6 @@ describe('Add & Delete New User', function() {
             cy.log('Admin User Google OTP is:', adminFormattedToken);
             let array = Array.from(adminFormattedToken);
 
-            cy.url().should('eq', signInLink);
             cy.get(signInPage.loginField).type(adminLogin);
             cy.get(signInPage.passwordField).type(adminPassword);
             cy.get(signInPage.btnSignInFirst).click();
@@ -164,7 +163,13 @@ describe('Add & Delete New User', function() {
 
             cy.visit(usersLink);
             cy.get(usersPage.searchField).type(newUserFirstName+'{enter}');
-            // todo wait for user in table to appear & delete him
+
+            cy.contains(usersPage.tableRow, newUserEmail).parent().within($tr => {
+                cy.get(usersPage.kebabMenu).click();
+            });
+            cy.contains(usersPage.kebabMenuBtn, 'Delete user').click();
+            cy.contains(usersPage.popupMenu, 'Ok').click();
+            cy.contains(usersPage.tableRow, newUserEmail).should('not.exist');
 
             // cy.get(usersPage.spinner).should('not.exist');
             // cy.get(usersPage.amount).its('length').should('be.gt', 0);
