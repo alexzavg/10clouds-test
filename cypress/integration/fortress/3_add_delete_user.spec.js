@@ -1,12 +1,9 @@
-import {signInPage} from '../../pages/sign-in.js';
-import {usersPage} from '../../pages/users.js';
-import {navbar} from '../../pages/navbar.js';
+import {signInPageElements} from '../../pages/sign-in.js';
+import {dashboardPageElements} from '../../pages/dashboard.js';
+import {usersPageElements, usersPageData} from '../../pages/users.js';
+import {navbarElements} from '../../pages/navbar.js';
 import {requests} from '../../support/requests.js';
-import {
-    getRandomCharLength, 
-    getRandomNumberLength, 
-    getCurrentTimeISO
-} from '../../support/dataGenerator.js';
+import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
@@ -28,7 +25,7 @@ describe('Add & Delete New User', function() {
     const currentTime = getCurrentTimeISO();
 
     let usersAmountBefore, usersAmountAfter, usersAmountFinal;
-    let adminFormattedToken, newUserFormattedToken;
+    let adminFormattedToken, adminFormattedTokenSecond, newUserFormattedToken;
     let temporaryPassword;
 
     it('should add new user, setup MFA, login and remove him', function() {
@@ -44,36 +41,39 @@ describe('Add & Delete New User', function() {
         let array = Array.from(adminFormattedToken);
 
         cy.url().should('eq', signInLink);
-        cy.get(signInPage.loginField).type(adminLogin);
-        cy.get(signInPage.passwordField).type(adminPassword);
-        cy.get(signInPage.btnSignInFirst).click();
+        cy.get(signInPageElements.loginField).type(adminLogin);
+        cy.get(signInPageElements.passwordField).type(adminPassword);
+        cy.get(signInPageElements.btnSignInFirst).click();
         
-        cy.get(signInPage.firstNumField).type(array[0]);
-        cy.get(signInPage.secondNumField).type(array[1]);
-        cy.get(signInPage.thirdNumField).type(array[2]);
-        cy.get(signInPage.fourthNumField).type(array[3]);
-        cy.get(signInPage.fifthNumField).type(array[4]);
-        cy.get(signInPage.sixthNumField).type(array[5]);
-        cy.get(signInPage.btnSignInSecond).click();
+        cy.get(signInPageElements.otpInput).eq(0).type(array[0]);
+        cy.get(signInPageElements.otpInput).eq(1).type(array[1]);
+        cy.get(signInPageElements.otpInput).eq(2).type(array[2]);
+        cy.get(signInPageElements.otpInput).eq(3).type(array[3]);
+        cy.get(signInPageElements.otpInput).eq(4).type(array[4]);
+        cy.get(signInPageElements.otpInput).eq(5).type(array[5]);
+        cy.get(signInPageElements.btnSignInSecond).click();
 
-        // menu categories text isn't displayed when navbar is expanded, workaround:
-        cy.get(navbar.fortressLogoTop).click();
-        cy.wait(1000);
+        cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
-        cy.get(navbar.settings).click();
-        cy.get(navbar.adminConfiguration).click();
-        cy.get(navbar.users).click();
+        // menu categories text isn't displayed when navbarElements is expanded, workaround:
+        cy.get(navbarElements.fortressLogoTop).click();
+        cy.wait(2000);
+
+        cy.get(navbarElements.settings).click();
+        cy.get(navbarElements.adminConfiguration).click();
+        cy.get(navbarElements.users).click();
 
         cy.wait('@role-search').its('response.statusCode').should('eq', 200);
         cy.wait('@user-search').its('response.statusCode').should('eq', 200);
         cy.wait('@device-search').its('response.statusCode').should('eq', 200);
 
         cy.url().should('eq', usersLink);
-        cy.get(usersPage.spinner).should('not.exist');
-        cy.get(usersPage.amount).its('length').should('be.gt', 0);
+        cy.get(usersPageElements.spinner).should('be.visible');
+        cy.get(usersPageElements.spinner).should('not.exist');
+        cy.get(usersPageElements.amount).its('length').should('be.gt', 0);
 
         const checkNumberOfUsers = () => {
-            cy.get(usersPage.amount).text().then((value) => {
+            cy.get(usersPageElements.amount).text().then((value) => {
                 if(+value > 0){
                     cy.log(+value);
                     return
@@ -83,26 +83,26 @@ describe('Add & Delete New User', function() {
         };
         checkNumberOfUsers();
 
-        cy.get(usersPage.amount).text().then((value) => {
+        cy.get(usersPageElements.amount).text().then((value) => {
             usersAmountBefore = +value;
             cy.log('Amount of users before:', usersAmountBefore);
 
-            cy.get(usersPage.btnAddUser).click();
-            cy.get(usersPage.firstNameField).type(newUserFirstName);
-            cy.get(usersPage.lastNameField).type(newUserFirstName);
-            cy.get(usersPage.emailfield).type(newUserEmail);
-            cy.get(usersPage.phoneField).type(newUserPhoneNumber);
-            cy.get(usersPage.roleDropdown).select(role);
-            cy.get(usersPage.btnAdd).click();
+            cy.get(usersPageElements.btnAddUser).click();
+            cy.get(usersPageElements.firstNameField).type(newUserFirstName);
+            cy.get(usersPageElements.lastNameField).type(newUserFirstName);
+            cy.get(usersPageElements.emailfield).type(newUserEmail);
+            cy.get(usersPageElements.phoneField).type(newUserPhoneNumber);
+            cy.get(usersPageElements.roleDropdown).select(role);
+            cy.get(usersPageElements.btnAdd).click();
 
-            cy.get(usersPage.spinner).should('not.exist');
-            cy.get(usersPage.amount).its('length').should('be.gt', 0);
+            cy.get(usersPageElements.spinner).should('not.exist');
+            cy.get(usersPageElements.amount).its('length').should('be.gt', 0);
             // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-241
             // usersAmountAfter = String(usersAmountBefore+1);
-            // cy.get(usersPage.amount).should('contain.text', usersAmountAfter);
+            // cy.get(usersPageElements.amount).should('contain.text', usersAmountAfter);
 
-            cy.get(navbar.user).click();
-            cy.get(navbar.logout).click();
+            cy.get(navbarElements.user).click();
+            cy.get(navbarElements.logout).click();
     
             cy.mailosaurGetMessage(serverId, {
                 sentFrom: 'no-reply@verificationemail.com',
@@ -117,62 +117,73 @@ describe('Add & Delete New User', function() {
                 cy.log('Temporary password is', temporaryPassword);
 
                 cy.url().should('eq', signInLink);
-                cy.get(signInPage.loginField).type(newUserEmail);
-                cy.get(signInPage.passwordField).type(temporaryPassword);
-                cy.get(signInPage.btnSignInFirst).click();
+                cy.get(signInPageElements.loginField).type(newUserEmail);
+                cy.get(signInPageElements.passwordField).type(temporaryPassword);
+                cy.get(signInPageElements.btnSignInFirst).click();
 
-                cy.get(signInPage.newPasswordField).type(newUserPassword);
-                cy.get(signInPage.confirmPasswordField).type(newUserPassword);
-                cy.get(signInPage.btnConfirmNewPassword).click();
+                cy.get(signInPageElements.newPasswordField).type(newUserPassword);
+                cy.get(signInPageElements.confirmPasswordField).type(newUserPassword);
+                cy.get(signInPageElements.btnConfirmNewPassword).click();
 
-                cy.get(signInPage.otpTokenBlock).text().then((value) => {
+                cy.get(signInPageElements.loginField).should('have.value', newUserEmail);
+                cy.get(signInPageElements.passwordField).clear().type(newUserPassword);
+                cy.get(signInPageElements.btnSignInFirst).click();
+
+                cy.get(signInPageElements.otpTokenBlock).text().then((value) => {
                     newUserFormattedToken = generateToken(value);
                     cy.log('New User Google OTP is:', newUserFormattedToken);
                     let array = Array.from(newUserFormattedToken);
-                    cy.get(signInPage.btnNext).click();
+                    cy.get(signInPageElements.btnNext).click();
 
-                    cy.get(signInPage.firstNumField).type(array[0]);
-                    cy.get(signInPage.secondNumField).type(array[1]);
-                    cy.get(signInPage.thirdNumField).type(array[2]);
-                    cy.get(signInPage.fourthNumField).type(array[3]);
-                    cy.get(signInPage.fifthNumField).type(array[4]);
-                    cy.get(signInPage.sixthNumField).type(array[5]);
-                    cy.get(signInPage.btnSignInSecond).click();
+                    cy.get(signInPageElements.otpInput).eq(0).type(array[0]);
+                    cy.get(signInPageElements.otpInput).eq(1).type(array[1]);
+                    cy.get(signInPageElements.otpInput).eq(2).type(array[2]);
+                    cy.get(signInPageElements.otpInput).eq(3).type(array[3]);
+                    cy.get(signInPageElements.otpInput).eq(4).type(array[4]);
+                    cy.get(signInPageElements.otpInput).eq(5).type(array[5]);
+                    cy.get(signInPageElements.btnSignInSecond).click();
 
-                    cy.get(navbar.user).click();
-                    cy.get(navbar.logout).click();
+                    cy.get(dashboardPageElements.scoreValue).should('be.visible');
+
+                    cy.get(navbarElements.user).click();
+                    cy.get(navbarElements.logout).click();
                 });
                 
             });
 
-            adminFormattedToken = generateToken(adminFormattedKey);
-            cy.log('Admin User Google OTP is:', adminFormattedToken);
-            let array = Array.from(adminFormattedToken);
+            adminFormattedTokenSecond = generateToken(adminFormattedKey);
+            cy.log('Admin User Google OTP is:', adminFormattedTokenSecond);
+            let array = Array.from(adminFormattedTokenSecond);
 
-            cy.get(signInPage.loginField).type(adminLogin);
-            cy.get(signInPage.passwordField).type(adminPassword);
-            cy.get(signInPage.btnSignInFirst).click();
+            cy.get(signInPageElements.loginField).type(adminLogin);
+            cy.get(signInPageElements.passwordField).type(adminPassword);
+            cy.get(signInPageElements.btnSignInFirst).click();
 
-            cy.get(signInPage.firstNumField).type(array[0]);
-            cy.get(signInPage.secondNumField).type(array[1]);
-            cy.get(signInPage.thirdNumField).type(array[2]);
-            cy.get(signInPage.fourthNumField).type(array[3]);
-            cy.get(signInPage.fifthNumField).type(array[4]);
-            cy.get(signInPage.sixthNumField).type(array[5]);
-            cy.get(signInPage.btnSignInSecond).click();
+            cy.get(signInPageElements.otpInput).eq(0).type(array[0]);
+            cy.get(signInPageElements.otpInput).eq(1).type(array[1]);
+            cy.get(signInPageElements.otpInput).eq(2).type(array[2]);
+            cy.get(signInPageElements.otpInput).eq(3).type(array[3]);
+            cy.get(signInPageElements.otpInput).eq(4).type(array[4]);
+            cy.get(signInPageElements.otpInput).eq(5).type(array[5]);
+            cy.get(signInPageElements.btnSignInSecond).click();
+
+            cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
             cy.visit(usersLink);
-            cy.get(usersPage.searchField).type(newUserFirstName+'{enter}');
+            cy.get(usersPageElements.spinner).should('be.visible');
+            cy.get(usersPageElements.spinner).should('not.exist');
 
-            cy.contains(usersPage.tableRow, newUserEmail).parent().within($tr => {
-                cy.get(usersPage.kebabMenu).click();
+            cy.get(usersPageElements.searchField).type(newUserFirstName+'{enter}');
+
+            cy.contains('tr', newUserEmail).parent().within($tr => {
+                cy.get(usersPageElements.kebabMenu).click();
             });
-            cy.contains(usersPage.kebabMenuBtn, 'Delete user').click();
-            cy.contains(usersPage.popupMenu, 'Ok').click();
-            cy.contains(usersPage.tableRow, newUserEmail).should('not.exist');
+            cy.contains(usersPageElements.kebabMenuBtn, usersPageData.deleteUser).click();
+            cy.contains(usersPageElements.popupMenu, usersPageData.ok).click();
+            cy.contains('tr', newUserEmail).should('not.exist');
 
-            // cy.get(usersPage.spinner).should('not.exist');
-            // cy.get(usersPage.amount).its('length').should('be.gt', 0);
+            // cy.get(usersPageElements.spinner).should('not.exist');
+            // cy.get(usersPageElements.amount).its('length').should('be.gt', 0);
             // checkNumberOfUsers();
 
         });

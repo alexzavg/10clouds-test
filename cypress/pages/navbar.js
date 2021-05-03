@@ -1,4 +1,4 @@
-export const navbar = {
+export const navbarElements = {
     'fortressLogoTop': '.top-list > li',
     'user': '.mat-menu-trigger > .icon-wrapper > img',
     'logout': '.logout',

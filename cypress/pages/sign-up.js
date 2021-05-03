@@ -1,4 +1,4 @@
-export const signUpPage = {
+export const signUpPageElements = {
     'firstNameField': '[formcontrolname="firstName"]',
     'lastNameField': '[formcontrolname="lastName"]',
     'emailField': '[formcontrolname="email"]',

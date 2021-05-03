@@ -1,3 +1,3 @@
-export const dashboardPage = {
+export const dashboardPageElements = {
     'scoreValue': '.score-value'
 }

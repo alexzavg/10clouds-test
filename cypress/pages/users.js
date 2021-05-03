@@ -1,4 +1,4 @@
-export const usersPage = {
+export const usersPageElements = {
     'btnAddUser': 'fortress-add-user-button',
     'firstNameField': '[formcontrolname="firstName"]',
     'lastNameField': '[formcontrolname="lastName"]',
@@ -9,8 +9,12 @@ export const usersPage = {
     'amount': '.amount',
     'spinner': '.spinner-path__inner',
     'searchField': 'fortress-search-input > [data-placeholder="Search"]',
-    'tableRow': 'tr',
-    'kebabMenu': 'td > .more-btn',
+    'kebabMenu': '.more-btn',
     'kebabMenuBtn': '[role="menuitem"]',
     'popupMenu': '.d-block'
+}
+
+export const usersPageData = {
+    'ok': 'Ok',
+    'deleteUser': 'Delete user'
 }

@@ -1,17 +1,12 @@
-export const signInPage = {
+export const signInPageElements = {
     'loginField' : '#login',
     'passwordField' : '#password',
     'btnSignInFirst' : '.action-wrapper > .mat-focus-indicator',
-    'firstNumField' : '#mat-input-2',
-    'secondNumField' : '#mat-input-3',
-    'thirdNumField' : '#mat-input-4',
-    'fourthNumField' : '#mat-input-5',
-    'fifthNumField' : '#mat-input-6',
-    'sixthNumField' : '#mat-input-7',
+    'otpInput' : '[type="number"]',
     'btnSignInSecond' : ':nth-child(2) > .mat-focus-indicator',
     'newPasswordField': '#newPassword',
     'confirmPasswordField': '#confirmPassword',
-    'btnConfirmNewPassword': 'sign-in-new-password > [type="submit"]',
+    'btnConfirmNewPassword': ':nth-child(2) > .mat-focus-indicator',
     'otpTokenBlock': '[class="code text-left"]',
-    'btnNext': 'fortress-sign-in-totp-qrcode > [type="submit"]'
+    'btnNext': '[type="submit"]'
 }
