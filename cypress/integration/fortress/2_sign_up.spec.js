@@ -1,7 +1,8 @@
-import {signUpPageElements} from '../../pages/sign-up.js';
+import {signUpPageElements, signUpPageData} from '../../pages/sign-up.js';
 import {signInPageElements} from '../../pages/sign-in.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
+import {emailsData} from '../../support/emailsData.js';
 import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
 
 describe('Sign Up New Customer', function() {
@@ -75,9 +76,9 @@ describe('Sign Up New Customer', function() {
         cy.get(signUpPageElements.btnContinueStep4).click();
     
         cy.mailosaurGetMessage(serverId, {
-            sentFrom: 'no-reply@verificationemail.com',
+            sentFrom: emailsData.emails.noReply,
             sentTo: email,
-            subject: 'Fortress - Email verification'
+            subject: emailsData.subjects.emailVerification
         }, {
             receivedAfter: new Date(currentTime),
             timeout: 60000
@@ -126,9 +127,9 @@ describe('Sign Up New Customer', function() {
         cy.wait('@services').its('response.statusCode').should('eq', 200);
 
         cy.url().should('eq', selectServicesLink);
-        cy.contains('End Point').should('be.visible');
-        cy.contains('Mail').should('be.visible');
-        cy.contains('Cloud Storage').should('be.visible');
+        cy.contains(signUpPageData.services.edp).should('be.visible');
+        cy.contains(signUpPageData.services.mail).should('be.visible');
+        cy.contains(signUpPageData.services.cloudStorage).should('be.visible');
         cy.get(signUpPageElements.highPolicyRadioBtn).click();
         cy.get(signUpPageElements.btnApply).click();
 

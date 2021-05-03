@@ -29,3 +29,11 @@ export const signUpPageElements = {
     'highPolicyRadioBtn': '#mat-radio-2 > .mat-radio-label',
     'btnApply': '.action-wrapper > .mat-focus-indicator'
 }
+
+export const signUpPageData = {
+    'services': {
+        'edp': 'End Point',
+        'mail': 'Mail',
+        'cloudStorage': 'Cloud Storage'
+    }
+}

@@ -1,8 +1,9 @@
 import {signInPageElements} from '../../pages/sign-in.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {usersPageElements, usersPageData} from '../../pages/users.js';
-import {navbarElements} from '../../pages/navbar.js';
+import {navbarElements, navbarData} from '../../pages/navbar.js';
 import {requests} from '../../support/requests.js';
+import {emailsData} from '../../support/emailsData.js';
 import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
@@ -59,18 +60,16 @@ describe('Add & Delete New User', function() {
         cy.get(navbarElements.fortressLogoTop).click();
         cy.wait(2000);
 
-        cy.get(navbarElements.settings).click();
-        cy.get(navbarElements.adminConfiguration).click();
-        cy.get(navbarElements.users).click();
+        cy.contains(navbarElements.category, navbarData.settings).click();
+        cy.contains(navbarElements.category, navbarData.adminConfiguration).click();
+        cy.contains(navbarElements.category, navbarData.users).click();
 
         cy.wait('@role-search').its('response.statusCode').should('eq', 200);
         cy.wait('@user-search').its('response.statusCode').should('eq', 200);
         cy.wait('@device-search').its('response.statusCode').should('eq', 200);
 
         cy.url().should('eq', usersLink);
-        cy.get(usersPageElements.spinner).should('be.visible');
         cy.get(usersPageElements.spinner).should('not.exist');
-        cy.get(usersPageElements.amount).its('length').should('be.gt', 0);
 
         const checkNumberOfUsers = () => {
             cy.get(usersPageElements.amount).text().then((value) => {
@@ -96,7 +95,6 @@ describe('Add & Delete New User', function() {
             cy.get(usersPageElements.btnAdd).click();
 
             cy.get(usersPageElements.spinner).should('not.exist');
-            cy.get(usersPageElements.amount).its('length').should('be.gt', 0);
             // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-241
             // usersAmountAfter = String(usersAmountBefore+1);
             // cy.get(usersPageElements.amount).should('contain.text', usersAmountAfter);
@@ -105,9 +103,9 @@ describe('Add & Delete New User', function() {
             cy.get(navbarElements.logout).click();
     
             cy.mailosaurGetMessage(serverId, {
-                sentFrom: 'no-reply@verificationemail.com',
+                sentFrom: emailsData.emails.noReply,
                 sentTo: newUserEmail,
-                subject: 'Your temporary password'
+                subject: emailsData.subjects.temporaryPassword
             }, {
                 receivedAfter: new Date(currentTime),
                 timeout: 60000
@@ -170,7 +168,6 @@ describe('Add & Delete New User', function() {
             cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
             cy.visit(usersLink);
-            cy.get(usersPageElements.spinner).should('be.visible');
             cy.get(usersPageElements.spinner).should('not.exist');
 
             cy.get(usersPageElements.searchField).type(newUserFirstName+'{enter}');
@@ -183,7 +180,6 @@ describe('Add & Delete New User', function() {
             cy.contains('tr', newUserEmail).should('not.exist');
 
             // cy.get(usersPageElements.spinner).should('not.exist');
-            // cy.get(usersPageElements.amount).its('length').should('be.gt', 0);
             // checkNumberOfUsers();
 
         });
