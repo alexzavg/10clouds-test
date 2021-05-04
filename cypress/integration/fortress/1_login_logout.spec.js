@@ -9,7 +9,7 @@ describe('Login & Logout', function() {
 
     const signInLink = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
-    const login = Cypress.env('users').first.email;
+    const email = Cypress.env('users').first.email;
     const password = Cypress.env('users').first.password;
     const formattedKey = Cypress.env('users').first.formattedKey;
     
@@ -27,26 +27,18 @@ describe('Login & Logout', function() {
         cy.intercept(requests['aggregate-endpoints']).as('aggregate-endpoints');
 
         cy.visit(signInLink);
+        cy.url().should('eq', signInLink);
 
         formattedToken = generateToken(formattedKey);
         cy.log('Google OTP is:', formattedToken);
         let array = Array.from(formattedToken);
         cy.log(array);
 
-        cy.url().should('eq', signInLink);
-        cy.get(signInPageElements.loginField).type(login).should('have.value', login);
-        cy.get(signInPageElements.passwordField).type(password);
-        cy.get(signInPageElements.btnSignInFirst).click();
+        cy.signIn(email, password);
 
         cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
 
-        cy.get(signInPageElements.otpInput).eq(0).type(array[0]).should('have.value', array[0]);
-        cy.get(signInPageElements.otpInput).eq(1).type(array[1]).should('have.value', array[1]);
-        cy.get(signInPageElements.otpInput).eq(2).type(array[2]).should('have.value', array[2]);
-        cy.get(signInPageElements.otpInput).eq(3).type(array[3]).should('have.value', array[3]);
-        cy.get(signInPageElements.otpInput).eq(4).type(array[4]).should('have.value', array[4]);
-        cy.get(signInPageElements.otpInput).eq(5).type(array[5]).should('have.value', array[5]);
-        cy.get(signInPageElements.btnSignInSecond).click();
+        cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
 
         cy.wait('@sign-in').its('response.statusCode').should('eq', 200);
         cy.wait('@user-me').its('response.statusCode').should('eq', 200);
@@ -59,8 +51,7 @@ describe('Login & Logout', function() {
         cy.get(dashboardPageElements.scoreValue).should('be.visible');
         cy.url().should('eq', dashboardLink);
 
-        cy.get(navbarElements.user).click();
-        cy.get(navbarElements.logout).click();
+        cy.logout();
 
         cy.get(signInPageElements.loginField).should('be.visible');
         cy.url().should('eq', signInLink);

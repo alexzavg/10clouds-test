@@ -1,5 +1,5 @@
 import {signUpPageElements, signUpPageData} from '../../pages/sign-up.js';
-import {signInPageElements} from '../../pages/sign-in.js';
+import {signInPageData, signInPageElements} from '../../pages/sign-in.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';
@@ -57,23 +57,23 @@ describe('Sign Up New Customer', function() {
         cy.get(signUpPageElements.emailField).type(email).should('have.value', email);
         cy.get(signUpPageElements.phoneNumberField).type(phoneNumber).should('have.value', phoneNumber);
         cy.get(signUpPageElements.personalUrlField).type(personalUrl).should('have.value', personalUrl);
-        cy.get(signUpPageElements.btnContinueStep1).click();
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.continue).click();
     
         cy.get(signUpPageElements.companyNameField).type(personalUrl).should('have.value', personalUrl);
         cy.get(signUpPageElements.taxNumberField).type(taxNumber).should('have.value', taxNumber);
         cy.get(signUpPageElements.numberOfEmployeesField).type(numberOfEmployees).should('have.value', numberOfEmployees);
         cy.get(signUpPageElements.companyWebAddressField).type(companyWebAddress).should('have.value', companyWebAddress);
-        cy.get(signUpPageElements.btnContinueStep2).click();
+        cy.contains(signUpPageElements.btnSecondStep, signUpPageData.buttons.continue).click();
     
         cy.get(signUpPageElements.countryDropdown).select(country).should('have.value', 'UA');
         cy.get(signUpPageElements.stateDropdown).select(state).should('have.value', '53');
         cy.get(signUpPageElements.cityField).type(city).should('have.value', city);
         cy.get(signUpPageElements.zipField).type(zip).should('have.value', zip);
-        cy.get(signUpPageElements.btnContinueStep3).click();
+        cy.contains(signUpPageElements.btnThirdStep, signUpPageData.buttons.continue).click();
     
         cy.get(signUpPageElements.passwordField).type(password);
         cy.get(signUpPageElements.confirmPasswordField).type(password);
-        cy.get(signUpPageElements.btnContinueStep4).click();
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
     
         cy.mailosaurGetMessage(serverId, {
             sentFrom: emailsData.emails.noReply,
@@ -90,17 +90,15 @@ describe('Sign Up New Customer', function() {
             cy.url().should('eq', confirmLink);
             cy.get(signUpPageElements.emailField).should('have.value', email);
             cy.get(signUpPageElements.confirmationCodeField).type(confirmationCode).should('have.value', confirmationCode);
-            cy.get(signUpPageElements.btnSendConfirmationCode).click();
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.send).click();
         });
 
         cy.url().should('eq', completeLink);
-        cy.contains('Initial account setup has been completed');
-        cy.get(signUpPageElements.btnSignIn).click();
+        cy.contains(signUpPageData.initialSetupCompleted);
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.signIn).click();
 
         cy.url().should('eq', signInLink);
-        cy.get(signInPageElements.loginField).type(email).should('have.value', email);
-        cy.get(signInPageElements.passwordField).type(password);
-        cy.get(signInPageElements.btnSignInFirst).click();
+        cy.signIn(email, password);
 
         cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
         cy.wait('@sign-in').its('response.statusCode').should('eq', 200);
@@ -112,16 +110,16 @@ describe('Sign Up New Customer', function() {
         cy.wait('@catalog-packages').its('response.statusCode').should('eq', 200);
 
         cy.url().should('eq', prePaymentLink);
-        cy.contains('Choose Your Subscription Plan').should('be.visible');
+        cy.contains(signUpPageData.chooseSubscriptionPlan).should('be.visible');
         cy.get(signUpPageElements.monthlySubscription).click();
         cy.get(signUpPageElements.corePack1).click();
-        cy.get(signUpPageElements.btnNextFirst).click();
-        cy.get(signUpPageElements.btnNextSecond).click();
-        cy.contains('Subscription Plan Summary').should('be.visible');
-        cy.get(signUpPageElements.btnNextSecond).click();
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
+        cy.contains(signUpPageData.subscriptionPlanSummary).should('be.visible');
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.proceedToPayment).click();
 
         cy.get(signUpPageElements.btnPayByCreditCard).click();
-        cy.get(signUpPageElements.btnNextSecond).click();
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.continuePayment).click();
 
         cy.wait('@service-licenses-order').its('response.statusCode').should('eq', 201);
         cy.wait('@services').its('response.statusCode').should('eq', 200);
@@ -131,7 +129,7 @@ describe('Sign Up New Customer', function() {
         cy.contains(signUpPageData.services.mail).should('be.visible');
         cy.contains(signUpPageData.services.cloudStorage).should('be.visible');
         cy.get(signUpPageElements.highPolicyRadioBtn).click();
-        cy.get(signUpPageElements.btnApply).click();
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.apply).click();
 
         cy.wait('@service-licenses-policies').its('response.statusCode').should('eq', 200);
         cy.wait('@customer-status').its('response.statusCode').should('eq', 200);

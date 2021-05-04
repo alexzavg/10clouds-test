@@ -1,4 +1,4 @@
-import {signInPageElements} from '../../pages/sign-in.js';
+import {signInPageData, signInPageElements} from '../../pages/sign-in.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {usersPageElements, usersPageData} from '../../pages/users.js';
 import {navbarElements, navbarData} from '../../pages/navbar.js';
@@ -42,17 +42,8 @@ describe('Add & Delete New User', function() {
         let array = Array.from(adminFormattedToken);
 
         cy.url().should('eq', signInLink);
-        cy.get(signInPageElements.loginField).type(adminLogin);
-        cy.get(signInPageElements.passwordField).type(adminPassword);
-        cy.get(signInPageElements.btnSignInFirst).click();
-        
-        cy.get(signInPageElements.otpInput).eq(0).type(array[0]);
-        cy.get(signInPageElements.otpInput).eq(1).type(array[1]);
-        cy.get(signInPageElements.otpInput).eq(2).type(array[2]);
-        cy.get(signInPageElements.otpInput).eq(3).type(array[3]);
-        cy.get(signInPageElements.otpInput).eq(4).type(array[4]);
-        cy.get(signInPageElements.otpInput).eq(5).type(array[5]);
-        cy.get(signInPageElements.btnSignInSecond).click();
+        cy.signIn(adminLogin, adminPassword);
+        cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
 
         cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
@@ -115,32 +106,21 @@ describe('Add & Delete New User', function() {
                 cy.log('Temporary password is', temporaryPassword);
 
                 cy.url().should('eq', signInLink);
-                cy.get(signInPageElements.loginField).type(newUserEmail);
-                cy.get(signInPageElements.passwordField).type(temporaryPassword);
-                cy.get(signInPageElements.btnSignInFirst).click();
+                cy.signIn(newUserEmail, temporaryPassword);
 
                 cy.get(signInPageElements.newPasswordField).type(newUserPassword);
                 cy.get(signInPageElements.confirmPasswordField).type(newUserPassword);
-                cy.get(signInPageElements.btnConfirmNewPassword).click();
+                cy.contains(signInPageElements.btn, signInPageData.buttons.confirm).click();
 
-                cy.get(signInPageElements.loginField).should('have.value', newUserEmail);
-                cy.get(signInPageElements.passwordField).clear().type(newUserPassword);
-                cy.get(signInPageElements.btnSignInFirst).click();
+                cy.signIn(newUserEmail, newUserPassword);
 
                 cy.get(signInPageElements.otpTokenBlock).text().then((value) => {
                     newUserFormattedToken = generateToken(value);
                     cy.log('New User Google OTP is:', newUserFormattedToken);
                     let array = Array.from(newUserFormattedToken);
-                    cy.get(signInPageElements.btnNext).click();
 
-                    cy.get(signInPageElements.otpInput).eq(0).type(array[0]);
-                    cy.get(signInPageElements.otpInput).eq(1).type(array[1]);
-                    cy.get(signInPageElements.otpInput).eq(2).type(array[2]);
-                    cy.get(signInPageElements.otpInput).eq(3).type(array[3]);
-                    cy.get(signInPageElements.otpInput).eq(4).type(array[4]);
-                    cy.get(signInPageElements.otpInput).eq(5).type(array[5]);
-                    cy.get(signInPageElements.btnSignInSecond).click();
-
+                    cy.contains(signInPageElements.btn, signInPageData.buttons.next).click();
+                    cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
                     cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
                     cy.get(navbarElements.user).click();
@@ -153,18 +133,8 @@ describe('Add & Delete New User', function() {
             cy.log('Admin User Google OTP is:', adminFormattedTokenSecond);
             let array = Array.from(adminFormattedTokenSecond);
 
-            cy.get(signInPageElements.loginField).type(adminLogin);
-            cy.get(signInPageElements.passwordField).type(adminPassword);
-            cy.get(signInPageElements.btnSignInFirst).click();
-
-            cy.get(signInPageElements.otpInput).eq(0).type(array[0]);
-            cy.get(signInPageElements.otpInput).eq(1).type(array[1]);
-            cy.get(signInPageElements.otpInput).eq(2).type(array[2]);
-            cy.get(signInPageElements.otpInput).eq(3).type(array[3]);
-            cy.get(signInPageElements.otpInput).eq(4).type(array[4]);
-            cy.get(signInPageElements.otpInput).eq(5).type(array[5]);
-            cy.get(signInPageElements.btnSignInSecond).click();
-
+            cy.signIn(adminLogin, adminPassword);
+            cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
             cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
             cy.visit(usersLink);
@@ -179,8 +149,11 @@ describe('Add & Delete New User', function() {
             cy.contains(usersPageElements.popupMenu, usersPageData.ok).click();
             cy.contains('tr', newUserEmail).should('not.exist');
 
+            // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-241
             // cy.get(usersPageElements.spinner).should('not.exist');
             // checkNumberOfUsers();
+            // usersAmountFinal = String(usersAmountAfter-1);
+            // cy.contains(usersPageElements.amount, usersAmountFinal);
 
         });
 
