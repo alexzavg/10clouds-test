@@ -52,7 +52,7 @@ describe('Login & Logout', function() {
         cy.url().should('eq', dashboardLink);
 
         cy.logout();
-
+        
         cy.get(signInPageElements.loginField).should('be.visible');
         cy.url().should('eq', signInLink);
     });
