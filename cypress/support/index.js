@@ -18,7 +18,6 @@
 // Alternatively you can use CommonJS syntax:
 require('./commands');
 require('cypress-commands');
-require('cypress-terminal-report/src/installLogsCollector')();
 
 // Add Screenshot to Mochawesome Report
 import addContext from "mochawesome/addContext";
