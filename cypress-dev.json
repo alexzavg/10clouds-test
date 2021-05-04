@@ -37,14 +37,15 @@
         "openMode": 0
     },
     "env": {
-        "MAILOSAUR_API_KEY": "ddaoroSOmnYVWN5b",
-        "MAILOSAUR_SERVER_ID": "odgv3oo6",
+        "MAILOSAUR_API_KEY": "wVQvfele7aeMbo5I",
+        "MAILOSAUR_SERVER_ID": "u9eitg8h",
         "urls": {
             "signUp": "https://dev-signup.qfortress.ai/sign-up",
             "confirm": "https://dev-signup.qfortress.ai/confirm",
             "complete": "https://dev-signup.qfortress.ai/complete",
             "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in",
-            "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard"
+            "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard",
+            "users": "https://dev.qfortress.ai/fortress-mssp/settings/users"
         },
         "customers": {
             "first": {

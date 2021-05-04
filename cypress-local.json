@@ -37,14 +37,15 @@
         "openMode": 0
     },
     "env": {
-        "MAILOSAUR_API_KEY": "ddaoroSOmnYVWN5b",
-        "MAILOSAUR_SERVER_ID": "odgv3oo6",
+        "MAILOSAUR_API_KEY": "wVQvfele7aeMbo5I",
+        "MAILOSAUR_SERVER_ID": "u9eitg8h",
         "urls": {
             "signUp": "http://localhost:4000/sign-up",
             "confirm": "http://localhost:4000/confirm",
             "complete": "http://localhost:4000/complete",
             "signIn": "http://localhost:4001/fortress-mssp/sign-in",
-            "dashboard": "http://localhost:4001/fortress-mssp/dashboard"
+            "dashboard": "http://localhost:4001/fortress-mssp/dashboard",
+            "users": "http://localhost:4001/fortress-mssp/settings/users"
         },
         "customers": {
             "first": {
