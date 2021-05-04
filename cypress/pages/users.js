@@ -8,9 +8,10 @@ export const usersPageElements = {
     'btnAdd': '[type="submit"]',
     'amount': '.amount',
     'spinner': '.spinner-path__inner',
-    'searchField': 'fortress-search-input > [data-placeholder="Search"]',
+    'searchField': '[data-placeholder="Search"]',
+    'btnClearSearchField': '[aria-label="Clear"]',
     'kebabMenu': '.more-btn',
-    'kebabMenuBtn': '[role="menuitem"]',
+    'btn': 'button',
     'popupMenu': '.d-block'
 }
 

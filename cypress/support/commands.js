@@ -1,6 +1,4 @@
-// ***********************************************
 // https://on.cypress.io/custom-commands
-// ***********************************************
 import 'cypress-mailosaur';
 import {signInPageElements, signInPageData} from '../pages/sign-in.js';
 import {navbarElements} from '../pages/navbar.js';
