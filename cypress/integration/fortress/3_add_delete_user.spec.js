@@ -63,19 +63,20 @@ describe('Add & Delete New User', function() {
         cy.get(usersPageElements.spinner).should('not.exist');
 
         const checkNumberOfUsers = () => {
-            cy.wait(500);
+            cy.wait(1000);
             cy.get(usersPageElements.amount).text().then((value) => {
                 if(+value > 0){
                     cy.log(+value);
                     return
+                } else {
+                    cy.reload();
+                    cy.url().should('eq', usersLink);
+                    cy.wait('@role-search').its('response.statusCode').should('eq', 200);
+                    cy.wait('@user-search').its('response.statusCode').should('eq', 200);
+                    cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                    cy.get(usersPageElements.spinner).should('not.exist');
+                    checkNumberOfUsers();
                 }
-                cy.reload();
-                cy.url().should('eq', usersLink);
-                cy.wait('@role-search').its('response.statusCode').should('eq', 200);
-                cy.wait('@user-search').its('response.statusCode').should('eq', 200);
-                cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                cy.get(usersPageElements.spinner).should('not.exist');
-                checkNumberOfUsers();
             });
         };
         checkNumberOfUsers();
@@ -147,13 +148,14 @@ describe('Add & Delete New User', function() {
             // due to test failing sometimes because I'm trying to login as admin the second time in less than 30 seconds 
             // (OTP is not yet changed & you can't login with the same OTP twice)
             const generateNewOtpToken = () => {
-                cy.wait(500);
+                cy.wait(1000);
                 let newOtp = generateToken(adminFormattedKey);
                 if(newOtp != adminOtp){
                     cy.log('got new OTP', newOtp);
                     return
+                } else {
+                    generateNewOtpToken();
                 }
-                generateNewOtpToken();
             }
             generateNewOtpToken();
 
