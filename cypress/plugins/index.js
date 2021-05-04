@@ -24,5 +24,5 @@ module.exports = (on, config) => {
     }
   })
 
-  require('cypress-terminal-report/src/installLogsPrinter')(on);
+  require('cypress-terminal-report/src/installLogsPrinter')(on, {compactLogs:1});
 }
