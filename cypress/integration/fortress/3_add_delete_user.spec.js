@@ -33,6 +33,7 @@ describe('Add & Delete New User', function() {
         cy.intercept(requests['role-search']).as('role-search');
         cy.intercept(requests['device-search']).as('device-search');
         cy.intercept(requests['user-search']).as('user-search');
+        cy.intercept(requests['user-remove']).as('user-remove');
 
         cy.visit(signInLink);
 
@@ -120,31 +121,35 @@ describe('Add & Delete New User', function() {
 
         // due to test failing sometimes because I'm trying to login as admin the second time in less than 30 seconds 
         // (OTP is not yet changed & you can't login with the same OTP twice)
-        cy.wait(30000);
-
-        adminOtpNew = generateToken(adminFormattedKey);
-        cy.log('Admin User Google OTP is:', adminOtpNew);
-        let arrayNew = Array.from(adminOtpNew);
+        cy.wait(30000).then(() => {
+            adminOtpNew = generateToken(adminFormattedKey);
+            cy.log('Admin User Google OTP is:', adminOtpNew);
+            expect(adminOtpNew).to.not.equal(adminOtp);
+            let arrayNew = Array.from(adminOtpNew);
             
-        cy.fillOtp(arrayNew[0], arrayNew[1], arrayNew[2], arrayNew[3], arrayNew[4], arrayNew[5]);
-        cy.get(dashboardPageElements.scoreValue).should('be.visible');
+            cy.fillOtp(arrayNew[0], arrayNew[1], arrayNew[2], arrayNew[3], arrayNew[4], arrayNew[5]);
+            cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
-        cy.visit(usersLink);
-        cy.get(usersPageElements.spinner).should('not.exist');
-
-        cy.wait('@role-search').its('response.statusCode').should('eq', 200);
-        cy.wait('@user-search').its('response.statusCode').should('eq', 200);
-        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-
-        cy.get(usersPageElements.searchField).type(newUserFirstName+'{enter}').then(() => {
+            cy.visit(usersLink);
             cy.get(usersPageElements.spinner).should('not.exist');
-            cy.contains('tr', newUserEmail).parent().within($tr => {
-                cy.get(usersPageElements.kebabMenu).click();
+
+            cy.wait('@role-search').its('response.statusCode').should('eq', 200);
+            cy.wait('@user-search').its('response.statusCode').should('eq', 200);
+            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+
+            cy.get(usersPageElements.searchField).type(newUserFirstName+'{enter}').then(() => {
+                cy.get(usersPageElements.spinner).should('not.exist');
+                cy.contains('tr', newUserEmail).parent().within($tr => {
+                    cy.get(usersPageElements.kebabMenu).click();
+                });
             });
+            cy.contains(usersPageElements.btn, usersPageData.deleteUser).click();
+            cy.contains(usersPageElements.popupMenu, usersPageData.ok).click();
+            cy.contains('tr', newUserEmail).should('not.exist');
+
+            cy.wait('@user-remove').its('response.statusCode').should('eq', 201);
+            cy.contains(usersPageElements.amount, '0');
         });
-        cy.contains(usersPageElements.btn, usersPageData.deleteUser).click();
-        cy.contains(usersPageElements.popupMenu, usersPageData.ok).click();
-        cy.contains('tr', newUserEmail).should('not.exist');
 
     });
 

@@ -15,5 +15,6 @@ export const requests = {
     'service-licenses-policies': '/service-licenses/policies',
     'role-search': '/role/search',
     'device-search': '/device/search',
-    'user-search': '/user/search'
+    'user-search': '/user/search',
+    'user-remove': '/user/remove'
 }
