@@ -25,7 +25,6 @@ describe('Add & Delete New User', function() {
 
     const currentTime = getCurrentTimeISO();
 
-    let usersAmountBefore, usersAmountAfter;
     let adminOtp, adminOtpNew, newUserOtp;
     let temporaryPassword;
 
@@ -62,133 +61,90 @@ describe('Add & Delete New User', function() {
         cy.url().should('eq', usersLink);
         cy.get(usersPageElements.spinner).should('not.exist');
 
-        const checkNumberOfUsers = () => {
-            cy.wait(1000);
-            cy.get(usersPageElements.amount).text().then((value) => {
-                if(+value > 0){
-                    cy.log(+value);
-                    return
-                } else {
-                    cy.reload();
-                    cy.url().should('eq', usersLink);
-                    cy.wait('@role-search').its('response.statusCode').should('eq', 200);
-                    cy.wait('@user-search').its('response.statusCode').should('eq', 200);
-                    cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                    cy.get(usersPageElements.spinner).should('not.exist');
-                    checkNumberOfUsers();
-                }
-            });
-        };
-        checkNumberOfUsers();
+        cy.get(usersPageElements.btnAddUser).click();
+        cy.get(usersPageElements.firstNameField).type(newUserFirstName);
+        cy.get(usersPageElements.lastNameField).type(newUserFirstName);
+        cy.get(usersPageElements.emailfield).type(newUserEmail);
+        cy.get(usersPageElements.phoneField).type(newUserPhoneNumber);
+        cy.get(usersPageElements.roleDropdown).select(role);
+        cy.get(usersPageElements.btnAdd).click();
 
-        cy.get(usersPageElements.amount).text().then((value) => {
-            usersAmountBefore = +value;
-            cy.log('Amount of users before:', usersAmountBefore);
+        cy.get(usersPageElements.spinner).should('not.exist');
+        cy.get(usersPageElements.amount).invoke('text').then(parseFloat).should('be.gt', 0);
 
-            cy.get(usersPageElements.btnAddUser).click();
-            cy.get(usersPageElements.firstNameField).type(newUserFirstName);
-            cy.get(usersPageElements.lastNameField).type(newUserFirstName);
-            cy.get(usersPageElements.emailfield).type(newUserEmail);
-            cy.get(usersPageElements.phoneField).type(newUserPhoneNumber);
-            cy.get(usersPageElements.roleDropdown).select(role);
-            cy.get(usersPageElements.btnAdd).click();
-
-            cy.get(usersPageElements.spinner).should('not.exist');
-
-            // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-241
-            // usersAmountAfter = String(usersAmountBefore+1);
-            // cy.get(usersPageElements.amount).should('contain.text', usersAmountAfter);
-
-            cy.clearCookies();
-            cy.clearLocalStorage();
+        cy.clearCookies();
+        cy.clearLocalStorage();
     
-            cy.mailosaurGetMessage(serverId, {
-                sentFrom: emailsData.emails.noReply,
-                sentTo: newUserEmail,
-                subject: emailsData.subjects.temporaryPassword
-            }, {
-                receivedAfter: new Date(currentTime),
-                timeout: 60000
-            }).then(mail => {
-                const body = mail.html.body;
-                temporaryPassword = body.split('temporary password is ')[1].slice(0,8); // get temporary password from email
-                cy.log('Temporary password is', temporaryPassword);
-
-                cy.visit(signInLink);
-                cy.url().should('eq', signInLink);
-
-                cy.signIn(newUserEmail, temporaryPassword);
-
-                cy.get(signInPageElements.newPasswordField).type(newUserPassword);
-                cy.get(signInPageElements.confirmPasswordField).type(newUserPassword);
-                cy.contains(signInPageElements.btn, signInPageData.buttons.confirm).click();
-
-                cy.signIn(newUserEmail, newUserPassword);
-
-                cy.get(signInPageElements.otpTokenBlock).text().then((value) => {
-                    newUserOtp = generateToken(value);
-                    cy.log('New User Google OTP is:', newUserOtp);
-                    let array = Array.from(newUserOtp);
-
-                    cy.contains(signInPageElements.btn, signInPageData.buttons.next).click();
-                    cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
-                    cy.get(dashboardPageElements.scoreValue).should('be.visible');
-
-                    cy.clearCookies();
-                    cy.clearLocalStorage();
-                });
-                
-            });
+        cy.mailosaurGetMessage(serverId, {
+            sentFrom: emailsData.emails.noReply,
+            sentTo: newUserEmail,
+            subject: emailsData.subjects.temporaryPassword
+        }, {
+            receivedAfter: new Date(currentTime),
+            timeout: 60000
+        }).then(mail => {
+            const body = mail.html.body;
+            temporaryPassword = body.split('temporary password is ')[1].slice(0,8); // get temporary password from email
+            cy.log('Temporary password is', temporaryPassword);
 
             cy.visit(signInLink);
             cy.url().should('eq', signInLink);
 
-            cy.signIn(adminLogin, adminPassword);
+            cy.signIn(newUserEmail, temporaryPassword);
 
-            // due to test failing sometimes because I'm trying to login as admin the second time in less than 30 seconds 
-            // (OTP is not yet changed & you can't login with the same OTP twice)
-            const generateNewOtpToken = () => {
-                cy.wait(1000);
-                let newOtp = generateToken(adminFormattedKey);
-                if(newOtp != adminOtp){
-                    cy.log('got new OTP', newOtp);
-                    return
-                } else {
-                    generateNewOtpToken();
-                }
-            }
-            generateNewOtpToken();
+            cy.get(signInPageElements.newPasswordField).type(newUserPassword);
+            cy.get(signInPageElements.confirmPasswordField).type(newUserPassword);
+            cy.contains(signInPageElements.btn, signInPageData.buttons.confirm).click();
 
-            adminOtpNew = generateToken(adminFormattedKey);
-            cy.log('Admin User Google OTP is:', adminOtpNew);
-            let array = Array.from(adminOtpNew);
-            
-            cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
-            cy.get(dashboardPageElements.scoreValue).should('be.visible');
+            cy.signIn(newUserEmail, newUserPassword);
 
-            cy.visit(usersLink);
-            cy.get(usersPageElements.spinner).should('not.exist');
+            cy.get(signInPageElements.otpTokenBlock).text().then((value) => {
+                newUserOtp = generateToken(value);
+                cy.log('New User Google OTP is:', newUserOtp);
+                let array = Array.from(newUserOtp);
 
-            cy.wait('@role-search').its('response.statusCode').should('eq', 200);
-            cy.wait('@user-search').its('response.statusCode').should('eq', 200);
-            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                cy.contains(signInPageElements.btn, signInPageData.buttons.next).click();
+                cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
+                cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
-            cy.get(usersPageElements.searchField).type(newUserFirstName+'{enter}').then(() => {
-                cy.get(usersPageElements.spinner).should('not.exist');
-                cy.contains('tr', newUserEmail).parent().within($tr => {
-                    cy.get(usersPageElements.kebabMenu).click();
-                });
+                cy.clearCookies();
+                cy.clearLocalStorage();
             });
-            cy.contains(usersPageElements.btn, usersPageData.deleteUser).click();
-            cy.contains(usersPageElements.popupMenu, usersPageData.ok).click();
-            cy.contains('tr', newUserEmail).should('not.exist');
-
-            cy.get(usersPageElements.amount).text().then((value) => {
-                usersAmountAfter = +value;
-                cy.log('Amount of users after:', usersAmountAfter);
-            });
-
+                
         });
+
+        cy.visit(signInLink);
+        cy.url().should('eq', signInLink);
+
+        cy.signIn(adminLogin, adminPassword);
+
+        // due to test failing sometimes because I'm trying to login as admin the second time in less than 30 seconds 
+        // (OTP is not yet changed & you can't login with the same OTP twice)
+        cy.wait(30000);
+
+        adminOtpNew = generateToken(adminFormattedKey);
+        cy.log('Admin User Google OTP is:', adminOtpNew);
+        let arrayNew = Array.from(adminOtpNew);
+            
+        cy.fillOtp(arrayNew[0], arrayNew[1], arrayNew[2], arrayNew[3], arrayNew[4], arrayNew[5]);
+        cy.get(dashboardPageElements.scoreValue).should('be.visible');
+
+        cy.visit(usersLink);
+        cy.get(usersPageElements.spinner).should('not.exist');
+
+        cy.wait('@role-search').its('response.statusCode').should('eq', 200);
+        cy.wait('@user-search').its('response.statusCode').should('eq', 200);
+        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+
+        cy.get(usersPageElements.searchField).type(newUserFirstName+'{enter}').then(() => {
+            cy.get(usersPageElements.spinner).should('not.exist');
+            cy.contains('tr', newUserEmail).parent().within($tr => {
+                cy.get(usersPageElements.kebabMenu).click();
+            });
+        });
+        cy.contains(usersPageElements.btn, usersPageData.deleteUser).click();
+        cy.contains(usersPageElements.popupMenu, usersPageData.ok).click();
+        cy.contains('tr', newUserEmail).should('not.exist');
 
     });
 
