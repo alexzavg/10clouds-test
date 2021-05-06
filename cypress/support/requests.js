@@ -14,5 +14,6 @@ export const requests = {
     'service-licenses-policies': '/service-licenses/policies',
     'role-search': '/role/search',
     'device-search': '/device/search',
-    'user-search': '/user/search'
+    'user-search': '/user/search',
+    'aggregate-customer-statisic': '**customer-statistics**'
 }
