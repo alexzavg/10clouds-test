@@ -5,8 +5,7 @@ import {ValidInDays, ValidInWeeks, ValidInMonths, ExtractTimes, ValidInHours} fr
 
 const {generateToken} = require('authenticator');
 
-describe('Dashboard funcunallity', function() {
-
+describe('Dashboard functionality', function() {
 
     const signInLink = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
@@ -14,10 +13,9 @@ describe('Dashboard funcunallity', function() {
     const password = Cypress.env('users').first.password;
     const formattedKey = Cypress.env('users').first.formattedKey;
 
-    
     let formattedToken;
  
-    it('should login to Fortress with 2FA and logout via Navbar', function() {
+    it('should cover all the functionality in dashboard', function() {
 
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
         cy.intercept(requests['sign-in']).as('sign-in');
@@ -31,7 +29,6 @@ describe('Dashboard funcunallity', function() {
 
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
-
         formattedToken = generateToken(formattedKey);
         cy.log('Google OTP is:', formattedToken);
         let array = Array.from(formattedToken);
