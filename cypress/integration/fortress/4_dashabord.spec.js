@@ -27,7 +27,7 @@ describe('Dashboard funcunallity', function() {
         cy.intercept(requests['aggregate-alerts']).as('aggregate-alerts');
         cy.intercept(requests['aggregate-users']).as('aggregate-users');
         cy.intercept(requests['aggregate-endpoints']).as('aggregate-endpoints');
-        cy.intercept(requests['aggregate-customer-statisic']).as('aggregate-customer-statisic');
+        cy.intercept(requests['customer-statistics']).as('aggregate-customer-statisic');
 
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
