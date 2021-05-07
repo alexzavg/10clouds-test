@@ -1,4 +1,4 @@
-import {dashboardPageElements} from '../../pages/dashboard.js';
+import {dashboardPageElements, dashboardPageData} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
 import {ValidInDays, ValidInWeeks, ValidInMonths, ExtractTimes, ValidInHours} from '../../support/dataGenerator.js';
 
@@ -25,7 +25,7 @@ describe('Dashboard functionality', function() {
         cy.intercept(requests['aggregate-alerts']).as('aggregate-alerts');
         cy.intercept(requests['aggregate-users']).as('aggregate-users');
         cy.intercept(requests['aggregate-endpoints']).as('aggregate-endpoints');
-        cy.intercept(requests['customer-statistics']).as('aggregate-customer-statisic');
+        cy.intercept(requests['customer-statistics']).as('customer-statistics');
 
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
@@ -45,159 +45,147 @@ describe('Dashboard functionality', function() {
         cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
         cy.wait('@aggregate-users').its('response.statusCode').should('eq', 200);
         cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-customer-statisic').its('response.statusCode').should('eq', 200);
+        cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
   
         // Check Dropdown last 1 hour
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 1h').click();
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 1h').click();
-        cy.get('@aggregate-users').then((interception) => {
+        cy.get(dashboardPageElements.dropdownSnapshot).click();
+        cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1Hour).click();
+        cy.wait('@aggregate-users').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
             
         });
-        cy.get('@aggregate-endpoints').then((interception) => {
+        cy.wait('@aggregate-endpoints').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
             
         });
-        cy.get('@aggregate-customer-statisic').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
             
         });
-        cy.get('@aggregate-alerts').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
             
         });
 
         // Check Dropdown last 6 hour
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 6h').click();
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 6h').click();
-        cy.get('@aggregate-users').then((interception) => {
+        cy.get(dashboardPageElements.dropdownSnapshot).click();
+        cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last6hour).click();
+        cy.wait('@aggregate-users').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
             
         });
-        cy.get('@aggregate-endpoints').then((interception) => {
+        cy.wait('@aggregate-endpoints').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
             
         });
-        cy.get('@aggregate-customer-statisic').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
             
         });
-        cy.get('@aggregate-alerts').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
             
         });
 
         // Check Dropdown last 12 hour
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 12h').click();
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 12h').click();
-        cy.get('@aggregate-users').then((interception) => {
+        cy.get(dashboardPageElements.dropdownSnapshot).click();
+        cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last12hour).click();
+        cy.wait('@aggregate-users').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
             
         });
-        cy.get('@aggregate-endpoints').then((interception) => {
+        cy.wait('@aggregate-endpoints').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
             
         });
-        cy.get('@aggregate-customer-statisic').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
             
         });
-        cy.get('@aggregate-alerts').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
             
         });
 
         // Check Dropdown last 24 hour        
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 24h').click();
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 24h').click();
-        cy.get('@aggregate-users').then((interception) => {
+        cy.get(dashboardPageElements.dropdownSnapshot).click();
+        cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last24hour).click();
+        cy.wait('@aggregate-users').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
             
         });
-        cy.get('@aggregate-endpoints').then((interception) => {
+        cy.wait('@aggregate-endpoints').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
             
         });
-        cy.get('@aggregate-customer-statisic').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
             
         });
-        cy.get('@aggregate-alerts').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
             
         });
 
         // Check Dropdown last 1 week          
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 1 week').click();
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 1 week').click();
-        cy.get('@aggregate-users').then((interception) => {
+        cy.get(dashboardPageElements.dropdownSnapshot).click();
+        cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1week).click();
+        cy.wait('@aggregate-users').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
             
         });
-        cy.get('@aggregate-endpoints').then((interception) => {
+        cy.wait('@aggregate-endpoints').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
             
         });
-        cy.get('@aggregate-customer-statisic').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
             
         });
-        cy.get('@aggregate-alerts').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
             
         });    
 
         // Check Dropdown last 3 month //Need fix
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 3 month').click();
-        cy.get('.mat-select-min-line').click();
-        cy.contains('.mat-option-text', 'Last 3 month').click();
-        cy.get('@aggregate-users').then((interception) => {
+        cy.get(dashboardPageElements.dropdownSnapshot).click();
+        cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.Last3month).click();
+        cy.wait('@aggregate-users').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
             
         });
-        cy.get('@aggregate-endpoints').then((interception) => {
+        cy.wait('@aggregate-endpoints').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
             
         });
-        cy.get('@aggregate-customer-statisic').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
             
         });
-        cy.get('@aggregate-alerts').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
             
@@ -205,21 +193,25 @@ describe('Dashboard functionality', function() {
         
         
         // Check Top Menu - Regulation
-        cy.get('fortress-cards-menu-item.ng-tns-c109-13 > .title').click();
+        cy.get(dashboardPageElements.topMenu);
+        cy.contains(dashboardPageElements.itemTopMenu, dashboardPageData.regulation).click();
 
         // Check Top Menu - Top Endpoints
-        cy.get('fortress-cards-menu-item.ng-tns-c109-14 > .title').click();
+        cy.get(dashboardPageElements.topMenu);
+        cy.contains(dashboardPageElements.itemTopMenu, dashboardPageData.topEndpoints).click();
 
         // Check Top Menu - Top Alerts
-        cy.get('fortress-cards-menu-item.ng-tns-c109-15 > .title').click();
+        cy.get(dashboardPageElements.topMenu);
+        cy.contains(dashboardPageElements.itemTopMenu, dashboardPageData.topAlerts).click();
 
         // Check Top Menu - Top Users
-        cy.get('fortress-cards-menu-item.ng-tns-c109-16 > .title').click();
+        cy.get(dashboardPageElements.topMenu);
+        cy.contains(dashboardPageElements.itemTopMenu, dashboardPageData.topNews).click();
 
         // Check Top Menu - Top News
-        cy.get('fortress-cards-menu-item.ng-tns-c109-17 > .title').click();
+        cy.get(dashboardPageElements.topMenu);
+        cy.contains(dashboardPageElements.itemTopMenu, dashboardPageData.topNews).click();
         
-
         // Total Top headers
         cy.get('.scroller').click()  //Open
 
