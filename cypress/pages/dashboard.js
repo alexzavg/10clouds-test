@@ -2,9 +2,11 @@ export const dashboardPageElements = {
     'scoreValue': '.score-value',
     'dropdownSnapshot': '.mat-select-min-line',
     'dropdownSnapshotOption': '.mat-option-text',
-    'topMenu': 'fortress-cards-menu',
-    'itemTopMenu': 'fortress-cards-menu-item'
-
+    'rightMenuCategory': 'fortress-cards-menu-item',
+    'rightMenuCategoryTitleOpen': '.ng-trigger-openCloseTitle.active',
+    'rightMenuCategoryOpen': '.ng-trigger-openCloseBody.active',
+    'topMenuOpenBtn': '.scroller',
+    'topMenuBlockOpen': '.top-menu.opened'
 }
 
 export const dashboardPageData = {
