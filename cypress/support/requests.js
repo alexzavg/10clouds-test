@@ -4,6 +4,7 @@ export const requests = {
     'user-me': '/user/me',
     'customer-status': '/customer/status',
     'customer-statistics': '/alert/customer-statistics**',
+    'alerts-statistics': '/alert/service-statistics**',
     'protection-scores': '/protection-scores',
     'aggregate-alerts': '**aggregate=alerts**',
     'aggregate-users': '**aggregate=users**',
