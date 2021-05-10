@@ -9,10 +9,9 @@ describe('Dashboard functionality', function() {
 
     const signInLink = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
-    // TODO create new user for this test, add him to configs
-    const email = Cypress.env('users').first.email;
-    const password = Cypress.env('users').first.password; 
-    const formattedKey = Cypress.env('users').first.formattedKey;
+    const email = Cypress.env('users').third.email;
+    const password = Cypress.env('users').third.password; 
+    const formattedKey = Cypress.env('users').third.formattedKey;
 
     let formattedToken;
  
