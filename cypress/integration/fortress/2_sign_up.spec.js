@@ -41,6 +41,7 @@ describe('Sign Up New Customer', function() {
         cy.intercept(requests['user-me']).as('user-me');
         cy.intercept(requests['customer-status']).as('customer-status');
         cy.intercept(requests['protection-scores']).as('protection-scores');
+        cy.intercept(requests['customer-statistics']).as('customer-statistics');
         cy.intercept(requests['aggregate-alerts']).as('aggregate-alerts');
         cy.intercept(requests['aggregate-users']).as('aggregate-users');
         cy.intercept(requests['aggregate-endpoints']).as('aggregate-endpoints');
@@ -135,6 +136,7 @@ describe('Sign Up New Customer', function() {
         cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
         cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
         cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+        cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
         cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
         cy.wait('@aggregate-users').its('response.statusCode').should('eq', 200);
         cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);

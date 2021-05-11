@@ -6,6 +6,7 @@ export const requests = {
     'customer-statistics': '/alert/customer-statistics**',
     'alerts-statistics': '/alert/service-statistics**',
     'protection-scores': '/protection-scores',
+    'customer-statistics': '/alert/customer-statistics**',
     'aggregate-alerts': '**aggregate=alerts**',
     'aggregate-users': '**aggregate=users**',
     'aggregate-endpoints': '**aggregate=endpoints**',
@@ -16,5 +17,6 @@ export const requests = {
     'service-licenses-policies': '/service-licenses/policies',
     'role-search': '/role/search',
     'device-search': '/device/search',
-    'user-search': '/user/search'
+    'user-search': '/user/search',
+    'user-remove': '/user/remove'
 }
