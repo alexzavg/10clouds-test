@@ -19,7 +19,7 @@ RUN cypress verify
 COPY . /app
 
 RUN npm install
-RUN npm install cypress@7.3.0 cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands --save-dev
+RUN npm install "cypress@7.3.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands --save-dev
 
 RUN cypress cache path
 RUN cypress cache list
