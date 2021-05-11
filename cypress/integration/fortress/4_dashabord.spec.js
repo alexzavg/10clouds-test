@@ -18,10 +18,6 @@ describe('Dashboard functionality', function() {
  
     it('should cover all the functionality in dashboard', function() {
 
-        cy.intercept(requests['auth-cognito']).as('auth-cognito');
-        cy.intercept(requests['sign-in']).as('sign-in');
-        cy.intercept(requests['user-me']).as('user-me');
-        cy.intercept(requests['customer-status']).as('customer-status');
         cy.intercept(requests['protection-scores']).as('protection-scores');
         cy.intercept(requests['aggregate-alerts']).as('aggregate-alerts');
         cy.intercept(requests['aggregate-users']).as('aggregate-users');
@@ -185,69 +181,70 @@ describe('Dashboard functionality', function() {
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).click();
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).should('not.exist');
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
-        // Open and check redirect page to alerts
-        cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topEndpoints).click();
-        cy.get(':nth-child(1) > right-menu-endpoint-item > .card-item__row').click(); // TODO
-        cy.url().should('eq', alerts);
-        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-users').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);
-        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-        cy.wait('@alerts-statistics').its('response.statusCode').should('eq', 200);
-        // Check relevant filters TODO
-        cy.get('.filters').click();
-        // Back to dashboard screen
-        cy.visit(dashboardLink);
-        cy.url().should('eq', dashboardLink);
+
+        // TODO - Open and check redirect to [Alerts] page with relevant filter 
+        // cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topEndpoints).click();
+        // cy.get(':nth-child(1) > right-menu-endpoint-item > .card-item__row').click(); // TODO
+        // cy.url().should('eq', alerts);
+        // cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+        // cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
+        // cy.wait('@aggregate-users').its('response.statusCode').should('eq', 200);
+        // cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);
+        // cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+        // cy.wait('@alerts-statistics').its('response.statusCode').should('eq', 200);
+        // TODO Check relevant filters
+        // cy.get('.filters').click();
+        // Back to [Dashboard] page
+        // cy.visit(dashboardLink);
+        // cy.url().should('eq', dashboardLink);
 
         // Open & close [Right Menu] - [Top Alerts]
         cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topAlerts).click();
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).should('be.visible');
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible');
-        // cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topAlerts).click();
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).click();
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).should('not.exist');
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
-        // Open and check redirect page to alerts with relevant filter   
-        cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topAlerts).click();
-        cy.get(':nth-child(1) > right-menu-alert-item > .card-item__head > .card-item__col').click(); // TODO
-        cy.url().should('eq', alerts);
-        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-users').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);
-        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-        cy.wait('@alerts-statistics').its('response.statusCode').should('eq', 200);
-        // Check relevant filters TODO
-        cy.get('.filters').click();
-        // Back to dashboard screen
-        cy.visit(dashboardLink);
-        cy.url().should('eq', dashboardLink);
+
+        // TODO - Open and check redirect to [Alerts] page with relevant filter 
+        // cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topAlerts).click();
+        // cy.get(':nth-child(1) > right-menu-alert-item > .card-item__head > .card-item__col').click(); // TODO
+        // cy.url().should('eq', alerts);
+        // cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+        // cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
+        // cy.wait('@aggregate-users').its('response.statusCode').should('eq', 200);
+        // cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);
+        // cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+        // cy.wait('@alerts-statistics').its('response.statusCode').should('eq', 200);
+        // TODO Check relevant filters
+        // cy.get('.filters').click();
+        // Back to [Dashboard] page
+        // cy.visit(dashboardLink);
+        // cy.url().should('eq', dashboardLink);
 
         // Open & close [Right Menu] - [Top Users]
         cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topUsers).click();
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('be.visible');
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible');
-        cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topUsers).click();
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).click();
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('not.exist');
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
-        // Open and check redirect page to alerts with relevant filter
-        cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topUsers).click();
-        cy.get(':nth-child(1) > right-menu-user-item > .card-item__row').click(); // TODO
-        cy.url().should('eq', alerts);
-        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-users').its('response.statusCode').should('eq', 200);
-        cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);
-        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-        cy.wait('@alerts-statistics').its('response.statusCode').should('eq', 200);
-        // Check relevant filters TODO
-        cy.get('.filters').click();
-        // Back to dashboard screen
-        cy.visit(dashboardLink);
-        cy.url().should('eq', dashboardLink);
+
+        // TODO - Open and check redirect to [Alerts] page with relevant filter
+        // cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topUsers).click();
+        // cy.get(':nth-child(1) > right-menu-user-item > .card-item__row').click(); // TODO
+        // cy.url().should('eq', alerts);
+        // cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+        // cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
+        // cy.wait('@aggregate-users').its('response.statusCode').should('eq', 200);
+        // cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);
+        // cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+        // cy.wait('@alerts-statistics').its('response.statusCode').should('eq', 200);
+        // TODO Check relevant filters
+        // cy.get('.filters').click();
+        // Back to [Dashboard] page
+        // cy.visit(dashboardLink);
+        // cy.url().should('eq', dashboardLink);
 
         // Open & close [Right Menu] - [Top News]
         cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topNews).click();
