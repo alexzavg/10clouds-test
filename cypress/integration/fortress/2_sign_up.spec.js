@@ -1,5 +1,4 @@
 import {signUpPageElements, signUpPageData} from '../../pages/sign-up.js';
-import {signInPageData, signInPageElements} from '../../pages/sign-in.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';

@@ -1,6 +1,5 @@
 import {signInPageElements} from '../../pages/sign-in.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
-import {navbarElements} from '../../pages/navbar.js';
 import {requests} from '../../support/requests.js';
 
 const {generateToken} = require('authenticator');
