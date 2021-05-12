@@ -37,6 +37,10 @@ describe('Dashboard functionality', function() {
         cy.signIn(email, password);
         cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
 
+        // ! aggregate-alerts, users and endpoints requests are deprecated
+        // ! there's only 1 request now - customer-top-statistics
+        // ! it has aggregated param in it's payload (endpoints, users, alerts)
+        // ! need to adjust the test according to the new request
         cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
         cy.wait('@aggregate-users').its('response.statusCode').should('eq', 200);
         cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);
@@ -56,11 +60,11 @@ describe('Dashboard functionality', function() {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
-        cy.wait('@customer-statistics').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
-        cy.wait('@aggregate-alerts').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
@@ -76,11 +80,11 @@ describe('Dashboard functionality', function() {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
         });
-        cy.wait('@customer-statistics').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
         });
-        cy.wait('@aggregate-alerts').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
         });
@@ -96,11 +100,11 @@ describe('Dashboard functionality', function() {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
         });
-        cy.wait('@customer-statistics').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
         });
-        cy.wait('@aggregate-alerts').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
         });
@@ -116,11 +120,11 @@ describe('Dashboard functionality', function() {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
         });
-        cy.wait('@customer-statistics').then((interception) => {
+        cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
         });
-        cy.wait('@aggregate-alerts').then((interception) => {
+        cy.wait('@customer-statistics').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
         });
@@ -136,14 +140,14 @@ describe('Dashboard functionality', function() {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
-        cy.wait('@customer-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
-            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
-        });
         cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
-        });    
+        });   
+        cy.wait('@customer-statistics').then((interception) => {
+            const geturl = ExtractTimes(interception)
+            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
+        }); 
 
         // Top Right Dropdown - [Last 3 month] 
         // Need fix, difference is now in days, should be 3 calendar months
@@ -157,14 +161,14 @@ describe('Dashboard functionality', function() {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
         });
-        cy.wait('@customer-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
-            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
-        });
         cy.wait('@aggregate-alerts').then((interception) => {
             const geturl = ExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
-        });     
+        });  
+        cy.wait('@customer-statistics').then((interception) => {
+            const geturl = ExtractTimes(interception)
+            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
+        });   
         
         // Open & close [Right Menu] - [Regulation]
         cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.regulation).click();
