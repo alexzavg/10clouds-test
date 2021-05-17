@@ -21,7 +21,7 @@ export const signUpPageElements = {
     'monthlySubscription': '#cdk-step-content-0-0 > :nth-child(2) > .wrapper-block-select > .options-row > :nth-child(1) > .option-box',
     'corePack1': '.package-list > .wrapper-block-select > .row > :nth-child(1) > .option-box',
     'btnPayByCreditCard': '.payment-gateway > fortress-block-select > .wrapper-block-select > .row > :nth-child(1) > .option-box',
-    'highPolicyRadioBtn': '#mat-radio-2 > .mat-radio-label',
+    'highPolicyRadioBtn': '#mat-radio-2 > .mat-radio-label'
 }
 
 export const signUpPageData = {
@@ -34,11 +34,6 @@ export const signUpPageData = {
         'proceedToPayment': 'Proceed to payment',
         'continuePayment': 'Continue payment',
         'apply': 'Apply'
-    },
-    'services': {
-        'edp': 'End Point',
-        'mail': 'Mail',
-        'cloudStorage': 'Cloud Storage'
     },
     'initialSetupCompleted': 'Initial account setup has been completed',
     'chooseSubscriptionPlan': 'Choose Your Subscription Plan',

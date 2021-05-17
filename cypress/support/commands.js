@@ -24,6 +24,10 @@ Cypress.Commands.add("logout", () => {
     cy.get(navbarElements.logout).click();
 });
 
+Cypress.Commands.add('clickOutside', () => {
+    cy.get('body').click(0, 0); // 0, 0 here are the x and y coordinates
+});
+
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
 //
