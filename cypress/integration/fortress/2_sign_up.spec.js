@@ -1,11 +1,12 @@
 import {signUpPageElements, signUpPageData} from '../../pages/sign-up.js';
-import {signInPageData, signInPageElements} from '../../pages/sign-in.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';
 import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
 
-describe('Sign Up New Customer', function() {
+// ! disabled due to bug https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1620809542004200
+// ! will be fixed after https://qfortress.atlassian.net/browse/FORT-292
+describe.skip('Sign Up New Customer', function() {
 
     const signUpLink = Cypress.env('urls').signUp;
     const confirmLink = Cypress.env('urls').confirm;
