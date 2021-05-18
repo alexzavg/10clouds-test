@@ -3,6 +3,8 @@ export const requests = {
     'sign-in': '/auth/sign-in',
     'user-me': '/user/me',
     'customer-status': '/customer/status',
+    'customer-statistics': '/alert/customer-statistics**',
+    'alerts-statistics': '/alert/service-statistics**',
     'protection-scores': '/protection-scores',
     'customer-statistics': '/alert/customer-statistics**',
     'customer-top-statistics': '/alert/customer-top-statistics',

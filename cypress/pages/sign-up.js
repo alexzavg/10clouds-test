@@ -22,6 +22,16 @@ export const signUpPageElements = {
     'corePack1': '.package-list > .wrapper-block-select > .row > :nth-child(1) > .option-box',
     'btnPayByCreditCard': '.payment-gateway > fortress-block-select > .wrapper-block-select > .row > :nth-child(1) > .option-box',
     'highPolicyRadioBtn': '#mat-radio-2 > .mat-radio-label',
+    'radioBtn': 'mat-radio-button',
+    'emailDomainsField': '#mat-input-6',
+    'smtpServersField': '#mat-input-7',
+    'cloudEnvironmentField': '#mat-input-8',
+    'gSuiteRadioBtn': '#mat-radio-12 > .mat-radio-label',
+    'euRadioBtn': '#mat-radio-15 > .mat-radio-label',
+    'storageProvider': {
+        'dropdown': '.mat-select-placeholder',
+        'option': 'mat-option'
+    }
 }
 
 export const signUpPageData = {
@@ -35,12 +45,10 @@ export const signUpPageData = {
         'continuePayment': 'Continue payment',
         'apply': 'Apply'
     },
-    'services': {
-        'edp': 'End Point',
-        'mail': 'Mail',
-        'cloudStorage': 'Cloud Storage'
-    },
     'initialSetupCompleted': 'Initial account setup has been completed',
     'chooseSubscriptionPlan': 'Choose Your Subscription Plan',
-    'subscriptionPlanSummary': 'Subscription Plan Summary'
+    'subscriptionPlanSummary': 'Subscription Plan Summary',
+    'gSuite': 'Gsuite',
+    'eu': 'EU',
+    'googleDrive': 'Google Drive'
 }

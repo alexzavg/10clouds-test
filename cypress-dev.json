@@ -6,8 +6,8 @@
     "execTimeout": 60000,
     "taskTimeout": 60000,
     "pageLoadTimeout": 60000,
-    "requestTimeout": 30000,
-    "responseTimeout": 30000,
+    "requestTimeout": 60000,
+    "responseTimeout": 60000,
     "videosFolder": "cypress/videos",
     "integrationFolder": "cypress/integration",
     "screenshotsFolder": "cypress/reports/mochareports/assets",
@@ -45,7 +45,8 @@
             "complete": "https://dev-signup.qfortress.ai/complete",
             "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in",
             "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard",
-            "users": "https://dev.qfortress.ai/fortress-mssp/settings/users"
+            "users": "https://dev.qfortress.ai/fortress-mssp/settings/users",
+            "alerts": "https://dev.qfortress.ai/fortress-mssp/alerts"
         },
         "customers": {
             "first": {
@@ -62,6 +63,11 @@
                 "email": "me41zavgorodnii+53@gmail.com",
                 "password": "wa12aszx34",
                 "formattedKey": "BUIBJBMS3FJ4WYUCTXJC26WCLMVKJUJJZD3ZM2MWBDZXURPDGUTQ"
+            },
+            "third": {
+                "email": "me41zavgorodnii+54@gmail.com",
+                "password": "wa12aszx34",
+                "formattedKey": "C2GBQ7RY3RNCPDDHS4FH4NKFANDY22JBXL5NS7KI4JIUDLRVFLZA"
             }
         }
     }
