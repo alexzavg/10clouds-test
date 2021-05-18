@@ -25,6 +25,7 @@ describe('Sign Up New Customer', function() {
     const city = 'Poltava';
     const zip = getRandomNumberLength(6);
     const password = getRandomCharLength(4) + getRandomNumberLength(4);
+    const testString = 'cypresstest.com';
 
     const currentTime = getCurrentTimeISO();
 
@@ -145,31 +146,36 @@ describe('Sign Up New Customer', function() {
         cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
 
         cy.url().should('eq', selectServicesLink);
+
+        // EDP service setup
         cy.get(signUpPageElements.highPolicyRadioBtn).click();
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
 
-        cy.contains('mat-radio-button', 'Gsuite').click();
-        cy.get('#mat-input-6').type('test.com');
-        cy.contains('mat-radio-button', 'EU').click();
-        cy.get('#mat-input-7').type('test.com');
+        // MAIL service setup
+        cy.contains(signUpPageElements.radioBtn, signUpPageData.gSuite).click(); // Gsuite
+        cy.get(signUpPageElements.emailDomainsField).type(testString);
+        cy.contains(signUpPageElements.radioBtn, signUpPageData.eu).click(); // EU
+        cy.get(signUpPageElements.smtpServersField).type(testString);
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
 
-        cy.get('#mat-input-8').type('test.com');
-        cy.contains('#cdk-step-content-1-2 > mat-radio-button', 'EU').click();
-        cy.get('.mat-select-placeholder').click();
-        cy.contains('mat-option', 'Google Drive').click();
+        // CLOUD STORAGE service setup
+        cy.get(signUpPageElements.gSuiteRadioBtn).click(); // Gsuite
+        cy.get(signUpPageElements.cloudStorageDomainsField).type(testString);
+        cy.get(signUpPageElements.euRadioBtn).click(); // EU
+        cy.get(signUpPageElements.storageProvider.dropdown).click();
+        cy.contains(signUpPageElements.storageProvider.option, signUpPageData.googleDrive).click();
         cy.clickOutside();
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.apply).click();
 
-        // cy.wait('@service-licenses-policies').its('response.statusCode').should('eq', 200);
-        // cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-        // cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
-        // cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-        // cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-        // cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+        cy.wait('@service-licenses-policies').its('response.statusCode').should('eq', 200);
+        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+        cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
+        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
 
-        // cy.get(dashboardPageElements.scoreValue).should('be.visible');
-        // cy.url().should('eq', dashboardLink);
+        cy.get(dashboardPageElements.scoreValue).should('be.visible');
+        cy.url().should('eq', dashboardLink);
 
     });
 

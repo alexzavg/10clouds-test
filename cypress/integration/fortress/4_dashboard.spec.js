@@ -5,7 +5,7 @@ import {ValidInDays, ValidInWeeks, ExtractTimes, ValidInHours} from '../../suppo
 
 const {generateToken} = require('authenticator');
 
-describe('Dashboard functionality', function() {
+describe.skip('Dashboard functionality', function() {
 
     const signInLink = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
