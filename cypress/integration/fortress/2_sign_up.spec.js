@@ -160,7 +160,7 @@ describe('Sign Up New Customer', function() {
 
         // CLOUD STORAGE service setup
         cy.get(signUpPageElements.gSuiteRadioBtn).click(); // Gsuite
-        cy.get(signUpPageElements.cloudStorageDomainsField).type(testString);
+        cy.get(signUpPageElements.cloudEnvironmentField).type(testString);
         cy.get(signUpPageElements.euRadioBtn).click(); // EU
         cy.get(signUpPageElements.storageProvider.dropdown).click();
         cy.contains(signUpPageElements.storageProvider.option, signUpPageData.googleDrive).click();

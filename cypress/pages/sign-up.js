@@ -25,7 +25,7 @@ export const signUpPageElements = {
     'radioBtn': 'mat-radio-button',
     'emailDomainsField': '#mat-input-6',
     'smtpServersField': '#mat-input-7',
-    'cloudStorageDomainsField': '#mat-input-8',
+    'cloudEnvironmentField': '#mat-input-8',
     'gSuiteRadioBtn': '#mat-radio-12 > .mat-radio-label',
     'euRadioBtn': '#mat-radio-15 > .mat-radio-label',
     'storageProvider': {
