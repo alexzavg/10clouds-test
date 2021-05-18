@@ -155,7 +155,7 @@ describe('Sign Up New Customer', function() {
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
 
         cy.get('#mat-input-8').type('test.com');
-        cy.contains('mat-radio-button', 'EU').click();
+        cy.contains('#cdk-step-content-1-2 > mat-radio-button', 'EU').click();
         cy.get('.mat-select-placeholder').click();
         cy.contains('mat-option', 'Google Drive').click();
         cy.clickOutside();
