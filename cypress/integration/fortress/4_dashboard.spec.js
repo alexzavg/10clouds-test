@@ -1,11 +1,13 @@
 import {dashboardPageElements, dashboardPageData} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
-import {ValidInDays, ValidInWeeks, GetExtractTimes, PostExtractTimes, ValidInHours} from '../../support/dataGenerator.js';
+import {ValidInDays, ValidInWeeks, PostExtractTimes, ValidInHours} from '../../support/dataGenerator.js';
+import {signUpPageElements} from '../../pages/sign-up.js';
+
 
 
 const {generateToken} = require('authenticator');
 
-describe.skip('Dashboard functionality', function() {
+describe('Dashboard functionality', function() {
 
     const signInLink = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
@@ -17,10 +19,6 @@ describe.skip('Dashboard functionality', function() {
     let formattedToken;
  
     it('should cover all the functionality in dashboard', function() {
-
-        //{ method: 'POST', url: '/users*' }, { success: true }
-        // , (req) => { expect(req.body).to.include('users') }
-
         cy.intercept(requests['protection-scores']).as('protection-scores');
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
         cy.intercept(requests['customer-statistics']).as('customer-statistics');
@@ -49,6 +47,7 @@ describe.skip('Dashboard functionality', function() {
         // Check Top Right Dropdown - [Last 1 hour]
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1Hour).click();
+        cy.get(signUpPageElements.spinner).should('not.exist')
         cy.wait('@customer-top-statistics').then((interception) => {
             const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
@@ -69,6 +68,7 @@ describe.skip('Dashboard functionality', function() {
         // Check Top Right Dropdown - [Last 6 hour]
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last6hour).click();
+        cy.get(signUpPageElements.spinner).should('not.exist')
         cy.wait('@customer-top-statistics').then((interception) => {
             const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
@@ -89,6 +89,7 @@ describe.skip('Dashboard functionality', function() {
         // Top Right Dropdown - [Last 12 hour]
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last12hour).click();
+        cy.get(signUpPageElements.spinner).should('not.exist')
         cy.wait('@customer-top-statistics').then((interception) => {
             const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
@@ -109,6 +110,7 @@ describe.skip('Dashboard functionality', function() {
         // Top Right Dropdown - [Last 24 hour]        
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last24hour).click();
+        cy.get(signUpPageElements.spinner).should('not.exist')
         cy.wait('@customer-top-statistics').then((interception) => {
             const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
@@ -129,6 +131,7 @@ describe.skip('Dashboard functionality', function() {
         // Top Right Dropdown - [Last 1 week]          
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1week).click();
+        cy.get(signUpPageElements.spinner).should('not.exist')
         cy.wait('@customer-top-statistics').then((interception) => {
             const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
@@ -150,6 +153,7 @@ describe.skip('Dashboard functionality', function() {
         // ! Need fix, difference is now in days, should be 3 calendar months
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.Last3month).click();
+        cy.get(signUpPageElements.spinner).should('not.exist')
         cy.wait('@customer-top-statistics').then((interception) => {
             const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
@@ -197,8 +201,8 @@ describe.skip('Dashboard functionality', function() {
         // TODO Check relevant filters
         // cy.get('.filters').click();
         // Back to [Dashboard] page
-        cy.visit(dashboardLink);
-        cy.url().should('eq', dashboardLink);
+        // cy.visit(dashboardLink);
+        // cy.url().should('eq', dashboardLink);
 
         // Open & close [Right Menu] - [Top Alerts]
         cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topAlerts).click();
