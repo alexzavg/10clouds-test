@@ -29,6 +29,9 @@ export function getCurrentTimeISO() {
     return time;
 };
 
+/**
+ * Get startDate, endDate from request URL
+ */
 export function ExtractTimes(url_request) {
     const url = new URL (url_request.request.url)
     const start_date = url.searchParams.get('startDate');
@@ -38,6 +41,9 @@ export function ExtractTimes(url_request) {
     return {start_date: new Date(start_date), end_date: new Date(end_date)};
 };
 
+/**
+ * Get startDate, endDate from request body
+ */
 export function PostExtractTimes(url_request) {
     const url = url_request.request.body
     const start_date = url.startDate
@@ -55,7 +61,7 @@ export function ValidInHours(start, end, range) {
   var resp =  Math.abs(Math.round(diff));
   return (resp == range);
   
- };
+};
 
 export function ValidInDays(start, end, range) {
     var t2 = end.getTime();

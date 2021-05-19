@@ -7,7 +7,7 @@ export const requests = {
     'alerts-statistics': '/alert/service-statistics**',
     'protection-scores': '/protection-scores',
     'customer-statistics': '/alert/customer-statistics**',
-    'customer-top-statistics': '/alert/customer-top-statistics',
+    'customer-top-statistics': '**/alert/customer-top-statistics**',
     'catalog-items': '/catalog/items',
     'catalog-packages': '/catalog/packages',
     'service-licenses-order': '/service-licenses/order',

@@ -47,128 +47,152 @@ describe('Dashboard functionality', function() {
         // Check Top Right Dropdown - [Last 1 hour]
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1Hour).click();
-        cy.get(signUpPageElements.spinner).should('not.exist')
+        cy.get(signUpPageElements.spinner).should('not.exist');
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+            cy.wait(250);
         });
 
         // Check Top Right Dropdown - [Last 6 hour]
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last6hour).click();
-        cy.get(signUpPageElements.spinner).should('not.exist')
+        cy.get(signUpPageElements.spinner).should('not.exist');
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
+            cy.wait(250);
         });
 
         // Top Right Dropdown - [Last 12 hour]
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last12hour).click();
-        cy.get(signUpPageElements.spinner).should('not.exist')
+        cy.get(signUpPageElements.spinner).should('not.exist');
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
+            cy.wait(250);
         });
 
         // Top Right Dropdown - [Last 24 hour]        
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last24hour).click();
-        cy.get(signUpPageElements.spinner).should('not.exist')
+        cy.get(signUpPageElements.spinner).should('not.exist');
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
+            cy.wait(250);
         });
 
         // Top Right Dropdown - [Last 1 week]          
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1week).click();
-        cy.get(signUpPageElements.spinner).should('not.exist')
+        cy.get(signUpPageElements.spinner).should('not.exist');
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+            cy.wait(250);
         });   
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+            cy.wait(250);
         }); 
 
         // Top Right Dropdown - [Last 3 month] 
         // ! Need fix, difference is now in days, should be 3 calendar months
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.Last3month).click();
-        cy.get(signUpPageElements.spinner).should('not.exist')
+        cy.get(signUpPageElements.spinner).should('not.exist');
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
+            cy.wait(250);
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
+            cy.wait(250);
         });  
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception)
-            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
+            const geturl = PostExtractTimes(interception);
+            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
+            cy.wait(250);
         });   
         
         // Open & close [Right Menu] - [Regulation]
