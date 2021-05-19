@@ -8,6 +8,8 @@ export const requests = {
     'protection-scores': '/protection-scores',
     'customer-statistics': '/alert/customer-statistics**',
     'customer-top-statistics': '**/alert/customer-top-statistics**',
+    'service-statistics': '**/alert/service-statistics**',
+    'alert-search': '**/alert/search**',
     'catalog-items': '/catalog/items',
     'catalog-packages': '/catalog/packages',
     'service-licenses-order': '/service-licenses/order',

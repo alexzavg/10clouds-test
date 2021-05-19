@@ -5,6 +5,7 @@ export const dashboardPageElements = {
     'rightMenuCategory': 'fortress-cards-menu-item',
     'rightMenuCategoryTitleOpen': '.ng-trigger-openCloseTitle.active',
     'rightMenuCategoryOpen': '.ng-trigger-openCloseBody.active',
+    'rightMenuItem': '.card-item.ng-star-inserted',
     'topMenuOpenBtn': '.scroller',
     'topMenuBlockOpen': '.top-menu.opened'
 }
