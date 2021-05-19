@@ -24,7 +24,7 @@ describe('Sign Up New Customer', function() {
     const state = 'Poltavs\'ka Oblast\'';
     const city = 'Poltava';
     const zip = getRandomNumberLength(6);
-    const password = getRandomCharLength(4) + getRandomNumberLength(4);
+    const password = 'CY_' + getRandomCharLength(4) + getRandomNumberLength(4);
     const testString = 'cypresstest.com';
 
     const currentTime = getCurrentTimeISO();
@@ -103,22 +103,24 @@ describe('Sign Up New Customer', function() {
 
         cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
 
-        cy.get('body').then((body) => {
-            if (body.find('.qrcode').length > 0) {
-                cy.log('2FA page seen');
-                cy.get(signInPageElements.otpTokenBlock).text().then((value) => {
-                    otp = generateToken(value);
-                    cy.log('New User Google OTP is:', otp);
-                    let array = Array.from(otp);
-    
-                    cy.contains(signInPageElements.btn, signInPageData.buttons.next).click();
-                    cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
-                });
-            }
-            else {
-                cy.log('2FA page not seen');
-            }
-        })
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.get('body').then((body) => {
+                if (body.find('.qrcode').length > 0) {
+                    cy.log('2FA page seen');
+                    cy.get(signInPageElements.otpTokenBlock).text().then((value) => {
+                        otp = generateToken(value);
+                        cy.log('New User Google OTP is:', otp);
+                        let array = Array.from(otp);
+        
+                        cy.contains(signInPageElements.btn, signInPageData.buttons.next).click();
+                        cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
+                    });
+                }
+                else {
+                    cy.log('2FA page not seen');
+                }
+            });
+        });
 
         cy.wait('@sign-in').its('response.statusCode').should('eq', 200);
         cy.wait('@user-me').its('response.statusCode').should('eq', 200);

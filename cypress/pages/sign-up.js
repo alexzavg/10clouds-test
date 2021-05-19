@@ -31,7 +31,8 @@ export const signUpPageElements = {
     'storageProvider': {
         'dropdown': '.mat-select-placeholder',
         'option': 'mat-option'
-    }
+    },
+    'spinner': '.spinner-svg'
 }
 
 export const signUpPageData = {
