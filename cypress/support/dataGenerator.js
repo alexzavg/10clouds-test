@@ -36,7 +36,16 @@ export function ExtractTimes(url_request) {
     cy.log(start_date)
     cy.log(end_date)
     return {start_date: new Date(start_date), end_date: new Date(end_date)};
-}
+};
+
+export function PostExtractTimes(url_request) {
+    const url = url_request.request.body
+    const start_date = url.startDate
+    const end_date = url.endDate
+    cy.log(start_date)
+    cy.log(end_date)
+    return {start_date: new Date(start_date), end_date: new Date(end_date)};
+};
 
 export function ValidInHours(start, end, range) {
 
@@ -76,3 +85,4 @@ export function ValidInMonths(start, end, range) {
     return (resp == range);
   
 };
+

@@ -1,6 +1,6 @@
 import {dashboardPageElements, dashboardPageData} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
-import {ValidInDays, ValidInWeeks, ExtractTimes, ValidInHours} from '../../support/dataGenerator.js';
+import {ValidInDays, ValidInWeeks, GetExtractTimes, PostExtractTimes, ValidInHours} from '../../support/dataGenerator.js';
 
 
 const {generateToken} = require('authenticator');
@@ -17,6 +17,9 @@ describe('Dashboard functionality', function() {
     let formattedToken;
  
     it('should cover all the functionality in dashboard', function() {
+
+        //{ method: 'POST', url: '/users*' }, { success: true }
+        // , (req) => { expect(req.body).to.include('users') }
 
         cy.intercept(requests['protection-scores']).as('protection-scores');
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
@@ -47,19 +50,19 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1Hour).click();
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
 
@@ -67,19 +70,19 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last6hour).click();
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
         });
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true)
         });
 
@@ -87,19 +90,19 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last12hour).click();
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
         });
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true)
         });
 
@@ -107,19 +110,19 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last24hour).click();
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
         });
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true)
         });
 
@@ -127,19 +130,19 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1week).click();
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         });   
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true)
         }); 
 
@@ -148,19 +151,19 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.Last3month).click();
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
         });
         cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
         });  
         cy.wait('@customer-statistics').then((interception) => {
-            const geturl = ExtractTimes(interception)
+            const geturl = PostExtractTimes(interception)
             cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true)
         });   
         
@@ -182,7 +185,7 @@ describe('Dashboard functionality', function() {
 
         // TODO - Open and check redirect to [Alerts] page with relevant filter 
         // cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topEndpoints).click();
-        // cy.get(':nth-child(1) > right-menu-endpoint-item > .card-item__row').click(); // TODO
+        // cy.contains(':nth-child(1) > right-menu-endpoint-item > .card-item__row').click(); // TODO
         // cy.url().should('eq', alerts);
         // cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
         // cy.wait('@aggregate-alerts').its('response.statusCode').should('eq', 200);
@@ -190,11 +193,12 @@ describe('Dashboard functionality', function() {
         // cy.wait('@aggregate-endpoints').its('response.statusCode').should('eq', 200);
         // cy.wait('@device-search').its('response.statusCode').should('eq', 200);
         // cy.wait('@alerts-statistics').its('response.statusCode').should('eq', 200);
+
         // TODO Check relevant filters
         // cy.get('.filters').click();
         // Back to [Dashboard] page
-        // cy.visit(dashboardLink);
-        // cy.url().should('eq', dashboardLink);
+        cy.visit(dashboardLink);
+        cy.url().should('eq', dashboardLink);
 
         // Open & close [Right Menu] - [Top Alerts]
         cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topAlerts).click();
