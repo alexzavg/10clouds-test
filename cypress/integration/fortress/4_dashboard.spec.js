@@ -217,6 +217,15 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
     });
 
+    it('should open & close [Right Menu] - [Top News]', function() {
+        cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topNews).click();
+        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topNews).should('be.visible');
+        cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible');
+        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topNews).click();
+        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topNews).should('not.exist');
+        cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
+    });
+
     it('should open & check redirect to [Alerts] page from [Right Menu] - [Top Endpoints]', function() {
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
         cy.intercept(requests['protection-scores']).as('protection-scores');
@@ -235,6 +244,7 @@ describe('Dashboard functionality', function() {
                 if (items.length > 0) {
                     cy.get(dashboardPageElements.rightMenuCategoryOpen).find(dashboardPageElements.rightMenuItem).first().click();
                     cy.url().should('eq', alertsLink);
+                    cy.get(signUpPageElements.spinner).should('not.exist');
     
                     cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
                     cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
@@ -246,7 +256,6 @@ describe('Dashboard functionality', function() {
                     cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                     cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
     
-                    cy.get(signUpPageElements.spinner).should('not.exist');
                     cy.get(alertsPageElements.filtersBtn).click();
                 }
                 else {
@@ -272,14 +281,6 @@ describe('Dashboard functionality', function() {
         // cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible');
         // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).click();
         // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('not.exist');
-        // cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
-
-        // // Open & close [Right Menu] - [Top News]
-        // cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topNews).click();
-        // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topNews).should('be.visible');
-        // cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible');
-        // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topNews).click();
-        // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topNews).should('not.exist');
         // cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
         
         // // Open & close [Top Menu]
