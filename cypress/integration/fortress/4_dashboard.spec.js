@@ -38,26 +38,27 @@ describe('Dashboard functionality', function() {
 
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1Hour).click();
-        cy.get(signUpPageElements.spinner).should('not.exist');
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
-            cy.wait(250);
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+                cy.wait(250);
+            });
         });
     });
     
@@ -67,26 +68,27 @@ describe('Dashboard functionality', function() {
 
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last6hour).click();
-        cy.get(signUpPageElements.spinner).should('not.exist');
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
-            cy.wait(250);
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 6).should('eq', true);
+                cy.wait(250);
+            });
         });
     });
 
@@ -96,26 +98,27 @@ describe('Dashboard functionality', function() {
 
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last12hour).click();
-        cy.get(signUpPageElements.spinner).should('not.exist');
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
-            cy.wait(250);
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 12).should('eq', true);
+                cy.wait(250);
+            });
         });
     });
 
@@ -125,26 +128,27 @@ describe('Dashboard functionality', function() {
 
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last24hour).click();
-        cy.get(signUpPageElements.spinner).should('not.exist');
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
-            cy.wait(250);
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInHours}).invoke('valid', geturl.start_date, geturl.end_date, 24).should('eq', true);
+                cy.wait(250);
+            });
         });
     });
 
@@ -154,27 +158,28 @@ describe('Dashboard functionality', function() {
 
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.last1week).click();
-        cy.get(signUpPageElements.spinner).should('not.exist');
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
-            cy.wait(250);
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+                cy.wait(250);
+            });   
+            cy.wait('@customer-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
+                cy.wait(250);
+            }); 
         });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
-            cy.wait(250);
-        });   
-        cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInWeeks}).invoke('valid', geturl.start_date, geturl.end_date, 1).should('eq', true);
-            cy.wait(250);
-        }); 
     });
 
     // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-454
@@ -184,28 +189,29 @@ describe('Dashboard functionality', function() {
 
         cy.get(dashboardPageElements.dropdownSnapshot).click();
         cy.contains(dashboardPageElements.dropdownSnapshotOption, dashboardPageData.Last3month).click();
-        cy.get(signUpPageElements.spinner).should('not.exist');
-        // ! Need dev fix, difference is now in days, should be 3 calendar months
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
-            cy.wait(250);
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            // ! Need dev fix, difference is now in days, should be 3 calendar months
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
+                cy.wait(250);
+            });
+            cy.wait('@customer-top-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
+                cy.wait(250);
+            });  
+            cy.wait('@customer-statistics').then((interception) => {
+                const geturl = PostExtractTimes(interception);
+                cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
+                cy.wait(250);
+            });  
         });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
-            cy.wait(250);
-        });
-        cy.wait('@customer-top-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
-            cy.wait(250);
-        });  
-        cy.wait('@customer-statistics').then((interception) => {
-            const geturl = PostExtractTimes(interception);
-            cy.wrap({'valid': ValidInDays}).invoke('valid', geturl.start_date, geturl.end_date, 84).should('eq', true);
-            cy.wait(250);
-        });  
     });
 
     it('should open & close [Right Menu] - [Regulation]', function() {
@@ -244,19 +250,18 @@ describe('Dashboard functionality', function() {
                 if (items.length > 0) {
                     cy.get(dashboardPageElements.rightMenuCategoryOpen).find(dashboardPageElements.rightMenuItem).first().click();
                     cy.url().should('eq', alertsLink);
-                    cy.get(signUpPageElements.spinner).should('not.exist');
-    
-                    cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                    cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                    cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                    cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-                    cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                    cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                    cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                    cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                    cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-    
-                    cy.get(alertsPageElements.filtersBtn).click();
+                    cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
+                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
+                        cy.get(alertsPageElements.filtersBtn).click();
+                    });
                 }
                 else {
                     cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).click();
