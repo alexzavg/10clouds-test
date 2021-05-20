@@ -29,6 +29,9 @@ export function getCurrentTimeISO() {
     return time;
 };
 
+/**
+ * Get startDate, endDate from request URL
+ */
 export function ExtractTimes(url_request) {
     const url = new URL (url_request.request.url)
     const start_date = url.searchParams.get('startDate');
@@ -36,7 +39,19 @@ export function ExtractTimes(url_request) {
     cy.log(start_date)
     cy.log(end_date)
     return {start_date: new Date(start_date), end_date: new Date(end_date)};
-}
+};
+
+/**
+ * Get startDate, endDate from request body
+ */
+export function PostExtractTimes(url_request) {
+    const url = url_request.request.body
+    const start_date = url.startDate
+    const end_date = url.endDate
+    cy.log(start_date)
+    cy.log(end_date)
+    return {start_date: new Date(start_date), end_date: new Date(end_date)};
+};
 
 export function ValidInHours(start, end, range) {
 
@@ -46,7 +61,7 @@ export function ValidInHours(start, end, range) {
   var resp =  Math.abs(Math.round(diff));
   return (resp == range);
   
- };
+};
 
 export function ValidInDays(start, end, range) {
     var t2 = end.getTime();
@@ -76,3 +91,4 @@ export function ValidInMonths(start, end, range) {
     return (resp == range);
   
 };
+
