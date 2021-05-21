@@ -7,7 +7,11 @@ export const dashboardPageElements = {
     'rightMenuCategoryOpen': '.ng-trigger-openCloseBody.active',
     'rightMenuItem': '.card-item.ng-star-inserted',
     'topMenuOpenBtn': '.scroller',
-    'topMenuBlockOpen': '.top-menu.opened'
+    'topMenuBlockOpen': '.top-menu.opened',
+    'scorllBarChart': '.line-chart',
+    'scrollBarSeverity': '.severity',
+    'scrollAlertSummary': '.alerts-summary',
+    'scrollClosedMenu': '.menu-closed'
 }
 
 export const dashboardPageData = {
@@ -21,5 +25,9 @@ export const dashboardPageData = {
     'topEndpoints': 'Top Endpoints',
     'topAlerts': 'Top Alerts',
     'topUsers': 'Top Users',
-    'topNews': 'Fortress News'
+    'topNews': 'Fortress News',
+    'severityHigh': 'High',
+    'severityMedium': 'Medium',
+    'severityLow': 'Low'
+
 }  
