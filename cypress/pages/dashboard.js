@@ -26,5 +26,8 @@ export const dashboardPageData = {
     'topAlerts': 'Top Alerts',
     'topUsers': 'Top Users',
     'topNews': 'Fortress News',
-    'nothingFound': 'Nothing found'
+    'nothingFound': 'Nothing found',
+    'severityHigh': 'High',
+    'severityMedium': 'Medium',
+    'severityLow': 'Low'
 }
