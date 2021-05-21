@@ -182,8 +182,7 @@ describe('Dashboard functionality', function() {
         });
     });
 
-    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-454
-    it.skip('should check Top Right Dropdown - [Last 3 month]', function() {
+    it('should check Top Right Dropdown - [Last 3 month]', function() {
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
         cy.intercept(requests['customer-statistics']).as('customer-statistics');
 
@@ -239,37 +238,33 @@ describe('Dashboard functionality', function() {
         cy.intercept(requests['device-search']).as('device-search');
         cy.intercept(requests['alert-search']).as('alert-search');
 
-        cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topEndpoints).click();
-        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).should('be.visible');
-        cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
-            cy.get(dashboardPageElements.rightMenuCategoryOpen).within((value) => {
-                let items = value.find(dashboardPageElements.rightMenuItem);
-                cy.wrap(items).as('items');
-                cy.wait(250);
-            });
-            cy.get('@items').then((items) => {
-                if (items.length > 0) {
-                    cy.get(dashboardPageElements.rightMenuCategoryOpen).find(dashboardPageElements.rightMenuItem).first().click();
-                    cy.url().should('eq', alertsLink);
-                    cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-                        cy.get(alertsPageElements.filtersBtn).click();
-                        cy.visit(dashboardLink);
-                    });
-                }
-                else {
-                    cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).click();
-                    cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).should('not.exist');
-                    cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
-                }
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topEndpoints).click();
+            cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
+                cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
+                    if (value.text().includes(dashboardPageData.nothingFound)) {
+                        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).click();
+                        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).should('not.exist');
+                        cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
+                    }
+                    else {
+                        cy.get(dashboardPageElements.rightMenuCategoryOpen).find(dashboardPageElements.rightMenuItem).first().click();
+                        cy.url().should('eq', alertsLink);
+                        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+                            cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                            cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
+                            cy.get(alertsPageElements.filtersBtn).click();
+                            cy.visit(dashboardLink);
+                        });
+                    }
+                });
             });
         });
     });
@@ -282,37 +277,34 @@ describe('Dashboard functionality', function() {
         cy.intercept(requests['device-search']).as('device-search');
         cy.intercept(requests['alert-search']).as('alert-search');
 
-        cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topAlerts).click();
-        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).should('be.visible');
-        cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
-            cy.get(dashboardPageElements.rightMenuCategoryOpen).within((value) => {
-                let items = value.find(dashboardPageElements.rightMenuItem);
-                cy.wrap(items).as('items');
-                cy.wait(250);
-            });
-            cy.get('@items').then((items) => {
-                if (items.length > 0) {
-                    cy.get(dashboardPageElements.rightMenuCategoryOpen).find(dashboardPageElements.rightMenuItem).first().click();
-                    cy.url().should('eq', alertsLink);
-                    cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-                        cy.get(alertsPageElements.filtersBtn).click();
-                        cy.visit(dashboardLink);
-                    });
-                }
-                else {
-                    cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).click();
-                    cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).should('not.exist');
-                    cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
-                }
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topAlerts).click();
+            cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).should('be.visible');
+            cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
+                cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
+                    if (value.text().includes(dashboardPageData.nothingFound)) {
+                        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).click();
+                        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).should('not.exist');
+                        cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
+                    }
+                    else {
+                        cy.get(dashboardPageElements.rightMenuCategoryOpen).find(dashboardPageElements.rightMenuItem).first().click();
+                        cy.url().should('eq', alertsLink);
+                        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+                            cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                            cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
+                            cy.get(alertsPageElements.filtersBtn).click();
+                            cy.visit(dashboardLink);
+                        });
+                    }
+                });
             });
         });
     });
@@ -324,47 +316,36 @@ describe('Dashboard functionality', function() {
         cy.intercept(requests['device-search']).as('device-search');
         cy.intercept(requests['alert-search']).as('alert-search');
 
-        cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topUsers).click();
-        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('be.visible');
-        cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
-            cy.get(dashboardPageElements.rightMenuCategoryOpen).within((value) => {
-                let items = value.find(dashboardPageElements.rightMenuItem);
-                cy.wrap(items).as('items');
-            });
-            cy.get('@items').then((items) => {
-                if (items.length > 0) {
-                    cy.get(dashboardPageElements.rightMenuCategoryOpen).find(dashboardPageElements.rightMenuItem).first().click();
-                    cy.url().should('eq', alertsLink);
-                    cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-                        cy.get(alertsPageElements.filtersBtn).click();
-                        cy.visit(dashboardLink);
-                    });
-                }
-                else {
-                    cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).click();
-                    cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('not.exist');
-                    cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
-                }
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topUsers).click();
+            cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('be.visible');
+            cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
+                cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
+                    if (value.text().includes(dashboardPageData.nothingFound)) {
+                        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).click();
+                        cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('not.exist');
+                        cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
+                    }
+                    else {
+                        cy.get(dashboardPageElements.rightMenuCategoryOpen).find(dashboardPageElements.rightMenuItem).first().click();
+                        cy.url().should('eq', alertsLink);
+                        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+                            cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
+                            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+                            cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
+                            cy.get(alertsPageElements.filtersBtn).click();
+                            cy.visit(dashboardLink);
+                        });
+                    }
+                });
             });
         });
     });
-
-
-        // // Open & close [Right Menu] - [Top Users]
-        // cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topUsers).click();
-        // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('be.visible');
-        // cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible');
-        // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).click();
-        // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('not.exist');
-        // cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
         
 });

@@ -21,5 +21,6 @@ export const dashboardPageData = {
     'topEndpoints': 'Top Endpoints',
     'topAlerts': 'Top Alerts',
     'topUsers': 'Top Users',
-    'topNews': 'Fortress News'
-}  
+    'topNews': 'Fortress News',
+    'nothingFound': 'Nothing found'
+}
