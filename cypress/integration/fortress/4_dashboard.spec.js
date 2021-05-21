@@ -402,8 +402,7 @@ describe('Dashboard functionality', function() {
         });
     });
 
-    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-454
-    it.skip('should check Top Right Dropdown - [Last 3 month]', function() {
+    it('should check Top Right Dropdown - [Last 3 month]', function() {
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
         cy.intercept(requests['customer-statistics']).as('customer-statistics');
 
@@ -568,14 +567,5 @@ describe('Dashboard functionality', function() {
             });
         });
     });
-
-
-        // // Open & close [Right Menu] - [Top Users]
-        // cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topUsers).click();
-        // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('be.visible');
-        // cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible');
-        // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).click();
-        // cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('not.exist');
-        // cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
         
 });

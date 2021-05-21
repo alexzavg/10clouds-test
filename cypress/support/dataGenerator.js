@@ -51,7 +51,7 @@ export function PostExtractTimes(url_request) {
     cy.log(start_date)
     cy.log(end_date)
     return {start_date: new Date(start_date), end_date: new Date(end_date)};
-};
+};  
 
 export function ValidInHours(start, end, range) {
 
