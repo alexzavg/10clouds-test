@@ -92,3 +92,8 @@ export function ValidInMonths(start, end, range) {
   
 };
 
+export function getAllCombos(arr) {
+    if(arr[0] === undefined) return [arr]
+    return getAllCombos(arr.slice(1)).flatMap(el => [el.concat(arr[0]), el])
+ };
+
