@@ -46,7 +46,8 @@
             "signIn": "http://localhost:4001/fortress-mssp/sign-in",
             "dashboard": "http://localhost:4001/fortress-mssp/dashboard",
             "users": "http://localhost:4001/fortress-mssp/settings/users",
-            "alerts": "http://localhost:4001/fortress-mssp/alerts"
+            "alerts": "http://localhost:4001/fortress-mssp/alerts",
+            "mssp": "http://localhost:4001/fortress-mssp/mssp"
         },
         "customers": {
             "first": {
@@ -68,6 +69,11 @@
                 "email": "me41zavgorodnii+54@gmail.com",
                 "password": "wa12aszx34",
                 "formattedKey": "C2GBQ7RY3RNCPDDHS4FH4NKFANDY22JBXL5NS7KI4JIUDLRVFLZA"
+            },
+            "fourth": {
+                "email": "me41zavgorodnii+56@gmail.com",
+                "password": "wa12aszx34",
+                "formattedKey": "OFBO75FVKCQTJFXFL235ILANQVESMSBYXPAQYSBBGEXKVISEHODA"
             }
         }
     }
