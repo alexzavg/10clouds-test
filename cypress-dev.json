@@ -46,7 +46,8 @@
             "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in",
             "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard",
             "users": "https://dev.qfortress.ai/fortress-mssp/settings/users",
-            "alerts": "https://dev.qfortress.ai/fortress-mssp/alerts"
+            "alerts": "https://dev.qfortress.ai/fortress-mssp/alerts",
+            "mssp": "https://dev.qfortress.ai/fortress-mssp/mssp"
         },
         "customers": {
             "first": {
@@ -68,6 +69,11 @@
                 "email": "me41zavgorodnii+54@gmail.com",
                 "password": "wa12aszx34",
                 "formattedKey": "C2GBQ7RY3RNCPDDHS4FH4NKFANDY22JBXL5NS7KI4JIUDLRVFLZA"
+            },
+            "fourth": {
+                "email": "me41zavgorodnii+56@gmail.com",
+                "password": "wa12aszx34",
+                "formattedKey": "OFBO75FVKCQTJFXFL235ILANQVESMSBYXPAQYSBBGEXKVISEHODA"
             }
         }
     }

@@ -12,7 +12,6 @@ describe('Sign Up New Customer', function() {
     const confirmLink = Cypress.env('urls').confirm;
     const completeLink = Cypress.env('urls').complete;
     const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
-
     const firstName = 'test' + getRandomCharLength(8);
     const email = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const phoneNumber = '+38067' + getRandomNumberLength(7);
@@ -26,7 +25,6 @@ describe('Sign Up New Customer', function() {
     const zip = getRandomNumberLength(6);
     const password = 'CY_' + getRandomCharLength(4) + getRandomNumberLength(4);
     const testString = 'cypresstest.com';
-
     const currentTime = getCurrentTimeISO();
 
     const signInLink = Cypress.config().baseUrl + '/' + personalUrl + '/sign-in';

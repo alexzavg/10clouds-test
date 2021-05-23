@@ -18,5 +18,7 @@ export const requests = {
     'role-search': '/role/search',
     'device-search': '/device/search',
     'user-search': '/user/search',
-    'user-remove': '/user/remove'
+    'user-remove': '/user/remove',
+    'customer-search': '/customer/search',
+    'customer-invitations': '/customer-invitations'
 }
