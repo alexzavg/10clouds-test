@@ -8,5 +8,6 @@ export const navbarElements = {
 export const navbarData = {
     'settings': 'Settings',
     'adminConfiguration': 'Admin Configuration',
-    'users': 'Users'
+    'users': 'Users',
+    'msspConfiguration': 'MSSP Configuration'
 }

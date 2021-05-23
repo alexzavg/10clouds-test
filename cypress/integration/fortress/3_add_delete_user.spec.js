@@ -16,13 +16,11 @@ describe('Add & Delete New User', function() {
     const adminPassword = Cypress.env('users').second.password;
     const adminFormattedKey = Cypress.env('users').second.formattedKey;
     const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
-
     const newUserFirstName = 'cypress' + getRandomCharLength(8);
     const newUserEmail = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const newUserPhoneNumber = '+38093' + getRandomNumberLength(7);
     const role = 'Organization Admin';
     const newUserPassword = 'CY_' + getRandomCharLength(4) + getRandomNumberLength(4);
-
     const currentTime = getCurrentTimeISO();
 
     let adminOtp, adminOtpNew, newUserOtp;
@@ -47,31 +45,31 @@ describe('Add & Delete New User', function() {
 
         cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
-        // menu categories text isn't displayed when navbarElements is expanded, workaround:
+        // ! menu categories text isn't displayed when navbarElements is expanded, workaround:
         cy.get(navbarElements.fortressLogoTop).click();
         cy.wait(2000);
-
         cy.contains(navbarElements.category, navbarData.settings).click();
         cy.contains(navbarElements.category, navbarData.adminConfiguration).click();
         cy.contains(navbarElements.category, navbarData.users).click();
 
-        cy.wait('@role-search').its('response.statusCode').should('eq', 200);
-        cy.wait('@user-search').its('response.statusCode').should('eq', 200);
-        cy.wait('@device-search').its('response.statusCode').should('eq', 200);
-
         cy.url().should('eq', usersLink);
-        cy.get(usersPageElements.spinner).should('not.exist');
+        cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+            cy.wait('@role-search').its('response.statusCode').should('eq', 200);
+            cy.wait('@user-search').its('response.statusCode').should('eq', 200);
+            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
 
-        cy.get(usersPageElements.btnAddUser).click();
-        cy.get(usersPageElements.firstNameField).type(newUserFirstName);
-        cy.get(usersPageElements.lastNameField).type(newUserFirstName);
-        cy.get(usersPageElements.emailfield).type(newUserEmail);
-        cy.get(usersPageElements.phoneField).type(newUserPhoneNumber);
-        cy.get(usersPageElements.roleDropdown).select(role);
-        cy.get(usersPageElements.btnAdd).click();
+            cy.get(usersPageElements.btnAddUser).click();
+            cy.get(usersPageElements.firstNameField).type(newUserFirstName);
+            cy.get(usersPageElements.lastNameField).type(newUserFirstName);
+            cy.get(usersPageElements.emailfield).type(newUserEmail);
+            cy.get(usersPageElements.phoneField).type(newUserPhoneNumber);
+            cy.get(usersPageElements.roleDropdown).select(role);
+            cy.get(usersPageElements.btnAdd).click();
+        });
 
-        cy.get(usersPageElements.spinner).should('not.exist');
-        cy.get(usersPageElements.amount).invoke('text').then(parseFloat).should('be.gt', 0);
+        cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+            cy.get(usersPageElements.amount).invoke('text').then(parseFloat).should('be.gt', 0);
+        });
 
         cy.clearCookies();
         cy.clearLocalStorage();
@@ -110,8 +108,7 @@ describe('Add & Delete New User', function() {
 
                 cy.clearCookies();
                 cy.clearLocalStorage();
-            });
-                
+            });    
         });
 
         cy.visit(signInLink);
@@ -131,16 +128,17 @@ describe('Add & Delete New User', function() {
             cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
             cy.visit(usersLink);
-            cy.get(usersPageElements.spinner).should('not.exist');
-
-            cy.wait('@role-search').its('response.statusCode').should('eq', 200);
-            cy.wait('@user-search').its('response.statusCode').should('eq', 200);
-            cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+            cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+                cy.wait('@role-search').its('response.statusCode').should('eq', 200);
+                cy.wait('@user-search').its('response.statusCode').should('eq', 200);
+                cy.wait('@device-search').its('response.statusCode').should('eq', 200);
+            });
 
             cy.get(usersPageElements.searchField).type(newUserFirstName+'{enter}').then(() => {
-                cy.get(usersPageElements.spinner).should('not.exist');
-                cy.contains('tr', newUserEmail).parent().within($tr => {
-                    cy.get(usersPageElements.kebabMenu).click();
+                cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+                    cy.contains('tr', newUserEmail).parent().within(() => {
+                        cy.get(usersPageElements.kebabMenu).click();
+                    });
                 });
             });
             cy.contains(usersPageElements.btn, usersPageData.deleteUser).click();
