@@ -7,6 +7,7 @@ export const msspPageElements = {
 
 export const msspPageData = {
     'customerType': {
-        'regular': 'Regular'
+        'regular': 'Regular',
+        'mssp': 'MSSP'
     },
 }
