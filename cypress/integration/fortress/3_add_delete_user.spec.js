@@ -45,7 +45,7 @@ describe('Add & Delete New User', function() {
 
         cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
-        // ! menu categories text isn't displayed when navbarElements is expanded, workaround:
+        // ! menu categories text isn't displayed when navbar is expanded, workaround:
         cy.get(navbarElements.fortressLogoTop).click();
         cy.wait(2000);
         cy.contains(navbarElements.category, navbarData.settings).click();
