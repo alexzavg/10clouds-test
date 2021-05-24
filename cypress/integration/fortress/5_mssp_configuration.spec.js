@@ -8,7 +8,7 @@ import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../
 
 const {generateToken} = require('authenticator');
 
-describe('MSSP', function() {
+describe('MSSP Configuration', function() {
 
     const signInLink = Cypress.env('urls').signIn;
     const msspLink = Cypress.env('urls').mssp;
