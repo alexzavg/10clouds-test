@@ -58,13 +58,15 @@ describe('MSSP', function() {
             cy.url().should('eq', msspLink);
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.wait('@customer-search').its('response.statusCode').should('eq', 200);
-    
                 cy.get(msspPageElements.inviteCompanyBtn).click();
                 cy.get(msspPageElements.customerTypeDropdown).select(msspPageData.customerType.regular);
                 cy.get(msspPageElements.emailField).type(customerEmailFirst);
                 cy.get(msspPageElements.inviteBtn).click();
-    
-                cy.wait('@customer-invitations').its('response.statusCode').should('eq', 201);
+                cy.wait('@customer-invitations').then((value) => {
+                    expect(value.response.statusCode).to.equal(201);
+                    expect(value.request.body.customerType).to.equal(msspPageData.customerType.regular.toUpperCase());
+                    expect(value.request.body.email).to.equal(customerEmailFirst);
+                });
             });
     
             cy.mailosaurGetMessage(serverId, {
@@ -77,7 +79,6 @@ describe('MSSP', function() {
             }).then(mail => {
                 const invitationLink = mail.html.links[0].href;
                 cy.log('Invitation link:', invitationLink);
-    
                 cy.visit(invitationLink);
                 cy.url().should('contain', signUpLink);
                 cy.get(signUpPageElements.emailField).should('have.value', customerEmailFirst);
@@ -120,13 +121,15 @@ describe('MSSP', function() {
             cy.url().should('eq', msspLink);
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.wait('@customer-search').its('response.statusCode').should('eq', 200);
-    
                 cy.get(msspPageElements.inviteCompanyBtn).click();
                 cy.get(msspPageElements.customerTypeDropdown).select(msspPageData.customerType.mssp);
                 cy.get(msspPageElements.emailField).type(customerEmailSecond);
                 cy.get(msspPageElements.inviteBtn).click();
-    
-                cy.wait('@customer-invitations').its('response.statusCode').should('eq', 201);
+                cy.wait('@customer-invitations').then((value) => {
+                    expect(value.response.statusCode).to.equal(201);
+                    expect(value.request.body.customerType).to.equal(msspPageData.customerType.mssp);
+                    expect(value.request.body.email).to.equal(customerEmailSecond);
+                });
             });
     
             cy.mailosaurGetMessage(serverId, {
@@ -139,7 +142,6 @@ describe('MSSP', function() {
             }).then(mail => {
                 const invitationLink = mail.html.links[0].href;
                 cy.log('Invitation link:', invitationLink);
-    
                 cy.visit(invitationLink);
                 cy.url().should('contain', signUpLink);
                 cy.get(signUpPageElements.emailField).should('have.value', customerEmailSecond);
