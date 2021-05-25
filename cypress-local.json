@@ -80,6 +80,12 @@
                 "password": "wa12aszx34WA_",
                 "formattedKey": "IPBWV7GZXVTY5JMBLUZY2YW64XRWVPTOD6U26YJDBCDQ4P7HQMIQ"
             }
+        },
+        "companies": {
+            "first": {
+                "name": "Automation Customer Do Not Remove",
+                "email": "me41zavgorodnii+autotestcompany@gmail.com"
+            }
         }
     }
 }
