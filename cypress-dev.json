@@ -53,6 +53,10 @@
         "customers": {
             "first": {
                 "name": "fortress-mssp"
+            },
+            "second": {
+                "name": "Automation Customer Do Not Remove",
+                "email": "me41zavgorodnii+autotestcompany@gmail.com"
             }
         },
         "users": {
@@ -82,14 +86,7 @@
                 "formattedKey": "IPBWV7GZXVTY5JMBLUZY2YW64XRWVPTOD6U26YJDBCDQ4P7HQMIQ"
             },
             "sixth": {
-                "email": "physical-solar@u9eitg8h.mailosaur.net",
-                "password": "WA_12aszx"
-            }
-        },
-        "companies": {
-            "first": {
-                "name": "Automation Customer Do Not Remove",
-                "email": "me41zavgorodnii+autotestcompany@gmail.com"
+                "email": "physical-solar@u9eitg8h.mailosaur.net"
             }
         }
     }

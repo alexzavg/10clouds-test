@@ -11,9 +11,19 @@ export function getRandomNumberLength(length) {
 export function getRandomCharLength(length) {
     var char = '';
     var i;
-    var numbers = 'abcdefghijklmnopqrstuvwxyz';
+    var characters = 'abcdefghijklmnopqrstuvwxyz';
     for (i = 0; i < length; i++) {
-        char += numbers.charAt(Math.floor(Math.random() * numbers.length));
+        char += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return char;
+};
+
+export function getRandomSpecialCharLength(length) {
+    var char = '';
+    var i;
+    var specialCharacters = '!@#$%^&*(){}|_';
+    for (i = 0; i < length; i++) {
+        char += specialCharacters.charAt(Math.floor(Math.random() * specialCharacters.length));
     }
     return char;
 };

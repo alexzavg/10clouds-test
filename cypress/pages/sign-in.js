@@ -7,7 +7,13 @@ export const signInPageElements = {
     'confirmPasswordField': '#confirmPassword',
     'btnConfirmNewPassword': ':nth-child(2) > .mat-focus-indicator',
     'otpTokenBlock': '[class="code text-left"]',
-    'btnNext': '[type="submit"]'
+    'btnNext': '[type="submit"]',
+    'forgotPasswordBtn': '.forgot-btn',
+    'emailField': '#email',
+    'confirmEmailField': '#confirmEmail',
+    'confirmCodeField': '#confirmCode',
+    'newPasswordField': '#newPassword',
+    'confirmPasswordField': '#confirmPassword'
 }
 
 export const signInPageData = {
@@ -15,6 +21,8 @@ export const signInPageData = {
         'signIn': 'Sign in',
         'verify': 'Verify',
         'confirm': 'Confirm',
-        'next': 'Next'
-    }
+        'next': 'Next',
+        'restorePassword': 'Restore Password'
+    },
+    'verificationCode': 'Authenticator Verification Code'
 }
