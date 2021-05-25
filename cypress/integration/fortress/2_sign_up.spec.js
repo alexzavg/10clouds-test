@@ -2,7 +2,7 @@ import {signUpPageElements, signUpPageData} from '../../pages/sign-up.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';
-import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
+import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
@@ -23,7 +23,7 @@ describe('Sign Up New Customer', function() {
     const state = 'Poltavs\'ka Oblast\'';
     const city = 'Poltava';
     const zip = getRandomNumberLength(6);
-    const password = 'C_' + getRandomCharLength(3) + getRandomNumberLength(3);
+    const password = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
     const testString = 'cypresstest.com';
     const currentTime = getCurrentTimeISO();
 
@@ -152,16 +152,16 @@ describe('Sign Up New Customer', function() {
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
 
         // MAIL service setup
-        cy.contains(signUpPageElements.radioBtn, signUpPageData.gSuite).click(); // Gsuite
+        cy.get(signUpPageElements.gSuiteRadioBtnMail).click(); // Gsuite
         cy.get(signUpPageElements.emailDomainsField).type(testString);
-        cy.contains(signUpPageElements.radioBtn, signUpPageData.eu).click(); // EU
+        cy.get(signUpPageElements.euRadioBtnMail).click(); // EU
         cy.get(signUpPageElements.smtpServersField).type(testString);
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
 
         // CLOUD STORAGE service setup
-        cy.get(signUpPageElements.gSuiteRadioBtn).click(); // Gsuite
+        cy.get(signUpPageElements.gSuiteRadioBtnCloud).click(); // Gsuite
         cy.get(signUpPageElements.cloudEnvironmentField).type(testString);
-        cy.get(signUpPageElements.euRadioBtn).click(); // EU
+        cy.get(signUpPageElements.euRadioBtnCloud).click(); // EU
         cy.get(signUpPageElements.storageProvider.dropdown).click();
         cy.contains(signUpPageElements.storageProvider.option, signUpPageData.googleDrive).click();
         cy.clickOutside();

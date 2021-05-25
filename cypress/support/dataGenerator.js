@@ -21,7 +21,7 @@ export function getRandomCharLength(length) {
 export function getRandomSpecialCharLength(length) {
     var char = '';
     var i;
-    var specialCharacters = '!@#$%^&*(){}|_';
+    var specialCharacters = '!@#$^&*{}|_';
     for (i = 0; i < length; i++) {
         char += specialCharacters.charAt(Math.floor(Math.random() * specialCharacters.length));
     }

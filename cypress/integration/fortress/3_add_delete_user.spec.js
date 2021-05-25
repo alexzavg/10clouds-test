@@ -5,7 +5,7 @@ import {usersPageElements, usersPageData} from '../../pages/users.js';
 import {navbarElements, navbarData} from '../../pages/navbar.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';
-import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
+import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
@@ -21,7 +21,7 @@ describe('Add & Delete New User', function() {
     const newUserEmail = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const newUserPhoneNumber = '+38093' + getRandomNumberLength(7);
     const role = 'Organization Admin';
-    const newUserPassword = 'C_' + getRandomCharLength(3) + getRandomNumberLength(3);
+    const newUserPassword = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
     const currentTime = getCurrentTimeISO();
 
     let adminOtp, adminOtpNew, newUserOtp;

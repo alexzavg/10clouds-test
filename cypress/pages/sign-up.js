@@ -23,11 +23,13 @@ export const signUpPageElements = {
     'btnPayByCreditCard': '.payment-gateway > fortress-block-select > .wrapper-block-select > .row > :nth-child(1) > .option-box',
     'highPolicyRadioBtn': '#mat-radio-2 > .mat-radio-label',
     'radioBtn': 'mat-radio-button',
-    'emailDomainsField': '#mat-input-6',
-    'smtpServersField': '#mat-input-7',
-    'cloudEnvironmentField': '#mat-input-8',
-    'gSuiteRadioBtn': '#mat-radio-12 > .mat-radio-label',
-    'euRadioBtn': '#mat-radio-15 > .mat-radio-label',
+    'emailDomainsField': '#mat-input-9',
+    'smtpServersField': '#mat-input-10',
+    'cloudEnvironmentField': '#mat-input-14',
+    'gSuiteRadioBtnMail': '#mat-radio-22 > .mat-radio-label',
+    'euRadioBtnMail': '#mat-radio-25 > .mat-radio-label',
+    'gSuiteRadioBtnCloud': '#mat-radio-22 > .mat-radio-label',
+    'euRadioBtnCloud': '#mat-radio-25 > .mat-radio-label',
     'storageProvider': {
         'dropdown': '.mat-select-placeholder',
         'option': 'mat-option'
