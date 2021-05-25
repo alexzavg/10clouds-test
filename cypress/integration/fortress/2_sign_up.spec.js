@@ -2,7 +2,7 @@ import {signUpPageElements, signUpPageData} from '../../pages/sign-up.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';
-import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
+import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
@@ -23,7 +23,7 @@ describe('Sign Up New Customer', function() {
     const state = 'Poltavs\'ka Oblast\'';
     const city = 'Poltava';
     const zip = getRandomNumberLength(6);
-    const password = 'CY_' + getRandomCharLength(4) + getRandomNumberLength(4);
+    const password = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
     const testString = 'cypresstest.com';
     const currentTime = getCurrentTimeISO();
 
@@ -31,6 +31,7 @@ describe('Sign Up New Customer', function() {
     const prePaymentLink = Cypress.config().baseUrl + '/' + personalUrl + '/payment/pre';
     const selectServicesLink = Cypress.config().baseUrl + '/' + personalUrl + '/select-services';
     const dashboardLink = Cypress.config().baseUrl + '/' + personalUrl + '/dashboard';
+    const setupCompletedLink = Cypress.config().baseUrl + '/' + personalUrl + '/setup-completed';
 
     let confirmationCode, otp;
 
@@ -152,31 +153,36 @@ describe('Sign Up New Customer', function() {
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
 
         // MAIL service setup
-        cy.contains(signUpPageElements.radioBtn, signUpPageData.gSuite).click(); // Gsuite
+        cy.get(signUpPageElements.gSuiteRadioBtnMail).click(); // Gsuite
         cy.get(signUpPageElements.emailDomainsField).type(testString);
-        cy.contains(signUpPageElements.radioBtn, signUpPageData.eu).click(); // EU
+        cy.get(signUpPageElements.euRadioBtnMail).click(); // EU
         cy.get(signUpPageElements.smtpServersField).type(testString);
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
 
         // CLOUD STORAGE service setup
-        cy.get(signUpPageElements.gSuiteRadioBtn).click(); // Gsuite
+        cy.get(signUpPageElements.gSuiteRadioBtnCloud).click(); // Gsuite
         cy.get(signUpPageElements.cloudEnvironmentField).type(testString);
-        cy.get(signUpPageElements.euRadioBtn).click(); // EU
+        cy.get(signUpPageElements.euRadioBtnCloud).click(); // EU
         cy.get(signUpPageElements.storageProvider.dropdown).click();
         cy.contains(signUpPageElements.storageProvider.option, signUpPageData.googleDrive).click();
         cy.clickOutside();
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.apply).click();
 
-        cy.wait('@service-licenses-policies').its('response.statusCode').should('eq', 200);
-        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+        // [Setup Completed] screen
+        cy.url().should('eq', setupCompletedLink);
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.enterTheSystem).click();
 
-        cy.get(dashboardPageElements.scoreValue).should('be.visible');
-        cy.url().should('eq', dashboardLink);
-
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.wait('@service-licenses-policies').its('response.statusCode').should('eq', 200);
+            cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+    
+            cy.get(dashboardPageElements.scoreValue).should('be.visible');
+            cy.url().should('eq', dashboardLink);
+        });
     });
 
 });

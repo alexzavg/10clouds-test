@@ -1,10 +1,11 @@
 import {signInPageData, signInPageElements} from '../../pages/sign-in.js';
+import {signUpPageElements} from '../../pages/sign-up.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {usersPageElements, usersPageData} from '../../pages/users.js';
 import {navbarElements, navbarData} from '../../pages/navbar.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';
-import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
+import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
@@ -20,7 +21,7 @@ describe('Add & Delete New User', function() {
     const newUserEmail = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const newUserPhoneNumber = '+38093' + getRandomNumberLength(7);
     const role = 'Organization Admin';
-    const newUserPassword = 'CY_' + getRandomCharLength(4) + getRandomNumberLength(4);
+    const newUserPassword = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
     const currentTime = getCurrentTimeISO();
 
     let adminOtp, adminOtpNew, newUserOtp;
@@ -53,7 +54,7 @@ describe('Add & Delete New User', function() {
         cy.contains(navbarElements.category, navbarData.users).click();
 
         cy.url().should('eq', usersLink);
-        cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
             cy.wait('@role-search').its('response.statusCode').should('eq', 200);
             cy.wait('@user-search').its('response.statusCode').should('eq', 200);
             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
@@ -67,7 +68,7 @@ describe('Add & Delete New User', function() {
             cy.get(usersPageElements.btnAdd).click();
         });
 
-        cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
             cy.get(usersPageElements.amount).invoke('text').then(parseFloat).should('be.gt', 0);
         });
 
@@ -128,14 +129,14 @@ describe('Add & Delete New User', function() {
             cy.get(dashboardPageElements.scoreValue).should('be.visible');
 
             cy.visit(usersLink);
-            cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.wait('@role-search').its('response.statusCode').should('eq', 200);
                 cy.wait('@user-search').its('response.statusCode').should('eq', 200);
                 cy.wait('@device-search').its('response.statusCode').should('eq', 200);
             });
 
             cy.get(usersPageElements.searchField).type(newUserFirstName+'{enter}').then(() => {
-                cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+                cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                     cy.contains('tr', newUserEmail).parent().within(() => {
                         cy.get(usersPageElements.kebabMenu).click();
                     });
