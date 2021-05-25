@@ -21,5 +21,5 @@ export const requests = {
     'user-remove': '/user/remove',
     'customer-search': '/customer/search',
     'customer-invitations': '/customer-invitations',
-    'services-statistics': '/services-statistics**'
+    'services-statistics': '**/services-statistics/**'
 }

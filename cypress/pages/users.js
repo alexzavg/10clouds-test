@@ -7,7 +7,6 @@ export const usersPageElements = {
     'roleDropdown': '[formcontrolname="roleId"]',
     'btnAdd': '[type="submit"]',
     'amount': '.amount',
-    'spinner': '.spinner-path__inner',
     'searchField': '[data-placeholder="Search"]',
     'btnClearSearchField': '[aria-label="Clear"]',
     'kebabMenu': '.more-btn',

@@ -178,6 +178,10 @@ describe('MSSP Configuration', function() {
             cy.intercept(requests['customer-search']).as('customer-search');
             cy.intercept(requests['services-statistics']).as('services-statistics');
             
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.get(dashboardPageElements.scoreValue).should('be.visible');
+            });
+
             cy.visit(msspLink);
             cy.url().should('eq', msspLink);
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
@@ -185,10 +189,15 @@ describe('MSSP Configuration', function() {
             });
 
             cy.get(msspPageElements.searchField).type(companyName+'{enter}').then(() => {
-                cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+                cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                     cy.wait('@customer-search').its('response.statusCode').should('eq', 200);
                     cy.contains('tr', companyName).click();
-                    cy.wait('@services-statistics').its('response.statusCode').should('eq', 200);
+                    cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                        cy.get('.detail-row').should('be.visible');
+                        cy.wait('@services-statistics').its('response.statusCode').should('eq', 200);
+                    });
+                    cy.contains('tr', companyName).click();
+                        cy.get('.detail-row').should('not.exist');
                 });
             });
         });
