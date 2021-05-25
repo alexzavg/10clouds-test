@@ -16,19 +16,8 @@
 
 3. **Execute commands:**
     - `npm install`
-    - `npm install -g "cypress@7.3.0"`
-    - `npm install "cypress@7.3.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands --save-dev`
-
----
-## Running tests
-
-**Run tests locally:**
-- `npm run cy:run:local`
-
-**Run tests on DEV:**
-- `npm run cy:run:dev`
-
-**_HINT_**: video recording is enabled for failed tests on local env, the videos can be found in directory `./cypress/videos`
+    - `npm install -g "cypress@7.4.0"`
+    - `npm install "cypress@7.4.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands --save-dev`
 
 ---
 ## Open Cypress test runner for manual test selection
@@ -42,3 +31,13 @@ These commands open Cypress runner on a specific environment. After that you can
 **Open test runner on DEV:**
 
 - `npm run open:dev`
+---
+## Running tests
+
+**Run tests locally:**
+- `npm run cy:run:local`
+
+**Run tests on DEV:**
+- `npm run cy:run:dev`
+
+**_HINT_**: video recording is enabled for failed tests on local env, the videos can be found in directory `./cypress/videos`

@@ -44,6 +44,7 @@
             "confirm": "http://localhost:4000/confirm",
             "complete": "http://localhost:4000/complete",
             "signIn": "http://localhost:4001/fortress-mssp/sign-in",
+            "restorePassword": "http://localhost:4001/fortress-mssp/forgot-password",
             "dashboard": "http://localhost:4001/fortress-mssp/dashboard",
             "users": "http://localhost:4001/fortress-mssp/settings/users",
             "alerts": "http://localhost:4001/fortress-mssp/alerts",
@@ -52,6 +53,10 @@
         "customers": {
             "first": {
                 "name": "fortress-mssp"
+            },
+            "second": {
+                "name": "Automation Customer Do Not Remove",
+                "email": "me41zavgorodnii+autotestcompany@gmail.com"
             }
         },
         "users": {
@@ -72,13 +77,16 @@
             },
             "fourth": {
                 "email": "me41zavgorodnii+56@gmail.com",
-                "password": "wa12aszx34",
+                "password": "WA12aszx34_",
                 "formattedKey": "OFBO75FVKCQTJFXFL235ILANQVESMSBYXPAQYSBBGEXKVISEHODA"
             },
             "fifth": {
                 "email": "me41zavgorodnii+57@gmail.com",
                 "password": "wa12aszx34WA_",
                 "formattedKey": "IPBWV7GZXVTY5JMBLUZY2YW64XRWVPTOD6U26YJDBCDQ4P7HQMIQ"
+            },
+            "sixth": {
+                "email": "physical-solar@u9eitg8h.mailosaur.net"
             }
         }
     }
