@@ -23,7 +23,7 @@ describe('Sign Up New Customer', function() {
     const state = 'Poltavs\'ka Oblast\'';
     const city = 'Poltava';
     const zip = getRandomNumberLength(6);
-    const password = 'CY_' + getRandomCharLength(4) + getRandomNumberLength(4);
+    const password = 'C_' + getRandomCharLength(3) + getRandomNumberLength(3);
     const testString = 'cypresstest.com';
     const currentTime = getCurrentTimeISO();
 

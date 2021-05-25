@@ -44,6 +44,7 @@
             "confirm": "https://dev-signup.qfortress.ai/confirm",
             "complete": "https://dev-signup.qfortress.ai/complete",
             "signIn": "https://dev.qfortress.ai/fortress-mssp/sign-in",
+            "restorePassword": "https://dev.qfortress.ai/fortress-mssp/forgot-password",
             "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard",
             "users": "https://dev.qfortress.ai/fortress-mssp/settings/users",
             "alerts": "https://dev.qfortress.ai/fortress-mssp/alerts",
@@ -79,6 +80,10 @@
                 "email": "me41zavgorodnii+57@gmail.com",
                 "password": "wa12aszx34WA_",
                 "formattedKey": "IPBWV7GZXVTY5JMBLUZY2YW64XRWVPTOD6U26YJDBCDQ4P7HQMIQ"
+            },
+            "sixth": {
+                "email": "physical-solar@u9eitg8h.mailosaur.net",
+                "password": "WA_12aszx"
             }
         },
         "companies": {

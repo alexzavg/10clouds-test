@@ -21,7 +21,7 @@ describe('Add & Delete New User', function() {
     const newUserEmail = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const newUserPhoneNumber = '+38093' + getRandomNumberLength(7);
     const role = 'Organization Admin';
-    const newUserPassword = 'CY_' + getRandomCharLength(4) + getRandomNumberLength(4);
+    const newUserPassword = 'C_' + getRandomCharLength(3) + getRandomNumberLength(3);
     const currentTime = getCurrentTimeISO();
 
     let adminOtp, adminOtpNew, newUserOtp;

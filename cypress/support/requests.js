@@ -21,5 +21,7 @@ export const requests = {
     'user-remove': '/user/remove',
     'customer-search': '/customer/search',
     'customer-invitations': '/customer-invitations',
-    'services-statistics': '**/services-statistics/**'
+    'services-statistics': '**/services-statistics/**',
+    'user-password-reset': '/user/password/reset',
+    'user-password-change': '/user/password/change'
 }
