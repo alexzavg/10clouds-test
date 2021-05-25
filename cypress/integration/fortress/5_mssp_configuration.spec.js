@@ -25,7 +25,14 @@ describe('MSSP Configuration', function() {
     const currentTime = getCurrentTimeISO();
     const customerEmailFirst = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const customerEmailSecond = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
+    const companyName = 'L3 Regular 4';
+    const companyEmail = '';
     
+    afterEach(() => {
+        cy.clearCookies();
+        cy.clearLocalStorage();
+    });
+
     describe('Invite [Regular] company', function() {
 
         it('should login', function() {
@@ -149,6 +156,41 @@ describe('MSSP Configuration', function() {
 
             cy.clearCookies();
             cy.clearLocalStorage();
+        });
+    });
+
+    describe.only('Search company by [Customer] param, check expanded info', function() {
+
+        it('should login', function() {
+            cy.visit(signInLink);
+            cy.url().should('eq', signInLink);
+    
+            let formattedToken = generateToken(formattedKeyFirst);
+            cy.log('Google OTP is:', formattedToken);
+            let array = Array.from(formattedToken);
+            cy.log(array);
+    
+            cy.signIn(emailFirst, passwordFirst);
+            cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
+        });
+    
+        it('should search company by [Customer] param, check expanded info', function() {
+            cy.intercept(requests['customer-search']).as('customer-search');
+            cy.intercept(requests['services-statistics']).as('services-statistics');
+            
+            cy.visit(msspLink);
+            cy.url().should('eq', msspLink);
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.wait('@customer-search').its('response.statusCode').should('eq', 200);
+            });
+
+            cy.get(msspPageElements.searchField).type(companyName+'{enter}').then(() => {
+                cy.get(usersPageElements.spinner).should('not.exist').then(() => {
+                    cy.wait('@customer-search').its('response.statusCode').should('eq', 200);
+                    cy.contains('tr', companyName).click();
+                    cy.wait('@services-statistics').its('response.statusCode').should('eq', 200);
+                });
+            });
         });
     });
  
