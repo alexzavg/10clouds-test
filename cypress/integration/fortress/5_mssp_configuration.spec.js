@@ -25,8 +25,8 @@ describe('MSSP Configuration', function() {
     const currentTime = getCurrentTimeISO();
     const customerEmailFirst = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const customerEmailSecond = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
-    const companyName = 'L3 Regular 4';
-    const companyEmail = '';
+    const companyName = Cypress.env('customers').second.name;
+    const companyEmail = Cypress.env('customers').second.email;
     
     afterEach(() => {
         cy.clearCookies();
@@ -159,7 +159,7 @@ describe('MSSP Configuration', function() {
         });
     });
 
-    describe.only('Search company by [Customer] param, check expanded info', function() {
+    describe('Search company by [Customer] param, check expanded info', function() {
 
         it('should login', function() {
             cy.visit(signInLink);
@@ -193,14 +193,58 @@ describe('MSSP Configuration', function() {
                     cy.wait('@customer-search').its('response.statusCode').should('eq', 200);
                     cy.contains('tr', companyName).click();
                     cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-                        cy.get('.detail-row').should('be.visible');
+                        cy.get(msspPageElements.companyExpandedInfoBlock).should('be.visible');
                         cy.wait('@services-statistics').its('response.statusCode').should('eq', 200);
                     });
                     cy.contains('tr', companyName).click();
-                        cy.get('.detail-row').should('not.exist');
+                    cy.get(msspPageElements.companyExpandedInfoBlock).should('not.exist');
                 });
             });
         });
     });
- 
- });
+
+    describe('Search company by [Customer] param, check expanded info', function() {
+
+        it('should login', function() {
+            cy.visit(signInLink);
+            cy.url().should('eq', signInLink);
+    
+            let formattedToken = generateToken(formattedKeySecond);
+            cy.log('Google OTP is:', formattedToken);
+            let array = Array.from(formattedToken);
+            cy.log(array);
+    
+            cy.signIn(emailSecond, passwordSecond);
+            cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
+        });
+    
+        it('should search company by [Email] param & switch context to this company', function() {
+            cy.intercept(requests['customer-search']).as('customer-search');
+            cy.intercept(requests['services-statistics']).as('services-statistics');
+            
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.get(dashboardPageElements.scoreValue).should('be.visible');
+            });
+
+            cy.visit(msspLink);
+            cy.url().should('eq', msspLink);
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.wait('@customer-search').its('response.statusCode').should('eq', 200);
+            });
+
+            cy.get(msspPageElements.searchField).type(companyEmail+'{enter}').then(() => {
+                cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                    cy.wait('@customer-search').its('response.statusCode').should('eq', 200);
+                    cy.contains('tr', companyEmail).parent().within(() => {
+                        cy.get(msspPageElements.switchContextBtn).click();
+                    });
+                });
+            });
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.get(dashboardPageElements.scoreValue).should('be.visible');
+                cy.contains(msspPageElements.breadcrumbs, companyName).should('be.visible');
+            });
+        });
+    });
+
+});
