@@ -28,10 +28,10 @@ export const signUpPageElements = {
     'cloudEnvironmentField': '#mat-input-14',
     'gSuiteRadioBtnMail': '#mat-radio-22 > .mat-radio-label',
     'euRadioBtnMail': '#mat-radio-25 > .mat-radio-label',
-    'gSuiteRadioBtnCloud': '#mat-radio-22 > .mat-radio-label',
-    'euRadioBtnCloud': '#mat-radio-25 > .mat-radio-label',
+    'gSuiteRadioBtnCloud': '#mat-radio-44 > .mat-radio-label',
+    'euRadioBtnCloud': '#mat-radio-47 > .mat-radio-label',
     'storageProvider': {
-        'dropdown': '.mat-select-placeholder',
+        'dropdown': '#mat-select-value-5',
         'option': 'mat-option'
     },
     'spinner': '.spinner-svg'
@@ -46,7 +46,8 @@ export const signUpPageData = {
         'next': 'Next',
         'proceedToPayment': 'Proceed to payment',
         'continuePayment': 'Continue payment',
-        'apply': 'Apply'
+        'apply': 'Apply',
+        'enterTheSystem': 'Enter The System'
     },
     'initialSetupCompleted': 'Initial account setup has been completed',
     'chooseSubscriptionPlan': 'Choose Your Subscription Plan',

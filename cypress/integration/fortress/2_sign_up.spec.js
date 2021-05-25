@@ -31,6 +31,7 @@ describe('Sign Up New Customer', function() {
     const prePaymentLink = Cypress.config().baseUrl + '/' + personalUrl + '/payment/pre';
     const selectServicesLink = Cypress.config().baseUrl + '/' + personalUrl + '/select-services';
     const dashboardLink = Cypress.config().baseUrl + '/' + personalUrl + '/dashboard';
+    const setupCompletedLink = Cypress.config().baseUrl + '/' + personalUrl + '/setup-completed';
 
     let confirmationCode, otp;
 
@@ -167,16 +168,21 @@ describe('Sign Up New Customer', function() {
         cy.clickOutside();
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.apply).click();
 
-        cy.wait('@service-licenses-policies').its('response.statusCode').should('eq', 200);
-        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+        // [Setup Completed] screen
+        cy.url().should('eq', setupCompletedLink);
+        cy.contains(signUpPageElements.btn, signUpPageData.buttons.enterTheSystem).click();
 
-        cy.get(dashboardPageElements.scoreValue).should('be.visible');
-        cy.url().should('eq', dashboardLink);
-
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.wait('@service-licenses-policies').its('response.statusCode').should('eq', 200);
+            cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+    
+            cy.get(dashboardPageElements.scoreValue).should('be.visible');
+            cy.url().should('eq', dashboardLink);
+        });
     });
 
 });
