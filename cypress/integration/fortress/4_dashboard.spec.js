@@ -241,6 +241,7 @@ describe('Dashboard functionality', function() {
         cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
             cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topEndpoints).click();
             cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
+                cy.wait(1500);
                 cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
                     if (value.text().includes(dashboardPageData.nothingFound)) {
                         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).click();
@@ -281,6 +282,7 @@ describe('Dashboard functionality', function() {
             cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topAlerts).click();
             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).should('be.visible');
             cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
+                cy.wait(1500);
                 cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
                     if (value.text().includes(dashboardPageData.nothingFound)) {
                         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).click();
@@ -320,6 +322,7 @@ describe('Dashboard functionality', function() {
             cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topUsers).click();
             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('be.visible');
             cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
+                cy.wait(1500);
                 cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
                     if (value.text().includes(dashboardPageData.nothingFound)) {
                         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).click();

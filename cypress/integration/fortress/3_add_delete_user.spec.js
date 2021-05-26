@@ -68,10 +68,6 @@ describe('Add & Delete New User', function() {
             cy.get(usersPageElements.btnAdd).click();
         });
 
-        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-            cy.get(usersPageElements.amount).invoke('text').then(parseFloat).should('be.gt', 0);
-        });
-
         cy.clearCookies();
         cy.clearLocalStorage();
     
