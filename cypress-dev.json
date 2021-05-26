@@ -24,7 +24,7 @@
             }
         },
     "trashAssetsBeforeRuns": true,
-    "video": true,
+    "video": false,
     "videoCompression": 51,
     "videoUploadOnPasses": false,
     "chromeWebSecurity": false,
