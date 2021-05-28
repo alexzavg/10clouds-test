@@ -80,5 +80,14 @@ describe('Restore Password', function() {
             });
         });
     });
+
+    it('should validate error for empty [Email] field', function() {
+        cy.visit(forgotPasswordLink);
+        cy.url().should('eq', forgotPasswordLink);
+        cy.get(signInPageElements.emailField).click();
+        cy.clickOutside();
+        cy.contains(signInPageElements.error, signInPageData.errors.emailRequired).should('be.visible');
+        cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.restorePassword).should('be.visible');
+    });
  
  });
