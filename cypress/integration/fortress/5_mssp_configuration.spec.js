@@ -14,17 +14,21 @@ describe('MSSP Configuration', function() {
     const msspLink = Cypress.env('urls').mssp;
     const signUpLink = Cypress.env('urls').signUp; 
     const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
+
     const userNameFirst = 'Autotest Autotest';
     const emailFirst = Cypress.env('users').fourth.email;
     const passwordFirst = Cypress.env('users').fourth.password;
     const formattedKeyFirst = Cypress.env('users').fourth.formattedKey;
+
     const userNameSecond = 'Autotests Autotests';
     const emailSecond = Cypress.env('users').fifth.email;
     const passwordSecond = Cypress.env('users').fifth.password;
     const formattedKeySecond = Cypress.env('users').fifth.formattedKey;
+
     const currentTime = getCurrentTimeISO();
     const customerEmailFirst = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const customerEmailSecond = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
+    
     const companyName = Cypress.env('customers').second.name;
     const companyEmail = Cypress.env('customers').second.email;
     

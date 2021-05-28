@@ -4,7 +4,7 @@ import {requests} from '../../support/requests.js';
 
 const {generateToken} = require('authenticator');
 
-describe('Login & Logout', function() {
+describe('Sign In', function() {
 
     const signInLink = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
@@ -14,7 +14,7 @@ describe('Login & Logout', function() {
     
     let formattedToken;
  
-    it('should login to Fortress with 2FA and logout via Navbar', function() {
+    it('should sign in & logout via Navbar', function() {
 
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
         cy.intercept(requests['sign-in']).as('sign-in');
