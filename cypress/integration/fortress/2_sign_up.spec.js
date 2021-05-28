@@ -12,10 +12,10 @@ describe('Sign Up New Customer', function() {
     const confirmLink = Cypress.env('urls').confirm;
     const completeLink = Cypress.env('urls').complete;
     const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
-    const firstName = 'test' + getRandomCharLength(8);
-    const email = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
+    const firstName = 'autotest' + getRandomCharLength(8);
+    const email = 'autotest'+ getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
     const phoneNumber = '+38067' + getRandomNumberLength(7);
-    const personalUrl = 'test' + getRandomCharLength(15);
+    const personalUrl = 'autotest' + getRandomCharLength(15);
     const taxNumber = getRandomNumberLength(6);
     const numberOfEmployees = getRandomNumberLength(1);
     const companyWebAddress = 'https://' + getRandomCharLength(20) + '.com';
@@ -24,7 +24,7 @@ describe('Sign Up New Customer', function() {
     const city = 'Poltava';
     const zip = getRandomNumberLength(6);
     const password = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
-    const testString = 'cypresstest.com';
+    const testString = 'autotest.com';
     const currentTime = getCurrentTimeISO();
 
     const signInLink = Cypress.config().baseUrl + '/' + personalUrl + '/sign-in';
