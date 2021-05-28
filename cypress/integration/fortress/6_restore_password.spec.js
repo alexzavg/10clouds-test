@@ -14,7 +14,8 @@ describe('Restore Password', function() {
     const currentTime = getCurrentTimeISO();
     const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
  
-    it('should restore password, check email & login with new password', function() {
+    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-418
+    it.skip('should restore password, check email & login with new password', function() {
 
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
         cy.intercept(requests['sign-in']).as('sign-in');
