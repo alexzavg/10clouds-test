@@ -1,4 +1,5 @@
-import {signInPageElements} from '../../pages/sign-in.js';
+import {signInPageElements, signInPageData} from '../../pages/sign-in.js';
+import {signUpPageElements} from '../../pages/sign-up.js';
 import {dashboardPageElements} from '../../pages/dashboard.js';
 import {requests} from '../../support/requests.js';
 
@@ -13,6 +14,11 @@ describe('Sign In', function() {
     const formattedKey = Cypress.env('users').first.formattedKey;
     
     let formattedToken;
+
+    afterEach(() => {
+        cy.clearCookies();
+        cy.clearLocalStorage();
+    });
  
     it('should sign in & logout via Navbar', function() {
 
@@ -54,6 +60,35 @@ describe('Sign In', function() {
         
         cy.get(signInPageElements.loginField).should('be.visible');
         cy.url().should('eq', signInLink);
+    });
+
+    it('should validate errors for empty [Email] & [Password] fields', function() {
+        cy.visit(signInLink);
+        cy.url().should('eq', signInLink);
+        cy.get(signInPageElements.loginField).click();
+        cy.clickOutside();
+        cy.get(signInPageElements.passwordField).click();
+        cy.clickOutside();
+        cy.contains(signInPageElements.error, signInPageData.errors.emailRequired).should('be.visible');
+        cy.contains(signInPageElements.error, signInPageData.errors.passwordRequired).should('be.visible');
+        cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.signIn).should('be.visible');
+    });
+
+    it('should sign in with invalid password', function() {
+        cy.intercept(requests['cognito-idp']).as('cognito-idp');
+        cy.visit(signInLink);
+        cy.url().should('eq', signInLink);
+        cy.signIn(email, 'invalidPassword');
+        cy.wait('@cognito-idp').its('response.statusCode').should('eq', 200);
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.contains(signInPageElements.notificationDialogue, signInPageData.errors.invalidCredentials);
+            cy.url().should('eq', signInLink);
+            cy.wait('@cognito-idp').then((value) => {
+                expect(value.response.statusCode).to.equal(400);
+                expect(value.response.body.message).to.equal('Incorrect username or password.');
+                expect(value.response.body.__type).to.equal('NotAuthorizedException');
+            });
+        });
     });
  
  });

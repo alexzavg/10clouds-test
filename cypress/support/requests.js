@@ -1,5 +1,6 @@
 export const requests = {
     'auth-cognito': '**/auth/cognito-pool-settings**',
+    'cognito-idp': 'https://cognito-idp.us-east-1.amazonaws.com/',
     'sign-in': '/auth/sign-in',
     'user-me': '/user/me',
     'customer-status': '/customer/status',
