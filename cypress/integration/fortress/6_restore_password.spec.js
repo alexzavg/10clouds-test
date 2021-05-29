@@ -91,7 +91,7 @@ describe('Restore Password', function() {
         cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.restorePassword).should('be.visible');
     });
 
-    it('should validate error for empty [Email] field', function() {
+    it('should validate error for invalid email in [Email] field', function() {
         cy.intercept(requests['user-password-reset']).as('user-password-reset');
         cy.visit(forgotPasswordLink);
         cy.url().should('eq', forgotPasswordLink);
