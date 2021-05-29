@@ -13,7 +13,10 @@ export const signInPageElements = {
     'confirmEmailField': '#confirmEmail',
     'confirmCodeField': '#confirmCode',
     'newPasswordField': '#newPassword',
-    'confirmPasswordField': '#confirmPassword'
+    'confirmPasswordField': '#confirmPassword',
+    'error': 'mat-error',
+    'btnDisabled': '.mat-button-disabled',
+    'notificationDialogue': 'fortress-dialog'
 }
 
 export const signInPageData = {
@@ -24,5 +27,11 @@ export const signInPageData = {
         'next': 'Next',
         'restorePassword': 'Restore Password'
     },
-    'verificationCode': 'Authenticator Verification Code'
+    'verificationCode': 'Authenticator Verification Code',
+    'errors': {
+        'emailRequired': 'Email is required.',
+        'passwordRequired': 'Password is required.',
+        'invalidCredentials': 'Incorrect login email or password',
+        'unableToAuthorize': 'Unable to authorize user'
+    }
 }

@@ -10,6 +10,7 @@ describe('Restore Password', function() {
     const forgotPasswordLink = Cypress.env('urls').restorePassword;
     const companyName = Cypress.env('customers').first.name;
     const email = Cypress.env('users').sixth.email;
+    const invalidEmail = email.replace('@', '@@');
     const newPassword = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
     const currentTime = getCurrentTimeISO();
     const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
@@ -78,6 +79,33 @@ describe('Restore Password', function() {
                 cy.contains(signInPageData.verificationCode).should('be.visible');
                 cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
             });
+        });
+    });
+
+    it('should validate error for empty [Email] field', function() {
+        cy.visit(forgotPasswordLink);
+        cy.url().should('eq', forgotPasswordLink);
+        cy.get(signInPageElements.emailField).click();
+        cy.clickOutside();
+        cy.contains(signInPageElements.error, signInPageData.errors.emailRequired).should('be.visible');
+        cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.restorePassword).should('be.visible');
+    });
+
+    it('should validate error for invalid email in [Email] field', function() {
+        cy.intercept(requests['user-password-reset']).as('user-password-reset');
+        cy.visit(forgotPasswordLink);
+        cy.url().should('eq', forgotPasswordLink);
+        cy.get(signInPageElements.emailField).type(invalidEmail);
+        cy.contains(signInPageElements.btn, signInPageData.buttons.restorePassword).click();
+        cy.contains(signInPageElements.notificationDialogue, `Email ${invalidEmail} is not valid`);
+        cy.url().should('eq', forgotPasswordLink);
+        cy.wait('@user-password-reset').then((value) => {
+            // Request
+            expect(value.request.method).to.equal('POST');
+            expect(value.request.body.email).to.equal(invalidEmail);
+            expect(value.request.body.siteUrl).to.equal(companyName);
+            // Response
+            expect(value.response.statusCode).to.equal(400);
         });
     });
  
