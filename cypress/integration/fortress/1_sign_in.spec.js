@@ -108,7 +108,7 @@ describe('Sign In', function() {
         cy.contains(signInPageData.verificationCode);
     });
 
-    it.only('should not sign in with invalid OTP', function() {
+    it('should not sign in with invalid OTP', function() {
         cy.intercept(requests['cognito-idp']).as('cognito-idp');
 
         cy.visit(signInLink);
