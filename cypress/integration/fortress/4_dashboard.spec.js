@@ -257,7 +257,6 @@ describe('Dashboard functionality', function() {
                             cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
                             cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
                             cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                            cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
@@ -298,7 +297,6 @@ describe('Dashboard functionality', function() {
                             cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
                             cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
                             cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
-                            cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
@@ -337,7 +335,6 @@ describe('Dashboard functionality', function() {
                             cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
                             cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
                             cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-                            cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
                             cy.wait('@service-statistics').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
