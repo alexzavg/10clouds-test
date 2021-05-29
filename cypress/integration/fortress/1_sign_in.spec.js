@@ -21,9 +21,10 @@ describe('Sign In', function() {
         cy.clearLocalStorage();
     });
  
-    it('should sign in & logout via Navbar', function() {
+    it.only('should sign in & logout via Navbar', function() {
 
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
+        cy.intercept(requests['cognito-idp']).as('cognito-idp');
         cy.intercept(requests['sign-in']).as('sign-in');
         cy.intercept(requests['user-me']).as('user-me');
         cy.intercept(requests['customer-status']).as('customer-status');
@@ -41,10 +42,13 @@ describe('Sign In', function() {
 
         cy.signIn(email, password);
 
+        cy.wait('@cognito-idp').its('response.statusCode').should('eq', 200);
+        cy.wait('@cognito-idp').its('response.statusCode').should('eq', 200);
         cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
 
         cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
 
+        cy.wait('@cognito-idp').its('response.statusCode').should('eq', 200);
         cy.wait('@sign-in').its('response.statusCode').should('eq', 200);
         cy.wait('@user-me').its('response.statusCode').should('eq', 200);
         cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
