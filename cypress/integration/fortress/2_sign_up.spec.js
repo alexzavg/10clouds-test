@@ -6,7 +6,8 @@ import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, 
 
 const {generateToken} = require('authenticator');
 
-describe('Sign Up New Customer', function() {
+// ! disabled due to https://fortress-kok8877.slack.com/archives/D01HHLNL6K1/p1622294056001000
+describe.skip('Sign Up New Customer', function() {
 
     const signUpLink = Cypress.env('urls').signUp;
     const confirmLink = Cypress.env('urls').confirm;
