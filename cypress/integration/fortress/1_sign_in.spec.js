@@ -65,19 +65,23 @@ describe('Sign In', function() {
     it('should validate errors for empty [Email] & [Password] fields', function() {
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
+
         cy.get(signInPageElements.loginField).click();
         cy.clickOutside();
         cy.get(signInPageElements.passwordField).click();
         cy.clickOutside();
+
         cy.contains(signInPageElements.error, signInPageData.errors.emailRequired).should('be.visible');
         cy.contains(signInPageElements.error, signInPageData.errors.passwordRequired).should('be.visible');
         cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.signIn).should('be.visible');
     });
 
-    it('should sign in with invalid password', function() {
+    it('should not sign in with invalid password', function() {
         cy.intercept(requests['cognito-idp']).as('cognito-idp');
+
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
+        
         cy.signIn(email, 'invalidPassword');
         cy.wait('@cognito-idp').its('response.statusCode').should('eq', 200);
         cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
@@ -89,6 +93,19 @@ describe('Sign In', function() {
                 expect(value.response.body.__type).to.equal('NotAuthorizedException');
             });
         });
+    });
+
+    it.only('should sign in with SPACES in [Login] field', function() {
+        cy.intercept(requests['auth-cognito']).as('auth-cognito');
+        cy.visit(signInLink);
+        cy.url().should('eq', signInLink);
+
+        cy.get(signInPageElements.loginField).clear().type(' ' + email + ' ');
+        cy.get(signInPageElements.passwordField).clear().type(password);
+        cy.contains(signInPageElements.btn, signInPageData.buttons.signIn).click();
+
+        cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
+        cy.contains(signInPageData.verificationCode);
     });
  
  });
