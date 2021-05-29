@@ -95,7 +95,7 @@ describe('Sign In', function() {
         });
     });
 
-    it.only('should sign in with SPACES in [Login] field', function() {
+    it('should sign in with SPACES in [Login] field', function() {
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
@@ -106,6 +106,31 @@ describe('Sign In', function() {
 
         cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
         cy.contains(signInPageData.verificationCode);
+    });
+
+    it.only('should not sign in with invalid OTP', function() {
+        cy.intercept(requests['cognito-idp']).as('cognito-idp');
+
+        cy.visit(signInLink);
+        cy.url().should('eq', signInLink);
+
+        let array = Array.from('000000');
+
+        cy.signIn(email, password);
+
+        cy.wait('@cognito-idp').its('response.statusCode').should('eq', 200);
+        cy.wait('@cognito-idp').its('response.statusCode').should('eq', 200);
+
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
+            cy.contains(signInPageElements.notificationDialogue, signInPageData.errors.unableToAuthorize);
+            cy.url().should('eq', signInLink);
+            cy.wait('@cognito-idp').then((value) => {
+                expect(value.response.statusCode).to.equal(400);
+                expect(value.response.body.message).to.equal('Invalid code received for user');
+                expect(value.response.body.__type).to.equal('CodeMismatchException');
+            });
+        });
     });
  
  });
