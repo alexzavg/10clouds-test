@@ -35,7 +35,8 @@ describe('Sign Up New Customer', function() {
 
     let confirmationCode, otp;
 
-    it('should sign up as new customer', function() {
+    // ! disabled due to https://fortress-kok8877.slack.com/archives/D01HHLNL6K1/p1622294056001000
+    it.skip('should sign up as new customer', function() {
 
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
         cy.intercept(requests['sign-in']).as('sign-in');
@@ -73,6 +74,8 @@ describe('Sign Up New Customer', function() {
     
         cy.get(signUpPageElements.passwordField).type(password);
         cy.get(signUpPageElements.confirmPasswordField).type(password);
+
+        // Create Customer / Company
         cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
     
         cy.mailosaurGetMessage(serverId, {

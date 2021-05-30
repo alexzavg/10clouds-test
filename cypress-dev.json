@@ -1,41 +1,9 @@
 {
-    "projectId": "",
-    "baseUrl": "https://dev.qfortress.ai",
-    "includeShadowDom": true,
-    "defaultCommandTimeout": 60000,
-    "execTimeout": 60000,
-    "taskTimeout": 60000,
-    "pageLoadTimeout": 60000,
-    "requestTimeout": 60000,
-    "responseTimeout": 60000,
-    "videosFolder": "cypress/videos",
-    "integrationFolder": "cypress/integration",
-    "screenshotsFolder": "cypress/reports/mochareports/assets",
-    "screenshotOnRunFailure": true,
-    "reporter": "cypress-multi-reporters",
-        "reporterOptions": {
-            "reporterEnabled": "mochawesome",
-            "mochawesomeReporterOptions": {
-                "reportDir": "cypress/reports/mocha",
-                "quiet": true,
-                "overwrite": false,
-                "html": false,
-                "json": true
-            }
-        },
-    "trashAssetsBeforeRuns": true,
+    "extends": "./cypress.json",
     "video": false,
     "videoCompression": 51,
     "videoUploadOnPasses": false,
-    "chromeWebSecurity": false,
-    "userAgent": null,
-    "viewportWidth": 1920,
-    "viewportHeight": 1080,
-    "waitForAnimations": true,
-    "retries": {
-        "runMode": 0,
-        "openMode": 0
-    },
+    "baseUrl": "https://dev.qfortress.ai",
     "env": {
         "MAILOSAUR_API_KEY": "wVQvfele7aeMbo5I",
         "MAILOSAUR_SERVER_ID": "u9eitg8h",
