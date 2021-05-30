@@ -1,7 +1,7 @@
 // https://on.cypress.io/custom-commands
 import 'cypress-mailosaur';
-import {signInPageElements, signInPageData} from '../pages/sign-in.js';
-import {navbarElements} from '../pages/navbar.js';
+import {signInPageElements, signInPageData} from '../components/sign-in.js';
+import {navbarElements} from '../components/navbar.js';
 
 Cypress.Commands.add("signIn", (email, password) => {
     cy.get(signInPageElements.loginField).clear().type(email).should('have.value', email);

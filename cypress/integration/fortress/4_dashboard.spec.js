@@ -1,6 +1,6 @@
-import {dashboardPageElements, dashboardPageData} from '../../pages/dashboard.js';
-import {signUpPageElements} from '../../pages/sign-up.js';
-import {alertsPageElements} from '../../pages/alerts.js';
+import {dashboardPageElements, dashboardPageData} from '../../components/dashboard.js';
+import {signUpPageElements} from '../../components/sign-up.js';
+import {alertsPageElements} from '../../components/alerts.js';
 import {requests} from '../../support/requests.js';
 import {ValidInDays, ValidInWeeks, PostExtractTimes, ValidInHours} from '../../support/dataGenerator.js';
 

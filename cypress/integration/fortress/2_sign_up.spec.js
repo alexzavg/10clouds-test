@@ -1,5 +1,5 @@
-import {signUpPageElements, signUpPageData} from '../../pages/sign-up.js';
-import {dashboardPageElements} from '../../pages/dashboard.js';
+import {signUpPageElements, signUpPageData} from '../../components/sign-up.js';
+import {dashboardPageElements} from '../../components/dashboard.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';
 import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../support/dataGenerator.js';

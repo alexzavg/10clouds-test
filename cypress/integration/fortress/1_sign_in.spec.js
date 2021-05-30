@@ -1,6 +1,6 @@
-import {signInPageElements, signInPageData} from '../../pages/sign-in.js';
-import {signUpPageElements} from '../../pages/sign-up.js';
-import {dashboardPageElements} from '../../pages/dashboard.js';
+import {signInPageElements, signInPageData} from '../../components/sign-in.js';
+import {signUpPageElements} from '../../components/sign-up.js';
+import {dashboardPageElements} from '../../components/dashboard.js';
 import {requests} from '../../support/requests.js';
 import {getRandomCharLength} from '../../support/dataGenerator.js';
 

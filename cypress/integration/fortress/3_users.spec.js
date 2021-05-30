@@ -1,8 +1,8 @@
-import {signInPageData, signInPageElements} from '../../pages/sign-in.js';
-import {signUpPageElements} from '../../pages/sign-up.js';
-import {dashboardPageElements} from '../../pages/dashboard.js';
-import {usersPageElements, usersPageData} from '../../pages/users.js';
-import {navbarElements, navbarData} from '../../pages/navbar.js';
+import {signInPageData, signInPageElements} from '../../components/sign-in.js';
+import {signUpPageElements} from '../../components/sign-up.js';
+import {dashboardPageElements} from '../../components/dashboard.js';
+import {usersPageElements, usersPageData} from '../../components/users.js';
+import {navbarElements, navbarData} from '../../components/navbar.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';
 import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
