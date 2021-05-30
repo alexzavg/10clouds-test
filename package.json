@@ -22,6 +22,7 @@
     "authenticator": "^1.1.5",
     "cypress": "^7.4.0",
     "cypress-commands": "^1.1.0",
+    "cypress-dark": "^1.7.14",
     "cypress-mailosaur": "^2.3.2",
     "cypress-multi-reporters": "^1.5.0",
     "mocha": "^8.4.0",

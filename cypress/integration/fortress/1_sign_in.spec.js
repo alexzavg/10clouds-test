@@ -21,7 +21,7 @@ describe('Sign In', function() {
         cy.clearLocalStorage();
     });
  
-    it.only('should sign in & logout via Navbar', function() {
+    it('should sign in & logout via Navbar', function() {
 
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
         cy.intercept(requests['cognito-idp']).as('cognito-idp');

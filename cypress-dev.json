@@ -36,6 +36,7 @@
         "runMode": 0,
         "openMode": 0
     },
+    "theme": "dark",
     "env": {
         "MAILOSAUR_API_KEY": "wVQvfele7aeMbo5I",
         "MAILOSAUR_SERVER_ID": "u9eitg8h",

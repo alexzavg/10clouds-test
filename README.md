@@ -17,7 +17,7 @@
 3. **Execute commands:**
     - `npm install`
     - `npm install -g "cypress@7.4.0"`
-    - `npm install "cypress@7.4.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands --save-dev`
+    - `npm install "cypress@7.4.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark --save-dev`
 
 ---
 ## Open Cypress test runner for manual test selection

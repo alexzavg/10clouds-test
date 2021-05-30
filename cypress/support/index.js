@@ -18,6 +18,7 @@
 // Alternatively you can use CommonJS syntax:
 require('./commands');
 require('cypress-commands');
+require('cypress-dark');
 
 // Add Screenshot to Mochawesome Report
 import addContext from "mochawesome/addContext";
