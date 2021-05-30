@@ -18,7 +18,7 @@
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
-      launchOptions.args.push('--window-size=320,240');
+      launchOptions.args.push('--window-size=1920,1080');
 
       // auto open devtools
       // launchOptions.args.push('--auto-open-devtools-for-tabs')
