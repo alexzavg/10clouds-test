@@ -1,7 +1,38 @@
 // https://on.cypress.io/custom-commands
 import 'cypress-mailosaur';
 import {signInPageElements, signInPageData} from '../components/sign-in.js';
+import {signUpPageElements, signUpPageData} from '../components/sign-up.js';
 import {navbarElements} from '../components/navbar.js';
+
+Cypress.Commands.add("signUpStepOne", (firstName, lastName, email, phoneNumber, personalUrl) => {
+    cy.get(signUpPageElements.firstNameField).clear().type(firstName).should('have.value', firstName);
+    cy.get(signUpPageElements.lastNameField).clear().type(lastName).should('have.value', lastName);
+    cy.get(signUpPageElements.emailField).clear().type(email).should('have.value', email);
+    cy.get(signUpPageElements.phoneNumberField).clear().type(phoneNumber).should('have.value', phoneNumber);
+    cy.get(signUpPageElements.personalUrlField).clear().type(personalUrl).should('have.value', personalUrl);
+    cy.contains(signUpPageElements.btn, signUpPageData.buttons.continue).click();
+});
+
+Cypress.Commands.add("signUpStepTwo", (companyName, taxNumber, numberOfEmployees, companyWebAddress) => {
+    cy.get(signUpPageElements.companyNameField).clear().type(companyName).should('have.value', companyName);
+    cy.get(signUpPageElements.taxNumberField).clear().type(taxNumber).should('have.value', taxNumber);
+    cy.get(signUpPageElements.numberOfEmployeesField).type(numberOfEmployees).should('have.value', numberOfEmployees);
+    cy.get(signUpPageElements.companyWebAddressField).type(companyWebAddress).should('have.value', companyWebAddress);
+    cy.contains(signUpPageElements.btnSecondStep, signUpPageData.buttons.continue).click();
+});
+
+Cypress.Commands.add("signUpStepThree", (country, countryValue, state, stateValue, city, zip) => {
+    cy.get(signUpPageElements.countryDropdown).select(country).should('have.value', countryValue);
+    cy.get(signUpPageElements.stateDropdown).select(state).should('have.value', stateValue);
+    cy.get(signUpPageElements.cityField).clear().type(city).should('have.value', city);
+    cy.get(signUpPageElements.zipField).clear().type(zip).should('have.value', zip);
+    cy.contains(signUpPageElements.btnThirdStep, signUpPageData.buttons.continue).click();
+});
+
+Cypress.Commands.add("signUpStepFour", (password, confirmPassword) => {
+    cy.get(signUpPageElements.passwordField).clear().type(password);
+    cy.get(signUpPageElements.confirmPasswordField).clear().type(confirmPassword);
+});
 
 Cypress.Commands.add("signIn", (email, password) => {
     cy.get(signInPageElements.loginField).clear().type(email).should('have.value', email);

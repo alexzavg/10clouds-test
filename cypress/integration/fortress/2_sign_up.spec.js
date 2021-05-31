@@ -1,3 +1,4 @@
+import {signInPageElements} from '../../components/sign-in.js';
 import {signUpPageElements, signUpPageData} from '../../components/sign-up.js';
 import {dashboardPageElements} from '../../components/dashboard.js';
 import {requests} from '../../support/requests.js';
@@ -6,7 +7,7 @@ import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, 
 
 const {generateToken} = require('authenticator');
 
-describe('Sign Up New Customer', function() {
+describe('Sign Up', function() {
 
     const signUpLink = Cypress.env('urls').signUp;
     const confirmLink = Cypress.env('urls').confirm;
@@ -20,10 +21,13 @@ describe('Sign Up New Customer', function() {
     const numberOfEmployees = getRandomNumberLength(1);
     const companyWebAddress = 'https://' + getRandomCharLength(20) + '.com';
     const country = 'Ukraine';
+    const countryValue = 'UA';
     const state = 'Poltavs\'ka Oblast\'';
+    const stateValue = '53';
     const city = 'Poltava';
     const zip = getRandomNumberLength(6);
     const password = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
+    const invalidPasswordOne = 'W1wwwwww';
     const testString = 'autotest.com';
     const currentTime = getCurrentTimeISO();
 
@@ -35,156 +39,325 @@ describe('Sign Up New Customer', function() {
 
     let confirmationCode, otp;
 
-    // ! disabled due to https://fortress-kok8877.slack.com/archives/D01HHLNL6K1/p1622294056001000
-    it.skip('should sign up as new customer', function() {
+    afterEach(() => {
+        cy.clearCookies();
+        cy.clearLocalStorage();
+    });
 
-        cy.intercept(requests['auth-cognito']).as('auth-cognito');
-        cy.intercept(requests['sign-in']).as('sign-in');
-        cy.intercept(requests['user-me']).as('user-me');
-        cy.intercept(requests['customer-status']).as('customer-status');
-        cy.intercept(requests['protection-scores']).as('protection-scores');
-        cy.intercept(requests['customer-statistics']).as('customer-statistics');
-        cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
-        cy.intercept(requests['catalog-items']).as('catalog-items');
-        cy.intercept(requests['catalog-packages']).as('catalog-packages');
-        cy.intercept(requests['service-licenses-order']).as('service-licenses-order');
-        cy.intercept(requests['services']).as('services');
-        cy.intercept(requests['service-licenses-policies']).as('service-licenses-policies');
+    // ! disabled due to architecture issue
+    // ! we can't create test customers
+    // ! run this test manually only when required
+    // ! https://fortress-kok8877.slack.com/archives/D01HHLNL6K1/p1622294056001000
+    describe.skip('Create new customer', function() {
+
+        it('should sign up as new customer', function() {
+
+            cy.intercept(requests['auth-cognito']).as('auth-cognito');
+            cy.intercept(requests['sign-in']).as('sign-in');
+            cy.intercept(requests['user-me']).as('user-me');
+            cy.intercept(requests['customer-status']).as('customer-status');
+            cy.intercept(requests['protection-scores']).as('protection-scores');
+            cy.intercept(requests['customer-statistics']).as('customer-statistics');
+            cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
+            cy.intercept(requests['catalog-items']).as('catalog-items');
+            cy.intercept(requests['catalog-packages']).as('catalog-packages');
+            cy.intercept(requests['service-licenses-order']).as('service-licenses-order');
+            cy.intercept(requests['services']).as('services');
+            cy.intercept(requests['service-licenses-policies']).as('service-licenses-policies');
+            
+            cy.visit(signUpLink);
+            cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
+            cy.signUpStepTwo(personalUrl, taxNumber, numberOfEmployees, companyWebAddress);
+            cy.signUpStepThree(country, countryValue, state, stateValue, city, zip);
+            cy.signUpStepFour(password, password);
+
+            // Create Customer / Company
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
         
-        cy.visit(signUpLink);
+            cy.mailosaurGetMessage(serverId, {
+                sentFrom: emailsData.emails.noReply,
+                sentTo: email,
+                subject: emailsData.subjects.emailVerification
+            }, {
+                receivedAfter: new Date(currentTime),
+                timeout: 60000
+            }).then(mail => {
+                const body = mail.html.body;
+                confirmationCode = body.split('code: ')[1].slice(0,6); // get confirmation code from email
+                cy.log('Confirmation code is', confirmationCode);
 
-        cy.get(signUpPageElements.firstNameField).type(firstName).should('have.value', firstName);
-        cy.get(signUpPageElements.lastNameField).type(firstName).should('have.value', firstName);
-        cy.get(signUpPageElements.emailField).type(email).should('have.value', email);
-        cy.get(signUpPageElements.phoneNumberField).type(phoneNumber).should('have.value', phoneNumber);
-        cy.get(signUpPageElements.personalUrlField).type(personalUrl).should('have.value', personalUrl);
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.continue).click();
-    
-        cy.get(signUpPageElements.companyNameField).type(personalUrl).should('have.value', personalUrl);
-        cy.get(signUpPageElements.taxNumberField).type(taxNumber).should('have.value', taxNumber);
-        cy.get(signUpPageElements.numberOfEmployeesField).type(numberOfEmployees).should('have.value', numberOfEmployees);
-        cy.get(signUpPageElements.companyWebAddressField).type(companyWebAddress).should('have.value', companyWebAddress);
-        cy.contains(signUpPageElements.btnSecondStep, signUpPageData.buttons.continue).click();
-    
-        cy.get(signUpPageElements.countryDropdown).select(country).should('have.value', 'UA');
-        cy.get(signUpPageElements.stateDropdown).select(state).should('have.value', '53');
-        cy.get(signUpPageElements.cityField).type(city).should('have.value', city);
-        cy.get(signUpPageElements.zipField).type(zip).should('have.value', zip);
-        cy.contains(signUpPageElements.btnThirdStep, signUpPageData.buttons.continue).click();
-    
-        cy.get(signUpPageElements.passwordField).type(password);
-        cy.get(signUpPageElements.confirmPasswordField).type(password);
+                cy.url().should('eq', confirmLink);
+                cy.get(signUpPageElements.emailField).should('have.value', email);
+                cy.get(signUpPageElements.confirmationCodeField).type(confirmationCode).should('have.value', confirmationCode);
+                cy.contains(signUpPageElements.btn, signUpPageData.buttons.send).click();
+            });
 
-        // Create Customer / Company
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
-    
-        cy.mailosaurGetMessage(serverId, {
-            sentFrom: emailsData.emails.noReply,
-            sentTo: email,
-            subject: emailsData.subjects.emailVerification
-        }, {
-            receivedAfter: new Date(currentTime),
-            timeout: 60000
-        }).then(mail => {
-            const body = mail.html.body;
-            confirmationCode = body.split('code: ')[1].slice(0,6); // get confirmation code from email
-            cy.log('Confirmation code is', confirmationCode);
+            cy.url().should('eq', completeLink);
+            cy.contains(signUpPageData.initialSetupCompleted);
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.signIn).click();
 
-            cy.url().should('eq', confirmLink);
-            cy.get(signUpPageElements.emailField).should('have.value', email);
-            cy.get(signUpPageElements.confirmationCodeField).type(confirmationCode).should('have.value', confirmationCode);
-            cy.contains(signUpPageElements.btn, signUpPageData.buttons.send).click();
-        });
+            cy.url().should('eq', signInLink);
+            cy.signIn(email, password);
 
-        cy.url().should('eq', completeLink);
-        cy.contains(signUpPageData.initialSetupCompleted);
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.signIn).click();
+            cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
 
-        cy.url().should('eq', signInLink);
-        cy.signIn(email, password);
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.get('body').then((body) => {
+                    if (body.find('.qrcode').length > 0) {
+                        cy.log('2FA page seen');
+                        cy.get(signInPageElements.otpTokenBlock).text().then((value) => {
+                            otp = generateToken(value);
+                            cy.log('New User Google OTP is:', otp);
+                            let array = Array.from(otp);
+            
+                            cy.contains(signInPageElements.btn, signInPageData.buttons.next).click();
+                            cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
+                        });
+                    }
+                    else {
+                        cy.log('2FA page not seen');
+                    }
+                });
+            });
 
-        cy.wait('@auth-cognito').its('response.statusCode').should('eq', 200);
+            cy.wait('@sign-in').its('response.statusCode').should('eq', 200);
+            cy.wait('@user-me').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
+            cy.wait('@catalog-items').its('response.statusCode').should('eq', 200);
+            cy.wait('@catalog-packages').its('response.statusCode').should('eq', 200);
 
-        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-            cy.get('body').then((body) => {
-                if (body.find('.qrcode').length > 0) {
-                    cy.log('2FA page seen');
-                    cy.get(signInPageElements.otpTokenBlock).text().then((value) => {
-                        otp = generateToken(value);
-                        cy.log('New User Google OTP is:', otp);
-                        let array = Array.from(otp);
+            cy.url().should('eq', prePaymentLink);
+            cy.contains(signUpPageData.chooseSubscriptionPlan).should('be.visible');
+            cy.get(signUpPageElements.monthlySubscription).click();
+            cy.get(signUpPageElements.corePack1).click();
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
+            cy.contains(signUpPageData.subscriptionPlanSummary).should('be.visible');
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.proceedToPayment).click();
+
+            cy.get(signUpPageElements.btnPayByCreditCard).click();
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.continuePayment).click();
+
+            cy.wait('@service-licenses-order').its('response.statusCode').should('eq', 201);
+            cy.wait('@services').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
+            cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
+
+            cy.url().should('eq', selectServicesLink);
+
+            // EDP service setup
+            cy.get(signUpPageElements.highPolicyRadioBtn).click();
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
+
+            // MAIL service setup
+            cy.get(signUpPageElements.gSuiteRadioBtnMail).click(); // Gsuite
+            cy.get(signUpPageElements.emailDomainsField).type(testString);
+            cy.get(signUpPageElements.euRadioBtnMail).click(); // EU
+            cy.get(signUpPageElements.smtpServersField).type(testString);
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
+
+            // CLOUD STORAGE service setup
+            cy.get(signUpPageElements.gSuiteRadioBtnCloud).click(); // Gsuite
+            cy.get(signUpPageElements.cloudEnvironmentField).type(testString);
+            cy.get(signUpPageElements.euRadioBtnCloud).click(); // EU
+            cy.get(signUpPageElements.storageProvider.dropdown).click();
+            cy.contains(signUpPageElements.storageProvider.option, signUpPageData.googleDrive).click();
+            cy.clickOutside();
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.apply).click();
+
+            // [Setup Completed] screen
+            cy.url().should('eq', setupCompletedLink);
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.enterTheSystem).click();
+
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.wait('@service-licenses-policies').its('response.statusCode').should('eq', 200);
+                cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
+                cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
+                cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
+                cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
         
-                        cy.contains(signInPageElements.btn, signInPageData.buttons.next).click();
-                        cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
-                    });
-                }
-                else {
-                    cy.log('2FA page not seen');
-                }
+                cy.get(dashboardPageElements.scoreValue).should('be.visible');
+                cy.url().should('eq', dashboardLink);
             });
         });
+    });
 
-        cy.wait('@sign-in').its('response.statusCode').should('eq', 200);
-        cy.wait('@user-me').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
-        cy.wait('@catalog-items').its('response.statusCode').should('eq', 200);
-        cy.wait('@catalog-packages').its('response.statusCode').should('eq', 200);
+    describe('Errors validation for [Step 1]', function() {
 
-        cy.url().should('eq', prePaymentLink);
-        cy.contains(signUpPageData.chooseSubscriptionPlan).should('be.visible');
-        cy.get(signUpPageElements.monthlySubscription).click();
-        cy.get(signUpPageElements.corePack1).click();
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
-        cy.contains(signUpPageData.subscriptionPlanSummary).should('be.visible');
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.proceedToPayment).click();
+        it('should check empty fields validation', function() {
+            cy.visit(signUpLink);
 
-        cy.get(signUpPageElements.btnPayByCreditCard).click();
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.continuePayment).click();
+            cy.get(signUpPageElements.firstNameField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.firstNameRequired).should('be.visible');
 
-        cy.wait('@service-licenses-order').its('response.statusCode').should('eq', 201);
-        cy.wait('@services').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
-        cy.wait('@customer-status').its('response.statusCode').should('eq', 200);
+            cy.get(signUpPageElements.lastNameField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.lastNameRequired).should('be.visible');
 
-        cy.url().should('eq', selectServicesLink);
+            cy.get(signUpPageElements.emailField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.emailRequired).should('be.visible');
 
-        // EDP service setup
-        cy.get(signUpPageElements.highPolicyRadioBtn).click();
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
+            cy.get(signUpPageElements.phoneNumberField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.invalidPhone).should('be.visible');
 
-        // MAIL service setup
-        cy.get(signUpPageElements.gSuiteRadioBtnMail).click(); // Gsuite
-        cy.get(signUpPageElements.emailDomainsField).type(testString);
-        cy.get(signUpPageElements.euRadioBtnMail).click(); // EU
-        cy.get(signUpPageElements.smtpServersField).type(testString);
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.next).click();
+            cy.get(signUpPageElements.personalUrlField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.personalUrlRequired).should('be.visible');
 
-        // CLOUD STORAGE service setup
-        cy.get(signUpPageElements.gSuiteRadioBtnCloud).click(); // Gsuite
-        cy.get(signUpPageElements.cloudEnvironmentField).type(testString);
-        cy.get(signUpPageElements.euRadioBtnCloud).click(); // EU
-        cy.get(signUpPageElements.storageProvider.dropdown).click();
-        cy.contains(signUpPageElements.storageProvider.option, signUpPageData.googleDrive).click();
-        cy.clickOutside();
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.apply).click();
+            cy.contains(signInPageElements.btnDisabled, signUpPageData.buttons.continue).should('be.visible');
+        });
 
-        // [Setup Completed] screen
-        cy.url().should('eq', setupCompletedLink);
-        cy.contains(signUpPageElements.btn, signUpPageData.buttons.enterTheSystem).click();
+        it('should check invalid email in [Email] field', function() {
+            cy.visit(signUpLink);
+            cy.get(signUpPageElements.emailField).type('invalidEmail');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.emailInvalid).should('be.visible');
+        });
 
-        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-            cy.wait('@service-licenses-policies').its('response.statusCode').should('eq', 200);
-            cy.wait('@protection-scores').its('response.statusCode').should('eq', 200);
-            cy.wait('@customer-statistics').its('response.statusCode').should('eq', 200);
-            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-            cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200);
-    
-            cy.get(dashboardPageElements.scoreValue).should('be.visible');
-            cy.url().should('eq', dashboardLink);
+        it('should check invalid email in [Phone] field', function() {
+            cy.visit(signUpLink);
+            cy.get(signUpPageElements.phoneNumberField).type('+38099999');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.invalidPhone).should('be.visible');
+        });
+    });
+
+    describe('Errors validation for [Step 2]', function() {
+
+        it('should check empty fields validation', function() {
+            cy.visit(signUpLink);
+            cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
+
+            cy.get(signUpPageElements.companyNameField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.companyNameRequired).should('be.visible');
+
+            cy.get(signUpPageElements.numberOfEmployeesField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersRequired).should('be.visible');
+
+            cy.get(signUpPageElements.companyWebAddressField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.companyWebAddressRequired).should('be.visible');
+
+            cy.contains(signInPageElements.btnDisabled, signUpPageData.buttons.continue).should('be.visible');
+        });
+
+        it('should check validation for [Number of Employees] field', function() {
+            cy.visit(signUpLink);
+            cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
+
+            // check no error for 1
+            cy.get(signUpPageElements.numberOfEmployeesField).clear().type('1');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('not.exist');
+
+            // check no error for 9999
+            cy.get(signUpPageElements.numberOfEmployeesField).clear().type('9999');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('not.exist');
+            
+            // check error for -1
+            cy.get(signUpPageElements.numberOfEmployeesField).clear().type('-1');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('be.visible');
+
+            // check error for 0
+            cy.get(signUpPageElements.numberOfEmployeesField).clear().type('0');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('be.visible');
+
+            // check error for 10000
+            cy.get(signUpPageElements.numberOfEmployeesField).clear().type('10000');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('be.visible');
+            
+            // check error for characters in numeric field
+            cy.get(signUpPageElements.numberOfEmployeesField).clear().type('abc');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersRequired).should('be.visible');
+            
+            // check error for special characters in numeric field
+            cy.get(signUpPageElements.numberOfEmployeesField).clear().type('!@#$%^&*()_');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersRequired).should('be.visible');
+        });
+    });
+
+    describe('Errors validation for [Step 3]', function() {
+
+        it('should check empty fields validation', function() {
+            cy.visit(signUpLink);
+            cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
+            cy.signUpStepTwo(personalUrl, taxNumber, numberOfEmployees, companyWebAddress);
+
+            cy.get(signUpPageElements.countryDropdown).select('');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.countryRequired).should('be.visible');
+
+            cy.get(signUpPageElements.countryDropdown).select(country).should('have.value', countryValue);
+            cy.get(signUpPageElements.stateDropdown).select('');
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.stateRequired).should('be.visible');
+
+            cy.get(signUpPageElements.cityField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.cityRequired).should('be.visible');
+            
+            cy.get(signUpPageElements.zipField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.zipRequired).should('be.visible');
+        });
+    });
+
+    describe('Errors validation for [Step 4]', function() {
+
+        it('should check empty fields validation', function() {
+            cy.visit(signUpLink);
+            cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
+            cy.signUpStepTwo(personalUrl, taxNumber, numberOfEmployees, companyWebAddress);
+            cy.signUpStepThree(country, countryValue, state, stateValue, city, zip);
+
+            cy.get(signUpPageElements.passwordField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.passwordRequired).should('be.visible');
+
+            cy.get(signUpPageElements.confirmPasswordField).click();
+            cy.clickOutside();
+            cy.contains(signInPageElements.error, signUpPageData.errors.confirmPasswordRequired).should('be.visible');
+
+            cy.contains(signInPageElements.btnDisabled, signUpPageData.buttons.createAccount).should('be.visible');
+        });
+
+        it('should check requirements validation for [Password] & [Confirm Password] fields', function() {
+            cy.intercept(requests['sign-up-api']).as('sign-up-api');
+
+            cy.visit(signUpLink);
+            cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
+            cy.signUpStepTwo(personalUrl, taxNumber, numberOfEmployees, companyWebAddress);
+            cy.signUpStepThree(country, countryValue, state, stateValue, city, zip);
+
+            // [Password] & [Confirm Password] don't match
+            cy.signUpStepFour(password, password+' ');
+            cy.contains(signInPageElements.error, signUpPageData.errors.passwordsDontMatch).should('be.visible');
+
+            // [Password] length is < 8 symbols
+            cy.get(signUpPageElements.passwordField).clear().type(password.slice(0,7));
+            cy.contains(signInPageElements.error, signUpPageData.errors.passwordInvalidLength).should('be.visible');
+
+            // [Password] doesn't meet requirement [At least one special character]
+            cy.signUpStepFour(invalidPasswordOne, invalidPasswordOne);
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.wait('@sign-up-api').its('response.statusCode').should('eq', 400);
+                cy.contains(signInPageElements.error, signUpPageData.errors.passwordRequirements).should('be.visible');
+            });
         });
     });
 
