@@ -339,7 +339,7 @@ describe('Sign Up', function() {
             cy.contains(signInPageElements.btnDisabled, signUpPageData.buttons.createAccount).should('be.visible');
         });
 
-        it.only('should check requirements validation for [Password] & [Confirm Password] fields', function() {
+        it('should check requirements validation for [Password] & [Confirm Password] fields', function() {
             cy.intercept(requests['sign-up-api']).as('sign-up-api');
 
             cy.visit(signUpLink);
