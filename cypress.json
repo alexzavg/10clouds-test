@@ -1,6 +1,8 @@
 {
     "$schema": "https://on.cypress.io/cypress.schema.json",
     "theme": "dark",
+    "experimentalStudio": true,
+    "experimentalFetchPolyfill": true,
     "projectId": "",
     "includeShadowDom": true,
     "defaultCommandTimeout": 60000,

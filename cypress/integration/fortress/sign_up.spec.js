@@ -27,7 +27,11 @@ describe('Sign Up', function() {
     const city = 'Poltava';
     const zip = getRandomNumberLength(6);
     const password = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
-    const invalidPasswordOne = 'W1wwwwww';
+    const invalidPasswordOne = 'W1_wwww';
+    const invalidPasswordTwo = 'wwwwww_1';
+    const invalidPasswordThree = 'WWWWWW_1';
+    const invalidPasswordFour = 'wwwWWWW_';
+    const invalidPasswordFive = 'W1wwwwww';
     const testString = 'autotest.com';
     const currentTime = getCurrentTimeISO();
 
@@ -343,16 +347,45 @@ describe('Sign Up', function() {
             cy.signUpStepTwo(personalUrl, taxNumber, numberOfEmployees, companyWebAddress);
             cy.signUpStepThree(country, countryValue, state, stateValue, city, zip);
 
+            // Checking [Password Requirements] popup
+            cy.get(signUpPageElements.passwordField).clear().type(password);
+            cy.get('.icon.checked').its('length').should('eq', 5);
+            cy.get('.icon.checked').should('be.visible');
+
             // [Password] & [Confirm Password] don't match
             cy.signUpStepFour(password, password+' ');
             cy.contains(signInPageElements.error, signUpPageData.errors.passwordsDontMatch).should('be.visible');
 
-            // [Password] length is < 8 symbols
-            cy.get(signUpPageElements.passwordField).clear().type(password.slice(0,7));
+            // [Password] doesn't meet requirement [At least 8 characters]
+            cy.get(signUpPageElements.passwordField).clear().type(invalidPasswordOne);
             cy.contains(signInPageElements.error, signUpPageData.errors.passwordInvalidLength).should('be.visible');
 
+            // [Password] doesn't meet requirement [At least one uppercase character]
+            cy.signUpStepFour(invalidPasswordTwo, invalidPasswordTwo);
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.wait('@sign-up-api').its('response.statusCode').should('eq', 400);
+                cy.contains(signInPageElements.error, signUpPageData.errors.passwordRequirements).should('be.visible');
+            });
+
+            // [Password] doesn't meet requirement [At least one lowercase character]
+            cy.signUpStepFour(invalidPasswordThree, invalidPasswordThree);
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.wait('@sign-up-api').its('response.statusCode').should('eq', 400);
+                cy.contains(signInPageElements.error, signUpPageData.errors.passwordRequirements).should('be.visible');
+            });
+
+            // [Password] doesn't meet requirement [At least one digit character]
+            cy.signUpStepFour(invalidPasswordFour, invalidPasswordFour);
+            cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.wait('@sign-up-api').its('response.statusCode').should('eq', 400);
+                cy.contains(signInPageElements.error, signUpPageData.errors.passwordRequirements).should('be.visible');
+            });
+
             // [Password] doesn't meet requirement [At least one special character]
-            cy.signUpStepFour(invalidPasswordOne, invalidPasswordOne);
+            cy.signUpStepFour(invalidPasswordFive, invalidPasswordFive);
             cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.wait('@sign-up-api').its('response.statusCode').should('eq', 400);
