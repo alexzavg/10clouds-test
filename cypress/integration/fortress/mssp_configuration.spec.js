@@ -37,7 +37,8 @@ describe('MSSP Configuration', function() {
         cy.clearLocalStorage();
     });
 
-    describe('Invite [Regular] company', function() {
+    // ! disabled due to temporarily disabling functionality, will be back after [Add Company] is released
+    describe.skip('Invite [Regular] company', function() {
 
         it('should login', function() {
             cy.visit(signInLink);
@@ -100,7 +101,8 @@ describe('MSSP Configuration', function() {
         });
     });
 
-    describe('Invite [MSSP] company', function() {
+    // ! disabled due to temporarily disabling functionality, will be back after [Add Company] is released
+    describe.skip('Invite [MSSP] company', function() {
 
         it('should login', function() {
             cy.visit(signInLink);
