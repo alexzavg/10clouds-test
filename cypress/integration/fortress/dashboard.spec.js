@@ -260,7 +260,7 @@ describe('Dashboard functionality', function() {
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-                            cy.get(alertsPageElements.filtersBtn).click();
+                            cy.get(alertsPageElements.filtersBtn).should('be.visible');
                             cy.visit(dashboardLink);
                         });
                     }
@@ -299,7 +299,7 @@ describe('Dashboard functionality', function() {
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-                            cy.get(alertsPageElements.filtersBtn).click();
+                            cy.get(alertsPageElements.filtersBtn).should('be.visible');
                             cy.visit(dashboardLink);
                         });
                     }
@@ -338,7 +338,7 @@ describe('Dashboard functionality', function() {
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-                            cy.get(alertsPageElements.filtersBtn).click();
+                            cy.get(alertsPageElements.filtersBtn).should('be.visible');
                             cy.visit(dashboardLink);
                         });
                     }
