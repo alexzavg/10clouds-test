@@ -213,8 +213,7 @@ describe('Dashboard functionality', function() {
         });
     });
 
-    // ! disabled due to bug https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1622635599044600
-    it.skip('should open & close [Right Menu] - [Regulation]', function() {
+    it('should open & close [Right Menu] - [Regulation]', function() {
         cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.regulation).click();
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.regulation).should('be.visible');
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible');
@@ -223,8 +222,7 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
     });
 
-    // ! disabled due to bug https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1622635599044600
-    it.skip('should open & close [Right Menu] - [Top News]', function() {
+    it('should open & close [Right Menu] - [Top News]', function() {
         cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.topNews).click();
         cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topNews).should('be.visible');
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible');
@@ -233,8 +231,7 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist');
     });
 
-    // ! disabled due to bug https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1622635599044600
-    it.skip('should open & check redirect to [Alerts] page from [Right Menu] - [Top Endpoints]', function() {
+    it('should open & check redirect to [Alerts] page from [Right Menu] - [Top Endpoints]', function() {
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
         cy.intercept(requests['protection-scores']).as('protection-scores');
         cy.intercept(requests['service-statistics']).as('service-statistics');
@@ -272,8 +269,7 @@ describe('Dashboard functionality', function() {
         });
     });
 
-    // ! disabled due to bug https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1622635599044600
-    it.skip('should open & check redirect to [Alerts] page from [Right Menu] - [Top Alerts]', function() {
+    it('should open & check redirect to [Alerts] page from [Right Menu] - [Top Alerts]', function() {
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
         cy.intercept(requests['protection-scores']).as('protection-scores');
         cy.intercept(requests['service-statistics']).as('service-statistics');
@@ -312,8 +308,7 @@ describe('Dashboard functionality', function() {
         });
     });
 
-    // ! disabled due to bug https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1622635599044600
-    it.skip('should open & check redirect to [Alerts] page from [Right Menu] - [Top Users]', function() {
+    it('should open & check redirect to [Alerts] page from [Right Menu] - [Top Users]', function() {
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
         cy.intercept(requests['protection-scores']).as('protection-scores');
         cy.intercept(requests['service-statistics']).as('service-statistics');
