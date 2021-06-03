@@ -209,7 +209,7 @@ describe('MSSP Configuration', function() {
         });
     });
 
-    describe('Search company by [Customer] param, check expanded info', function() {
+    describe('Search company by [Email] param & switch context to this company', function() {
 
         it('should login', function() {
             cy.visit(signInLink);
