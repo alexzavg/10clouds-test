@@ -137,7 +137,7 @@ describe('Sign In', function() {
             });
         });
     });
-
+    
     it('should check [Password] field max length is 36 symbols', function() {
         const longPassword = getRandomCharLength(37);
         cy.visit(signInLink);
@@ -145,6 +145,6 @@ describe('Sign In', function() {
         cy.get(signInPageElements.passwordField).invoke('attr', 'type', 'text').should('have.attr', 'type', 'text');
         cy.get(signInPageElements.passwordField).should('have.attr', 'maxLength', '36');
         cy.get(signInPageElements.passwordField).should('have.value', longPassword.slice(0,36));
-    });
- 
- });
+    });    
+
+});
