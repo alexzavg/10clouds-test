@@ -31,13 +31,20 @@ These commands open Cypress runner on a specific environment. After that you can
 **Open test runner on DEV:**
 
 - `npm run open:dev`
+
+**Open test runner on STAGE:**
+
+- `npm run open:stage`
 ---
 ## Running tests
 
-**Run tests locally:**
+**Run all e2e tests locally:**
 - `npm run cy:run:local`
 
-**Run tests on DEV:**
+**Run all e2e tests on DEV:**
 - `npm run cy:run:dev`
+
+**Run all e2e tests on STAGE:**
+- `npm run cy:run:stage`
 
 **_HINT_**: video recording is enabled for failed tests on local env, the videos can be found in directory `./cypress/videos`

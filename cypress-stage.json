@@ -1,0 +1,61 @@
+{
+    "extends": "./cypress.json",
+    "video": false,
+    "videoCompression": 51,
+    "videoUploadOnPasses": false,
+    "baseUrl": "https://staging.qfortress.ai",
+    "env": {
+        "MAILOSAUR_API_KEY": "wVQvfele7aeMbo5I",
+        "MAILOSAUR_SERVER_ID": "u9eitg8h",
+        "urls": {
+            "signUp": "https://staging-signup.qfortress.ai/sign-up",
+            "confirm": "https://staging-signup.qfortress.ai/confirm",
+            "complete": "https://staging-signup.qfortress.ai/complete",
+            "signIn": "https://staging.qfortress.ai/qmasters-demo/sign-in",
+            "restorePassword": "https://staging.qfortress.ai/qmasters-demo/forgot-password",
+            "dashboard": "https://staging.qfortress.ai/qmasters-demo/dashboard",
+            "users": "https://staging.qfortress.ai/qmasters-demo/settings/users",
+            "alerts": "https://staging.qfortress.ai/qmasters-demo/alerts",
+            "mssp": "https://staging.qfortress.ai/qmasters-demo/mssp"
+        },
+        "customers": {
+            "first": {
+                "name": "qmasters-demo"
+            },
+            "second": {
+                "name": "contora",
+                "email": "me41zavgorodnii@gmail.com"
+            }
+        },
+        "users": {
+            "first": {
+                "email": "me41zavgorodnii+52@gmail.com",
+                "password": "wa12aszx34",
+                "formattedKey": "ZFZFODSRROWUW4LPLFV4FBCT5LGSHQ26BUTVDLCWAQ4J22JISLEA"
+            },
+            "second": {
+                "email": "me41zavgorodnii+53@gmail.com",
+                "password": "wa12aszx34",
+                "formattedKey": "BR57FSRMGF5NFEW7F37IFVHDQHGATAZY5QZW5PZ33RKQQ4CLG5LA"
+            },
+            "third": {
+                "email": "me41zavgorodnii+54@gmail.com",
+                "password": "wa12aszx34",
+                "formattedKey": "CGF4ENP27OTVHR6KKGHE66MSR6T4B7TGLSSLBMU5KEUTOZ3GR6UA"
+            },
+            "fourth": {
+                "email": "me41zavgorodnii+56@gmail.com",
+                "password": "wa12aszx34",
+                "formattedKey": "RFTXGM5ZJAJ4F46KJM4LUCHYV3JIBDX2NZQFVHEBSGWEVXMVD4RA"
+            },
+            "fifth": {
+                "email": "me41zavgorodnii+57@gmail.com",
+                "password": "wa12aszx34",
+                "formattedKey": "YM3KML2HMBQY7MUUKYIBN32MG6Z5WUSHP77LV7Q7ZIHTB3BCO5BQ"
+            },
+            "sixth": {
+                "email": "impossible-perfectly@u9eitg8h.mailosaur.net"
+            }
+        }
+    }
+}

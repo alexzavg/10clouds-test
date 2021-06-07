@@ -253,41 +253,46 @@ describe('Sign Up', function() {
             cy.contains(signInPageElements.btnDisabled, signUpPageData.buttons.continue).should('be.visible');
         });
 
-        it('should check validation for [Number of Employees] field', function() {
+        it('should check that [Number of Employees] field accepts min value [1]', function() {
             cy.visit(signUpLink);
             cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
 
-            // check no error for 1
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('1');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('not.exist');
+        });
 
-            // check no error for 9999
+        it('should check that [Number of Employees] field accepts max value [9999]', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('9999');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('not.exist');
-            
-            // check error for -1
+        });
+
+        it('should check that [Number of Employees] field doesn\'t accept value [-1]', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('-1');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('be.visible');
+        });
 
-            // check error for 0
+        it('should check that [Number of Employees] field doesn\'t accept value [0]', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('0');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('be.visible');
+        });
 
-            // check error for 10000
+        it('should check that [Number of Employees] field doesn\'t accept value [10000]', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('10000');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('be.visible');
-            
-            // check error for characters in numeric field
+        });
+
+        it('should check error for characters in [Number of Employees] field', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('abc');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersRequired).should('be.visible');
-            
-            // check error for special characters in numeric field
+        });
+
+        it('should check error for special characters in [Number of Employees] field', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('!@#$%^&*()_');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersRequired).should('be.visible');
