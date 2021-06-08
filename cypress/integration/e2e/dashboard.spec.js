@@ -1,6 +1,6 @@
-import {dashboardPageElements, dashboardPageData} from '../../pages/dashboard.js';
-import {signUpPageElements} from '../../pages/sign-up.js';
-import {alertsPageElements} from '../../pages/alerts.js';
+import {dashboardPageElements, dashboardPageData} from '../../components/dashboard.js';
+import {signUpPageElements} from '../../components/sign-up.js';
+import {alertsPageElements} from '../../components/alerts.js';
 import {requests} from '../../support/requests.js';
 import {ValidInDays, ValidInWeeks, PostExtractTimes, ValidInHours, getAllCombos} from '../../support/dataGenerator.js';
 
@@ -879,7 +879,7 @@ describe('Dashboard functionality', function() {
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-                            cy.get(alertsPageElements.filtersBtn).click();
+                            cy.get(alertsPageElements.filtersBtn).should('be.visible');
                             cy.visit(dashboardLink);
                         });
                     }
@@ -887,7 +887,6 @@ describe('Dashboard functionality', function() {
             });
         });
     });
-
 
     it('should open & check redirect to [Alerts] page from [Right Menu] - [Top Alerts]', function() {
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
@@ -919,7 +918,7 @@ describe('Dashboard functionality', function() {
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-                            cy.get(alertsPageElements.filtersBtn).click();
+                            cy.get(alertsPageElements.filtersBtn).should('be.visible');
                             cy.visit(dashboardLink);
                         });
                     }
@@ -958,7 +957,7 @@ describe('Dashboard functionality', function() {
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                             cy.wait('@alert-search').its('response.statusCode').should('eq', 200);
-                            cy.get(alertsPageElements.filtersBtn).click();
+                            cy.get(alertsPageElements.filtersBtn).should('be.visible');
                             cy.visit(dashboardLink);
                         });
                     }

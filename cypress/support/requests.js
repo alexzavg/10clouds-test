@@ -24,5 +24,6 @@ export const requests = {
     'customer-invitations': '/customer-invitations',
     'services-statistics': '**/services-statistics/**',
     'user-password-reset': '/user/password/reset',
-    'user-password-change': '/user/password/change'
+    'user-password-change': '/user/password/change',
+    'sign-up-api': '**signup-api**'
 }

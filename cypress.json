@@ -1,6 +1,9 @@
 {
     "$schema": "https://on.cypress.io/cypress.schema.json",
     "theme": "dark",
+    "scrollBehavior": false,
+    "experimentalStudio": false,
+    "experimentalFetchPolyfill": false,
     "projectId": "",
     "includeShadowDom": true,
     "defaultCommandTimeout": 60000,
@@ -26,7 +29,7 @@
         },
     "trashAssetsBeforeRuns": true,
     "chromeWebSecurity": false,
-    "userAgent": null,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
     "viewportWidth": 1920,
     "viewportHeight": 1080,
     "waitForAnimations": true,

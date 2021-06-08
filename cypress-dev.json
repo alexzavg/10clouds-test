@@ -5,6 +5,7 @@
     "videoUploadOnPasses": false,
     "baseUrl": "https://dev.qfortress.ai",
     "env": {
+        "env": "dev",
         "MAILOSAUR_API_KEY": "wVQvfele7aeMbo5I",
         "MAILOSAUR_SERVER_ID": "u9eitg8h",
         "urls": {

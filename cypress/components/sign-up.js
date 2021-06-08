@@ -54,5 +54,26 @@ export const signUpPageData = {
     'subscriptionPlanSummary': 'Subscription Plan Summary',
     'gSuite': 'Gsuite',
     'eu': 'EU',
-    'googleDrive': 'Google Drive'
+    'googleDrive': 'Google Drive',
+    'errors': {
+        'firstNameRequired': 'First Name is required.',
+        'lastNameRequired': 'Last Name is required.',
+        'emailRequired': 'Email is required.',
+        'emailInvalid': 'Email is not valid.',
+        'invalidPhone': 'Enter a valid phone number',
+        'personalUrlRequired': 'Personal URL is required.',
+        'companyNameRequired': 'Company Name is required.',
+        'numberOfUsersRequired': 'Number of Users is required.',
+        'numberOfUsersInvalidRange': 'Number of Users should be in range of 1 to 9999.',
+        'companyWebAddressRequired': 'Company Web Address is required.',
+        'countryRequired': 'Country is required.',
+        'stateRequired': 'State is required.',
+        'cityRequired': 'City is required.',
+        'zipRequired': 'ZIP is required.',
+        'passwordRequired': 'Password is required.',
+        'confirmPasswordRequired': 'Confirm Password is required.',
+        'passwordInvalidLength': 'Password must be at least 8 characters long.',
+        'passwordsDontMatch': 'Password and Confirm Password does not match.',
+        'passwordRequirements': 'Password should contain at least one uppercase and lowercase character, one number and one special character.'
+    }
 }

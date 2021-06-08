@@ -1,7 +1,7 @@
-import {dashboardPageElements} from '../../pages/dashboard.js';
-import {navbarElements, navbarData} from '../../pages/navbar.js';
-import {signUpPageElements} from '../../pages/sign-up.js';
-import {msspPageElements, msspPageData} from '../../pages/mssp.js';
+import {dashboardPageElements} from '../../components/dashboard.js';
+import {navbarElements, navbarData} from '../../components/navbar.js';
+import {signUpPageElements} from '../../components/sign-up.js';
+import {msspPageElements, msspPageData} from '../../components/mssp.js';
 import {requests} from '../../support/requests.js';
 import {emailsData} from '../../support/emailsData.js';
 import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
@@ -37,7 +37,8 @@ describe('MSSP Configuration', function() {
         cy.clearLocalStorage();
     });
 
-    describe('Invite [Regular] company', function() {
+    // ! disabled due to temporarily disabling functionality, will be back after [Add Company] is released
+    describe.skip('Invite [Regular] company', function() {
 
         it('should login', function() {
             cy.visit(signInLink);
@@ -100,7 +101,8 @@ describe('MSSP Configuration', function() {
         });
     });
 
-    describe('Invite [MSSP] company', function() {
+    // ! disabled due to temporarily disabling functionality, will be back after [Add Company] is released
+    describe.skip('Invite [MSSP] company', function() {
 
         it('should login', function() {
             cy.visit(signInLink);
@@ -207,7 +209,7 @@ describe('MSSP Configuration', function() {
         });
     });
 
-    describe('Search company by [Customer] param, check expanded info', function() {
+    describe('Search company by [Email] param & switch context to this company', function() {
 
         it('should login', function() {
             cy.visit(signInLink);

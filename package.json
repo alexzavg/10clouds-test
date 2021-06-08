@@ -6,20 +6,24 @@
   "scripts": {
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
     "pretest": "npm run clean:reports",
-    "cy:run:dev": "node_modules/.bin/cypress run --config-file cypress-dev.json --spec \"cypress/integration/fortress/*.spec.js\" --browser chrome",
-    "cy:run:local": "node_modules/.bin/cypress run --config-file cypress-local.json --spec \"cypress/integration/fortress/*.spec.js\" --browser chrome",
+    "cy:run:local": "node_modules/.bin/cypress run --config-file cypress-local.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome",
+    "cy:run:dev": "node_modules/.bin/cypress run --config-file cypress-dev.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome",
+    "cy:run:stage": "node_modules/.bin/cypress run --config-file cypress-stage.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome",
     "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
     "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
     "posttest": "npm run combine-reports && npm run generate-report",
-    "test:dev": "npm run pretest && npm run cy:run:dev && npm run posttest",
     "test:local": "npm run pretest && npm run cy:run:local && npm run posttest",
+    "test:dev": "npm run pretest && npm run cy:run:dev && npm run posttest",
+    "test:stage": "npm run pretest && npm run cy:run:stage && npm run posttest",
+    "open:local": "node_modules/.bin/cypress open --config-file cypress-local.json",
     "open:dev": "node_modules/.bin/cypress open --config-file cypress-dev.json",
-    "open:local": "node_modules/.bin/cypress open --config-file cypress-local.json"
+    "open:stage": "node_modules/.bin/cypress open --config-file cypress-stage.json"
   },
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",
   "devDependencies": {
     "@bahmutov/cypress-extends": "^1.1.0",
+    "@cypress/skip-test": "^2.6.0",
     "authenticator": "^1.1.5",
     "cypress": "^7.4.0",
     "cypress-commands": "^1.1.0",
