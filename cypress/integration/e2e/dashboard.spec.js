@@ -17,7 +17,7 @@ describe('Dashboard functionality', function() {
 
     let formattedToken;
  
-    it('should login', function() {
+    it.only('should login', function() {
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
 
@@ -32,97 +32,79 @@ describe('Dashboard functionality', function() {
         cy.get(dashboardPageElements.scoreValue).should('be.visible');
     });
 
-    it.skip('checking', function () {
-        cy.get(dashboardPageElements.topMenuOpenBtn).click();
-        cy.get(dashboardPageElements.scorllBarChart).should('be.visible');
-        cy.get(dashboardPageElements.scrollBarSeverity).should('be.visible');
-        cy.get('.severity-container > > > > .name') .should('have.length', 3).then(($els) => {
-            const arr = Cypress.$.makeArray($els).map((el) => el.innerText);
-            (cy.log(Cypress.$.makeArray($els).map((el) => el.innerText)));
-             cy.log(JSON.stringify(getAllCombos(arr)));
-            });
-        
-    });
-
-    it('should check Top Scroll Bar - Open / Closed', function () {
-        // Open scroll bar
-        cy.get(dashboardPageElements.topMenuOpenBtn).click();
-        cy.get(dashboardPageElements.scorllBarChart).should('be.visible');
-        cy.get(dashboardPageElements.scrollBarSeverity).should('be.visible');
-        // Close scroll bar
-        cy.get(dashboardPageElements.topMenuOpenBtn).click();
-        cy.get(dashboardPageElements.scrollBarSeverity).should('be.visible');
-        cy.get(dashboardPageElements.scrollClosedMenu).should('be.visible');
-    });
-
-    it('should check Top Scroll Bar - [High]', function () {
+    it.only('should check Top Scroll Bar - [High] severity', function () {
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
         cy.intercept(requests['customer-statistics']).as('customer-statistics');
 
-        // Opened scroll and Click [High] Severity
+        // Open [Top Menu] and select [High] Severity
         cy.get(dashboardPageElements.topMenuOpenBtn).click();
-        cy.get(dashboardPageElements.scorllBarChart).should('be.visible');
-        cy.get(dashboardPageElements.scrollBarSeverity).should('be.visible');
-        cy.contains(dashboardPageData.severityHigh).click();
-        cy.wait(1500);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        // Opened scroll and click on [High] Severity to Cancel  
-        cy.contains(dashboardPageData.severityHigh).click();
-        cy.wait(1500);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', []);
-        // Closed scroll and Click [High] Severity
-        cy.get(dashboardPageElements.topMenuOpenBtn).click();
-        cy.get(dashboardPageElements.scrollAlertSummary).should('be.visible');
-        cy.get(dashboardPageElements.scrollBarSeverity).should('be.visible');
-        cy.get('.alerts-summary > .severity > :nth-child(1)').click(); // Do ..To be fixed
-        cy.wait(1500);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        // Closed scroll and click on [High] Severity to Cancel
-        cy.get('.alerts-summary > .severity > :nth-child(1)').click(); // Undo ..To be fixed
-        cy.wait(1500);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', []);
-        // Opened scroll and click on "X" to Cancel [High] Severity
-        cy.get(dashboardPageElements.topMenuOpenBtn).click();
-        cy.contains(dashboardPageData.severityHigh).click();
-        cy.wait(1500);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.get('.severity-container > .severity > .mat-focus-indicator > .mat-button-wrapper > .mat-icon').click(); // Do ..To be fixed
-        cy.wait(1500);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', []);
-        // Closed scroll and click on "X" to Cancel [High] Severity
-        cy.get(dashboardPageElements.topMenuOpenBtn).click();
-        cy.get(dashboardPageElements.scrollAlertSummary).should('be.visible');
-        cy.get(dashboardPageElements.scrollBarSeverity).should('be.visible');
-        cy.get('.alerts-summary > .severity > :nth-child(1)').click(); // Do ..To be fixed
-        cy.wait(1500);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
-        cy.get('.alerts-summary > .severity > .mat-focus-indicator > .mat-button-wrapper > .mat-icon').click(); // Do ..To be fixed
-        cy.wait(1500);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
-        cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', []);
+        cy.get(dashboardPageElements.topMenuChart).should('be.visible');
+        cy.contains(dashboardPageElements.topMenuClosed, dashboardPageData.severityHigh).click();
+        cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+            cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+            cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+            cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+            cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        });
+
+        // // Opened scroll and click on [High] Severity to Cancel  
+        // cy.contains(dashboardPageData.severityHigh).click();
+        // cy.wait(1500);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', []);
+
+        // // Closed scroll and Click [High] Severity
+        // cy.get(dashboardPageElements.topMenuOpenBtn).click();
+        // cy.get(dashboardPageElements.scrollAlertSummary).should('be.visible');
+        // cy.get(dashboardPageElements.scrollBarSeverity).should('be.visible');
+        // cy.get('.alerts-summary > .severity > :nth-child(1)').click(); // Do ..To be fixed
+        // cy.wait(1500);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+
+        // // Closed scroll and click on [High] Severity to Cancel
+        // cy.get('.alerts-summary > .severity > :nth-child(1)').click(); // Undo ..To be fixed
+        // cy.wait(1500);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', []);
+
+        // // Opened scroll and click on "X" to Cancel [High] Severity
+        // cy.get(dashboardPageElements.topMenuOpenBtn).click();
+        // cy.contains(dashboardPageData.severityHigh).click();
+        // cy.wait(1500);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.get('.severity-container > .severity > .mat-focus-indicator > .mat-button-wrapper > .mat-icon').click(); // Do ..To be fixed
+        // cy.wait(1500);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', []);
+
+        // // Closed scroll and click on "X" to Cancel [High] Severity
+        // cy.get(dashboardPageElements.topMenuOpenBtn).click();
+        // cy.get(dashboardPageElements.scrollAlertSummary).should('be.visible');
+        // cy.get(dashboardPageElements.scrollBarSeverity).should('be.visible');
+        // cy.get('.alerts-summary > .severity > :nth-child(1)').click(); // Do ..To be fixed
+        // cy.wait(1500);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', ['HIGH']);
+        // cy.get('.alerts-summary > .severity > .mat-focus-indicator > .mat-button-wrapper > .mat-icon').click(); // Do ..To be fixed
+        // cy.wait(1500);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-top-statistics').its('request.body.severity').should('deep.eq', []);
+        // cy.wait('@customer-statistics').its('request.body.severity').should('deep.eq', []);
     });
 
     it('should check Top Scroll Bar - [Medium]', function () {

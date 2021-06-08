@@ -8,10 +8,10 @@ export const dashboardPageElements = {
     'rightMenuItem': '.card-item.ng-star-inserted',
     'topMenuOpenBtn': '.scroller',
     'topMenuBlockOpen': '.top-menu.opened',
-    'scorllBarChart': '.line-chart',
-    'scrollBarSeverity': '.severity',
-    'scrollAlertSummary': '.alerts-summary',
-    'scrollClosedMenu': '.menu-closed'
+    'topMenuChart': '.line-chart',
+    'topMenuAlertSummary': '.alerts-summary',
+    'topMenuClosed': '.menu-closed',
+    'topMenuOpened': '.top-menu.opened'
 }
 
 export const dashboardPageData = {
