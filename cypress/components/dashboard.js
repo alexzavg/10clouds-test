@@ -6,8 +6,18 @@ export const dashboardPageElements = {
     'rightMenuCategoryTitleOpen': '.ng-trigger-openCloseTitle.active',
     'rightMenuCategoryOpen': '.ng-trigger-openCloseBody.active',
     'rightMenuItem': '.card-item.ng-star-inserted',
+    'topMenuBlock': 'fortress-top-menu > div',
     'topMenuOpenBtn': '.scroller',
-    'topMenuBlockOpen': '.top-menu.opened'
+    'topMenuAlertSummary': '.alerts-summary',
+    'topMenuClosed': '.menu-closed',
+    'topMenuOpen': '.menu-opened',
+    'severityBlock': '.block',
+    'severitySelected': {
+        'high': '.selected-high',
+        'medium': '.selected-medium',
+        'low': '.selected-low'
+    },
+    'severityUnselectBtn': '[aria-label="Clear"]'
 }
 
 export const dashboardPageData = {
@@ -22,5 +32,8 @@ export const dashboardPageData = {
     'topAlerts': 'Top Alerts',
     'topUsers': 'Top Users',
     'topNews': 'Fortress News',
-    'nothingFound': 'Nothing found'
+    'nothingFound': 'Nothing found',
+    'severityHigh': 'High',
+    'severityMedium': 'Medium',
+    'severityLow': 'Low'
 }

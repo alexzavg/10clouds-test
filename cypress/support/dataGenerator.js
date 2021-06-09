@@ -55,13 +55,13 @@ export function ExtractTimes(url_request) {
  * Get startDate, endDate from request body
  */
 export function PostExtractTimes(url_request) {
-    const url = url_request.request.body
-    const start_date = url.startDate
-    const end_date = url.endDate
+    const payload = url_request.request.body
+    const start_date = payload.startDate
+    const end_date = payload.endDate
     cy.log(start_date)
     cy.log(end_date)
     return {start_date: new Date(start_date), end_date: new Date(end_date)};
-};
+};  
 
 export function ValidInHours(start, end, range) {
 
@@ -101,4 +101,9 @@ export function ValidInMonths(start, end, range) {
     return (resp == range);
   
 };
+
+export function getAllCombos(arr) {
+    if(arr[0] === undefined) return [arr]
+    return getAllCombos(arr.slice(1)).flatMap(el => [el.concat(arr[0]), el])
+ };
 
