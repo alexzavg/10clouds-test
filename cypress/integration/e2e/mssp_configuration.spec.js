@@ -31,16 +31,17 @@ describe('MSSP Configuration', function() {
     
     const companyName = Cypress.env('customers').second.name;
     const companyEmail = Cypress.env('customers').second.email;
-    
-    afterEach(() => {
-        cy.clearCookies();
-        cy.clearLocalStorage();
+
+    beforeEach(() => {
+        cy.intercept(requests['customer-search']).as('customer-search');
+        cy.intercept(requests['customer-invitations']).as('customer-invitations');
+        cy.intercept(requests['services-statistics']).as('services-statistics');
     });
 
     // ! disabled due to temporarily disabling functionality, will be back after [Add Company] is released
     describe.skip('Invite [Regular] company', function() {
 
-        it('should login', function() {
+        it('Sign in', function() {
             cy.visit(signInLink);
             cy.url().should('eq', signInLink);
     
@@ -53,9 +54,7 @@ describe('MSSP Configuration', function() {
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
         });
     
-        it('should invite [REGULAR] company & check invitation link from mail', function() {
-            cy.intercept(requests['customer-search']).as('customer-search');
-            cy.intercept(requests['customer-invitations']).as('customer-invitations');
+        it('Invite [REGULAR] company & check invitation link from mail', function() {
             
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible');
@@ -99,12 +98,13 @@ describe('MSSP Configuration', function() {
             cy.clearCookies();
             cy.clearLocalStorage();
         });
+
     });
 
     // ! disabled due to temporarily disabling functionality, will be back after [Add Company] is released
     describe.skip('Invite [MSSP] company', function() {
 
-        it('should login', function() {
+        it('Sign in', function() {
             cy.visit(signInLink);
             cy.url().should('eq', signInLink);
     
@@ -117,9 +117,7 @@ describe('MSSP Configuration', function() {
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
         });
     
-        it('should invite [MSSP] company & check invitation link from mail', function() {
-            cy.intercept(requests['customer-search']).as('customer-search');
-            cy.intercept(requests['customer-invitations']).as('customer-invitations');
+        it('Invite [MSSP] company & check invitation link from mail', function() {
             
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible');
@@ -163,11 +161,12 @@ describe('MSSP Configuration', function() {
             cy.clearCookies();
             cy.clearLocalStorage();
         });
+
     });
 
     describe('Search company by [Customer] param, check expanded info', function() {
 
-        it('should login', function() {
+        it('Sign in', function() {
             cy.visit(signInLink);
             cy.url().should('eq', signInLink);
     
@@ -180,9 +179,7 @@ describe('MSSP Configuration', function() {
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
         });
     
-        it('should search company by [Customer] param, check expanded info', function() {
-            cy.intercept(requests['customer-search']).as('customer-search');
-            cy.intercept(requests['services-statistics']).as('services-statistics');
+        it('Search company by [Customer] param, check expanded info', function() {
             
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible');
@@ -206,12 +203,16 @@ describe('MSSP Configuration', function() {
                     cy.get(msspPageElements.companyExpandedInfoBlock).should('not.exist');
                 });
             });
+
+            cy.clearCookies();
+            cy.clearLocalStorage();
         });
+
     });
 
     describe('Search company by [Email] param & switch context to this company', function() {
 
-        it('should login', function() {
+        it('Sign in', function() {
             cy.visit(signInLink);
             cy.url().should('eq', signInLink);
     
@@ -224,9 +225,7 @@ describe('MSSP Configuration', function() {
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
         });
     
-        it('should search company by [Email] param & switch context to this company', function() {
-            cy.intercept(requests['customer-search']).as('customer-search');
-            cy.intercept(requests['services-statistics']).as('services-statistics');
+        it('Search company by [Email] param & switch context to this company', function() {
             
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible');
@@ -250,7 +249,11 @@ describe('MSSP Configuration', function() {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible');
                 cy.contains(msspPageElements.breadcrumbs, companyName).should('be.visible');
             });
+
+            cy.clearCookies();
+            cy.clearLocalStorage();
         });
+
     });
 
 });

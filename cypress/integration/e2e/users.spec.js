@@ -27,14 +27,16 @@ describe('Users', function() {
     let adminOtp, adminOtpNew, newUserOtp;
     let temporaryPassword;
 
-    describe('Add & Delete new user', function() {
-        it('should add new user, setup MFA & login by him', function() {
+    beforeEach(() => {
+        cy.intercept(requests['role-search']).as('role-search');
+        cy.intercept(requests['device-search']).as('device-search');
+        cy.intercept(requests['user-search']).as('user-search');
+        cy.intercept(requests['user-remove']).as('user-remove');
+    });
 
-            cy.intercept(requests['role-search']).as('role-search');
-            cy.intercept(requests['device-search']).as('device-search');
-            cy.intercept(requests['user-search']).as('user-search');
-            cy.intercept(requests['user-remove']).as('user-remove');
-    
+    describe('Add & Delete new user', function() {
+
+        it('Add new user, setup MFA & sign in', function() {
             cy.visit(signInLink);
     
             adminOtp = generateToken(adminFormattedKey);
@@ -110,13 +112,7 @@ describe('Users', function() {
             });
         });
 
-        it('should remove new user', function() {
-
-            cy.intercept(requests['role-search']).as('role-search');
-            cy.intercept(requests['device-search']).as('device-search');
-            cy.intercept(requests['user-search']).as('user-search');
-            cy.intercept(requests['user-remove']).as('user-remove');
-
+        it('Remove new user', function() {
             cy.visit(signInLink);
             cy.url().should('eq', signInLink);
     

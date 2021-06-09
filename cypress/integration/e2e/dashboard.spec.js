@@ -18,7 +18,7 @@ describe('Dashboard functionality', function() {
     let formattedToken;
  
     describe('Sign In', function() {
-        it('should login', function() {
+        it('Sign in', function() {
             cy.visit(signInLink);
             cy.url().should('eq', signInLink);
     

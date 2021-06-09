@@ -14,14 +14,16 @@ describe('Restore Password', function() {
     const newPassword = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
     const currentTime = getCurrentTimeISO();
     const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
- 
-    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-418
-    it.skip('should restore password, check email & login with new password', function() {
 
+    beforeEach(() => {
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
         cy.intercept(requests['sign-in']).as('sign-in');
         cy.intercept(requests['user-password-reset']).as('user-password-reset');
         cy.intercept(requests['user-password-change']).as('user-password-change');
+    });
+ 
+    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-418
+    it.skip('Restore password, check email & login with new password', function() {
 
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
@@ -82,7 +84,7 @@ describe('Restore Password', function() {
         });
     });
 
-    it('should validate error for empty [Email] field', function() {
+    it('Validate error for empty [Email] field', function() {
         cy.visit(forgotPasswordLink);
         cy.url().should('eq', forgotPasswordLink);
         cy.get(signInPageElements.emailField).click();
@@ -91,8 +93,7 @@ describe('Restore Password', function() {
         cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.restorePassword).should('be.visible');
     });
 
-    it('should validate error for invalid email in [Email] field', function() {
-        cy.intercept(requests['user-password-reset']).as('user-password-reset');
+    it('Validate error for invalid email in [Email] field', function() {
         cy.visit(forgotPasswordLink);
         cy.url().should('eq', forgotPasswordLink);
         cy.get(signInPageElements.emailField).type(invalidEmail);

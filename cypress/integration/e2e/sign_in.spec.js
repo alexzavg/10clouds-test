@@ -16,13 +16,7 @@ describe('Sign In', function() {
     
     let formattedToken;
 
-    afterEach(() => {
-        cy.clearCookies();
-        cy.clearLocalStorage();
-    });
- 
-    it('should sign in & logout via Navbar', function() {
-
+    beforeEach(() => {
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
         cy.intercept(requests['cognito-idp']).as('cognito-idp');
         cy.intercept(requests['sign-in']).as('sign-in');
@@ -31,6 +25,14 @@ describe('Sign In', function() {
         cy.intercept(requests['protection-scores']).as('protection-scores');
         cy.intercept(requests['customer-statistics']).as('customer-statistics');
         cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
+    });
+
+    afterEach(() => {
+        cy.clearCookies();
+        cy.clearLocalStorage();
+    });
+ 
+    it('Sign in & logout via Navbar', function() {
 
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
@@ -67,7 +69,7 @@ describe('Sign In', function() {
         cy.url().should('eq', signInLink);
     });
 
-    it('should validate errors for empty [Email] & [Password] fields', function() {
+    it('Validate errors for empty [Email] & [Password] fields', function() {
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
 
@@ -81,8 +83,7 @@ describe('Sign In', function() {
         cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.signIn).should('be.visible');
     });
 
-    it('should not sign in with invalid password', function() {
-        cy.intercept(requests['cognito-idp']).as('cognito-idp');
+    it('Sign in with invalid password', function() {
 
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
@@ -100,8 +101,7 @@ describe('Sign In', function() {
         });
     });
 
-    it('should sign in with SPACES in [Login] field', function() {
-        cy.intercept(requests['auth-cognito']).as('auth-cognito');
+    it('Sign in with SPACES in [Login] field', function() {
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
 
@@ -113,8 +113,7 @@ describe('Sign In', function() {
         cy.contains(signInPageData.verificationCode);
     });
 
-    it('should not sign in with invalid OTP', function() {
-        cy.intercept(requests['cognito-idp']).as('cognito-idp');
+    it('Sign in with invalid OTP', function() {
 
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
@@ -138,7 +137,7 @@ describe('Sign In', function() {
         });
     });
     
-    it('should check [Password] field max length is 36 symbols', function() {
+    it('Check [Password] field max length is 36 symbols', function() {
         const longPassword = getRandomCharLength(37);
         cy.visit(signInLink);
         cy.get(signInPageElements.passwordField).clear().type(longPassword);

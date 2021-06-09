@@ -43,31 +43,34 @@ describe('Sign Up', function() {
 
     let confirmationCode, otp;
 
+    beforeEach(() => {
+        cy.intercept(requests['auth-cognito']).as('auth-cognito');
+        cy.intercept(requests['sign-in']).as('sign-in');
+        cy.intercept(requests['user-me']).as('user-me');
+        cy.intercept(requests['customer-status']).as('customer-status');
+        cy.intercept(requests['protection-scores']).as('protection-scores');
+        cy.intercept(requests['customer-statistics']).as('customer-statistics');
+        cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
+        cy.intercept(requests['catalog-items']).as('catalog-items');
+        cy.intercept(requests['catalog-packages']).as('catalog-packages');
+        cy.intercept(requests['service-licenses-order']).as('service-licenses-order');
+        cy.intercept(requests['services']).as('services');
+        cy.intercept(requests['service-licenses-policies']).as('service-licenses-policies');
+        cy.intercept(requests['sign-up-api']).as('sign-up-api');
+    });
+
     afterEach(() => {
         cy.clearCookies();
         cy.clearLocalStorage();
     });
 
-    // ! disabled due to architecture issue
-    // ! we can't create test customers
-    // ! run this test manually only when required
+    // ! disabled due to architecture issue with Amazon KMS
+    // ! creating every new customer costs ~ $2
+    // ! run this test manually only on demand
     // ! https://fortress-kok8877.slack.com/archives/D01HHLNL6K1/p1622294056001000
     describe.skip('Create new customer', function() {
 
-        it('should sign up as new customer', function() {
-
-            cy.intercept(requests['auth-cognito']).as('auth-cognito');
-            cy.intercept(requests['sign-in']).as('sign-in');
-            cy.intercept(requests['user-me']).as('user-me');
-            cy.intercept(requests['customer-status']).as('customer-status');
-            cy.intercept(requests['protection-scores']).as('protection-scores');
-            cy.intercept(requests['customer-statistics']).as('customer-statistics');
-            cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
-            cy.intercept(requests['catalog-items']).as('catalog-items');
-            cy.intercept(requests['catalog-packages']).as('catalog-packages');
-            cy.intercept(requests['service-licenses-order']).as('service-licenses-order');
-            cy.intercept(requests['services']).as('services');
-            cy.intercept(requests['service-licenses-policies']).as('service-licenses-policies');
+        it('Sign up as new customer', function() {
             
             cy.visit(signUpLink);
             cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
@@ -187,11 +190,12 @@ describe('Sign Up', function() {
                 cy.url().should('eq', dashboardLink);
             });
         });
+
     });
 
     describe('Errors validation for [Step 1]', function() {
 
-        it('should check empty fields validation', function() {
+        it('Check empty fields validation', function() {
             cy.visit(signUpLink);
 
             cy.get(signUpPageElements.firstNameField).click();
@@ -217,14 +221,14 @@ describe('Sign Up', function() {
             cy.contains(signInPageElements.btnDisabled, signUpPageData.buttons.continue).should('be.visible');
         });
 
-        it('should check invalid email in [Email] field', function() {
+        it('Check invalid email in [Email] field', function() {
             cy.visit(signUpLink);
             cy.get(signUpPageElements.emailField).type('invalidEmail');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.emailInvalid).should('be.visible');
         });
 
-        it('should check invalid email in [Phone] field', function() {
+        it('Check invalid email in [Phone] field', function() {
             cy.visit(signUpLink);
             cy.get(signUpPageElements.phoneNumberField).type('+38099999');
             cy.clickOutside();
@@ -234,7 +238,7 @@ describe('Sign Up', function() {
 
     describe('Errors validation for [Step 2]', function() {
 
-        it('should check empty fields validation', function() {
+        it('Check empty fields validation', function() {
             cy.visit(signUpLink);
             cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
 
@@ -253,7 +257,7 @@ describe('Sign Up', function() {
             cy.contains(signInPageElements.btnDisabled, signUpPageData.buttons.continue).should('be.visible');
         });
 
-        it('should check that [Number of Employees] field accepts min value [1]', function() {
+        it('Check that [Number of Employees] field accepts min value [1]', function() {
             cy.visit(signUpLink);
             cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
 
@@ -262,37 +266,37 @@ describe('Sign Up', function() {
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('not.exist');
         });
 
-        it('should check that [Number of Employees] field accepts max value [9999]', function() {
+        it('Check that [Number of Employees] field accepts max value [9999]', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('9999');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('not.exist');
         });
 
-        it('should check that [Number of Employees] field doesn\'t accept value [-1]', function() {
+        it('Check that [Number of Employees] field doesn\'t accept value [-1]', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('-1');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('be.visible');
         });
 
-        it('should check that [Number of Employees] field doesn\'t accept value [0]', function() {
+        it('Check that [Number of Employees] field doesn\'t accept value [0]', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('0');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('be.visible');
         });
 
-        it('should check that [Number of Employees] field doesn\'t accept value [10000]', function() {
+        it('Check that [Number of Employees] field doesn\'t accept value [10000]', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('10000');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersInvalidRange).should('be.visible');
         });
 
-        it('should check error for characters in [Number of Employees] field', function() {
+        it('Check error for characters in [Number of Employees] field', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('abc');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersRequired).should('be.visible');
         });
 
-        it('should check error for special characters in [Number of Employees] field', function() {
+        it('Check error for special characters in [Number of Employees] field', function() {
             cy.get(signUpPageElements.numberOfEmployeesField).clear().type('!@#$%^&*()_');
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.numberOfUsersRequired).should('be.visible');
@@ -301,7 +305,7 @@ describe('Sign Up', function() {
 
     describe('Errors validation for [Step 3]', function() {
 
-        it('should check empty fields validation', function() {
+        it('Check empty fields validation', function() {
             cy.visit(signUpLink);
             cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
             cy.signUpStepTwo(personalUrl, taxNumber, numberOfEmployees, companyWebAddress);
@@ -323,11 +327,12 @@ describe('Sign Up', function() {
             cy.clickOutside();
             cy.contains(signInPageElements.error, signUpPageData.errors.zipRequired).should('be.visible');
         });
+
     });
 
     describe('Errors validation for [Step 4]', function() {
 
-        it('should check empty fields validation', function() {
+        it('Check empty fields validation', function() {
             cy.visit(signUpLink);
             cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
             cy.signUpStepTwo(personalUrl, taxNumber, numberOfEmployees, companyWebAddress);
@@ -344,9 +349,7 @@ describe('Sign Up', function() {
             cy.contains(signInPageElements.btnDisabled, signUpPageData.buttons.createAccount).should('be.visible');
         });
 
-        it('should check requirements validation for [Password] & [Confirm Password] fields', function() {
-            cy.intercept(requests['sign-up-api']).as('sign-up-api');
-
+        it('Check requirements validation for [Password] & [Confirm Password] fields', function() {
             cy.visit(signUpLink);
             cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
             cy.signUpStepTwo(personalUrl, taxNumber, numberOfEmployees, companyWebAddress);
@@ -397,6 +400,7 @@ describe('Sign Up', function() {
                 cy.contains(signInPageElements.error, signUpPageData.errors.passwordRequirements).should('be.visible');
             });
         });
+
     });
 
 });
