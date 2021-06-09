@@ -1,5 +1,6 @@
 // https://on.cypress.io/custom-commands
 import 'cypress-mailosaur';
+import "cypress-localstorage-commands";
 import {signInPageElements, signInPageData} from '../components/sign-in.js';
 import {signUpPageElements, signUpPageData} from '../components/sign-up.js';
 import {navbarElements} from '../components/navbar.js';

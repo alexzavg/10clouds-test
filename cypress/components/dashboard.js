@@ -6,12 +6,18 @@ export const dashboardPageElements = {
     'rightMenuCategoryTitleOpen': '.ng-trigger-openCloseTitle.active',
     'rightMenuCategoryOpen': '.ng-trigger-openCloseBody.active',
     'rightMenuItem': '.card-item.ng-star-inserted',
+    'topMenuBlock': 'fortress-top-menu > div',
     'topMenuOpenBtn': '.scroller',
-    'topMenuBlockOpen': '.top-menu.opened',
-    'topMenuChart': '.line-chart',
     'topMenuAlertSummary': '.alerts-summary',
     'topMenuClosed': '.menu-closed',
-    'topMenuOpened': '.top-menu.opened'
+    'topMenuOpen': '.menu-opened',
+    'severityBlock': '.block',
+    'severitySelected': {
+        'high': '.selected-high',
+        'medium': '.selected-medium',
+        'low': '.selected-low'
+    },
+    'severityUnselectBtn': '[aria-label="Clear"]'
 }
 
 export const dashboardPageData = {
