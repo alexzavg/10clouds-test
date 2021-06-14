@@ -74,16 +74,17 @@ describe('Users', function() {
             cy.clearCookies();
             cy.clearLocalStorage();
         
+            // get verification code from email
             cy.mailosaurGetMessage(serverId, {
-                sentFrom: emailsData.emails.noReply,
+                sentFrom: emailsData.emails.support,
                 sentTo: newUserEmail,
-                subject: emailsData.subjects.temporaryPassword
+                subject: emailsData.subjects.userInvitation
             }, {
                 receivedAfter: new Date(currentTime),
                 timeout: 60000
             }).then(mail => {
                 const body = mail.html.body;
-                temporaryPassword = body.split('temporary password is ')[1].slice(0,8); // get temporary password from email
+                temporaryPassword = body.split('verification code: <b>')[1].slice(0,8);
                 cy.log('Temporary password is', temporaryPassword);
     
                 cy.visit(signInLink);

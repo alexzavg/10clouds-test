@@ -6,6 +6,7 @@ export const emailsData = {
     'subjects': {
         'emailVerification': 'Fortress - Email verification',
         'temporaryPassword': 'Your temporary password',
-        'customerInvitation': 'You\'ve been invited to join Fortress dashboard by '
+        'customerInvitation': 'You\'ve been invited to join Fortress dashboard by ',
+        'userInvitation': 'You’ve been invited to join your Fortress MSSP\'s Fortress advanced platform.'
     }
 }
