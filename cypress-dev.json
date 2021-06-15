@@ -70,7 +70,7 @@
             "top": "5",
             "aggregate": ["alerts", "endpoints", "users"],
             "serviceType": ["EDP", "MAIL", "CLOUD_STORAGE"],
-            "sub_verdict": ["CLN", "SPM", "MAL", "BLK", "SUS"],
+            "subVerdict": ["CLN", "SPM", "MAL", "BLK", "SUS"],
             "serviceLicenseId": "de347460-5689-11eb-9957-93051f103eed",
             "serviceAccountId": "bdaacb50-be20-11eb-90f5-7548d68e111e",
             "customerId": "47bf4160-3495-11eb-a2dc-0919615e3fc5",
