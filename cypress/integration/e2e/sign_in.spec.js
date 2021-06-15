@@ -113,6 +113,15 @@ describe('Sign In', function() {
         cy.contains(signInPageData.verificationCode);
     });
 
+    it('Check [Password] field max length is 36 symbols', function() {
+        const longPassword = getRandomCharLength(37);
+        cy.visit(signInLink);
+        cy.get(signInPageElements.passwordField).clear().type(longPassword);
+        cy.get(signInPageElements.passwordField).invoke('attr', 'type', 'text').should('have.attr', 'type', 'text');
+        cy.get(signInPageElements.passwordField).should('have.attr', 'maxLength', '36');
+        cy.get(signInPageElements.passwordField).should('have.value', longPassword.slice(0,36));
+    }); 
+
     it('Sign in with invalid OTP', function() {
 
         cy.visit(signInLink);
@@ -135,15 +144,6 @@ describe('Sign In', function() {
                 expect(value.response.body.__type).to.equal('CodeMismatchException');
             });
         });
-    });
-    
-    it('Check [Password] field max length is 36 symbols', function() {
-        const longPassword = getRandomCharLength(37);
-        cy.visit(signInLink);
-        cy.get(signInPageElements.passwordField).clear().type(longPassword);
-        cy.get(signInPageElements.passwordField).invoke('attr', 'type', 'text').should('have.attr', 'type', 'text');
-        cy.get(signInPageElements.passwordField).should('have.attr', 'maxLength', '36');
-        cy.get(signInPageElements.passwordField).should('have.value', longPassword.slice(0,36));
-    });    
+    });   
 
 });

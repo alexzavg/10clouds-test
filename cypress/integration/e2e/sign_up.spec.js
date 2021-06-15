@@ -67,7 +67,7 @@ describe('Sign Up', function() {
     // ! disabled due to architecture issue with Amazon KMS
     // ! creating every new customer costs ~ $2
     // ! run this test manually only on demand
-    // ! https://fortress-kok8877.slack.com/archives/D01HHLNL6K1/p1622294056001000
+    // ! https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1622552019034200
     describe.skip('Create new customer', function() {
 
         it('Sign up as new customer', function() {
@@ -349,50 +349,50 @@ describe('Sign Up', function() {
             cy.contains(signInPageElements.btnDisabled, signUpPageData.buttons.createAccount).should('be.visible');
         });
 
-        it('Check requirements validation for [Password] & [Confirm Password] fields', function() {
-            cy.visit(signUpLink);
-            cy.signUpStepOne(firstName, firstName, email, phoneNumber, personalUrl);
-            cy.signUpStepTwo(personalUrl, taxNumber, numberOfEmployees, companyWebAddress);
-            cy.signUpStepThree(country, countryValue, state, stateValue, city, zip);
-
-            // Checking [Password Requirements] popup
+        it('Check [Password Requirements] popup', function() {
             cy.get(signUpPageElements.passwordField).clear().type(password);
             cy.get('.icon.checked').its('length').should('eq', 5);
             cy.get('.icon.checked').should('be.visible');
+        });
 
-            // [Password] & [Confirm Password] don't match
+        it('[Password] & [Confirm Password] don\'t match', function() {
             cy.signUpStepFour(password, password+' ');
             cy.contains(signInPageElements.error, signUpPageData.errors.passwordsDontMatch).should('be.visible');
+        });
 
-            // [Password] doesn't meet requirement [At least 8 characters]
+        it('[Password] doesn\'t meet requirement [At least 8 characters]', function() {
             cy.get(signUpPageElements.passwordField).clear().type(invalidPasswordOne);
             cy.contains(signInPageElements.error, signUpPageData.errors.passwordInvalidLength).should('be.visible');
+        });
 
-            // [Password] doesn't meet requirement [At least one uppercase character]
+        it('[Password] doesn\'t meet requirement [At least one uppercase character]', function() {
             cy.signUpStepFour(invalidPasswordTwo, invalidPasswordTwo);
             cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.wait('@sign-up-api').its('response.statusCode').should('eq', 400);
                 cy.contains(signInPageElements.error, signUpPageData.errors.passwordRequirements).should('be.visible');
             });
+        });
 
-            // [Password] doesn't meet requirement [At least one lowercase character]
+        it('[Password] doesn\'t meet requirement [At least one lowercase character]', function() {
             cy.signUpStepFour(invalidPasswordThree, invalidPasswordThree);
             cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.wait('@sign-up-api').its('response.statusCode').should('eq', 400);
                 cy.contains(signInPageElements.error, signUpPageData.errors.passwordRequirements).should('be.visible');
             });
+        });
 
-            // [Password] doesn't meet requirement [At least one digit character]
+        it('[Password] doesn\'t meet requirement [At least one digit character]', function() {
             cy.signUpStepFour(invalidPasswordFour, invalidPasswordFour);
             cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.wait('@sign-up-api').its('response.statusCode').should('eq', 400);
                 cy.contains(signInPageElements.error, signUpPageData.errors.passwordRequirements).should('be.visible');
             });
+        });
 
-            // [Password] doesn't meet requirement [At least one special character]
+        it('[Password] doesn\'t meet requirement [At least one special character]', function() {
             cy.signUpStepFour(invalidPasswordFive, invalidPasswordFive);
             cy.contains(signUpPageElements.btn, signUpPageData.buttons.createAccount).click();
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {

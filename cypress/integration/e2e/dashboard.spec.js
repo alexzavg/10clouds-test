@@ -6,7 +6,7 @@ import {ValidInDays, ValidInWeeks, PostExtractTimes, ValidInHours} from '../../s
 
 const {generateToken} = require('authenticator');
 
-describe('Dashboard functionality', function() {
+describe('Dashboard', function() {
 
     const signInLink = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
@@ -588,7 +588,7 @@ describe('Dashboard functionality', function() {
 
     });
 
-    describe('Top Right Dropdown', function() {
+    describe('Top Right [Time Range] Dropdown', function() {
 
         beforeEach(() => {
             cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
@@ -760,7 +760,7 @@ describe('Dashboard functionality', function() {
 
     });
 
-    describe('Right Menu', function() {
+    describe('Right [Top Statistics] Menu', function() {
 
         beforeEach(() => {
             cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics');
