@@ -6,9 +6,9 @@
   "scripts": {
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
     "pretest": "npm run clean:reports",
-    "cy:run:local": "node_modules/.bin/cypress run --config-file cypress-local.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome",
-    "cy:run:dev": "node_modules/.bin/cypress run --config-file cypress-dev.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome",
-    "cy:run:stage": "node_modules/.bin/cypress run --config-file cypress-stage.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome",
+    "cy:run:local": "node_modules/.bin/cypress run --config-file cypress-local.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome --headless",
+    "cy:run:dev": "node_modules/.bin/cypress run --config-file cypress-dev.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome --headless",
+    "cy:run:stage": "node_modules/.bin/cypress run --config-file cypress-stage.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome --headless",
     "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
     "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
     "posttest": "npm run combine-reports && npm run generate-report",
