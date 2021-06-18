@@ -11,6 +11,9 @@ describe('API', function() {
     const email = Cypress.env('apiSuite').user.email;
     const password = Cypress.env('apiSuite').user.password; 
     const formattedKey = Cypress.env('apiSuite').user.formattedKey;
+    const contentType = {
+        json: "application/json; charset=utf-8"
+    };
 
     let formattedToken;
 
@@ -56,6 +59,7 @@ describe('API', function() {
             }
         ).should((response) => {
             expect(response.status).to.eq(200);
+            expect(response.headers['content-type']).to.eq(contentType.json);
             expect(response.body.jwtToken).to.have.lengthOf.greaterThan(0);
             expect(response.body.refreshToken).to.have.lengthOf.greaterThan(0);
             expect(response.body.idToken).to.have.lengthOf.greaterThan(0);
