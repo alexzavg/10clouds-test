@@ -59,7 +59,7 @@ describe('API', function() {
             expect(response.body.jwtToken).to.have.lengthOf.greaterThan(0);
             expect(response.body.refreshToken).to.have.lengthOf.greaterThan(0);
             expect(response.body.idToken).to.have.lengthOf.greaterThan(0);
-          })
+        });
     });
 
 });
