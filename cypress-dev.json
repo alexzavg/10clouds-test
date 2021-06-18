@@ -59,7 +59,7 @@
             }
         },
         "apiSuite": {
-            "baseUrl": "https://develop-api.qfortress.ai/api/#",
+            "baseUrl": "https://develop-api.qfortress.ai",
             "siteUrl": "fortress-mssp",
             "x-customer-id": "47bf4160-3495-11eb-a2dc-0919615e3fc5",
             "roleId": "1e0a5130-c481-11eb-8068-6d80fe9bfef0",
