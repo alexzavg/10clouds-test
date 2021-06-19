@@ -1,6 +1,5 @@
 {
     "extends": "./cypress.json",
-    "projectId": "uip9ey",
     "video": true,
     "videoCompression": 51,
     "videoUploadOnPasses": false,
