@@ -9,7 +9,8 @@ describe('API', function() {
     const baseUrl = Cypress.env('apiSuite').baseUrl;
     const signInLink = Cypress.env('urls').signIn;
     const email = Cypress.env('apiSuite').user.email;
-    const password = Cypress.env('apiSuite').user.password; 
+    const password = Cypress.env('apiSuite').user.password;
+    const siteUrl = Cypress.env('apiSuite').siteUrl;
     const formattedKey = Cypress.env('apiSuite').user.formattedKey;
     const contentType = {
         json: "application/json; charset=utf-8"
@@ -63,6 +64,21 @@ describe('API', function() {
             expect(response.body.jwtToken).to.have.lengthOf.greaterThan(0);
             expect(response.body.refreshToken).to.have.lengthOf.greaterThan(0);
             expect(response.body.idToken).to.have.lengthOf.greaterThan(0);
+        });
+    });
+
+    it(`Check endpoint ${baseUrl}${endpoints['auth-cognito-pool-settings']}`, function() {
+        cy.request(
+            {
+                method: 'GET',
+                url: baseUrl + endpoints['auth-cognito-pool-settings'] + `?siteUrl=${siteUrl}`
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.headers['content-type']).to.eq(contentType.json);
+            expect(response.body.region).to.eq('us-east-1');
+            expect(response.body.userPoolId).to.eq('us-east-1_4eXAijZrz');
+            expect(response.body.userPoolsClientId).to.eq('5kj604040o8fadf368ub29glj3');
         });
     });
 
