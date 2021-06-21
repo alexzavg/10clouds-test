@@ -146,4 +146,40 @@ describe('API', function() {
         // });
     });
 
+    it(`Check if user is logged in ${baseUrl}${endpoints.auth['sign-in']}`, function() {
+        cy.request(
+            {
+                method: 'POST',
+                url: baseUrl + endpoints.auth['sign-in'],
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
+                }
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200);
+        });
+    });
+
+    it(`User logout ${baseUrl}${endpoints.auth['sign-out']}`, function() {
+        cy.request(
+            {
+                method: 'POST',
+                url: baseUrl + endpoints.auth['sign-out'],
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
+                }
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200);
+        });
+    });
+
 });
