@@ -8,12 +8,12 @@ const {generateToken} = require('authenticator');
 
 describe('Dashboard', function() {
 
-    const signInLink = Cypress.env('urls').signIn;
+    const signInLink    = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
-    const alertsLink = Cypress.env('urls').alerts;
-    const email = Cypress.env('users').third.email;
-    const password = Cypress.env('users').third.password; 
-    const formattedKey = Cypress.env('users').third.formattedKey;
+    const alertsLink    = Cypress.env('urls').alerts;
+    const email         = Cypress.env('users').third.email;
+    const password      = Cypress.env('users').third.password; 
+    const formattedKey  = Cypress.env('users').third.formattedKey;
 
     let formattedToken;
  

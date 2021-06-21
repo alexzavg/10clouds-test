@@ -1,19 +1,24 @@
 import {dashboardPageElements} from '../../components/dashboard.js';
 import {signUpPageElements} from '../../components/sign-up.js';
 import {endpoints} from '../../support/endpoints.js';
+import {getRandomCharLength, getRandomNumberLength} from '../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
 describe('API', function() {
 
-    const baseUrl = Cypress.env('apiSuite').baseUrl;
-    const signInLink = Cypress.env('urls').signIn;
-    const email = Cypress.env('apiSuite').user.email;
-    const password = Cypress.env('apiSuite').user.password;
-    const siteUrl = Cypress.env('apiSuite').siteUrl;
-    const formattedKey = Cypress.env('apiSuite').user.formattedKey;
-    const contentType = {
-        json: "application/json; charset=utf-8"
+    const baseUrl       = Cypress.env('apiSuite').baseUrl;
+    const signInLink    = Cypress.env('urls').signIn;
+    const email         = Cypress.env('apiSuite').user.email;
+    const password      = Cypress.env('apiSuite').user.password;
+    const siteUrl       = Cypress.env('apiSuite').siteUrl;
+    const customerId    = Cypress.env('apiSuite').customerId;
+    const roleId        = Cypress.env('apiSuite').roleId;
+    const serverId      = Cypress.env('MAILOSAUR_SERVER_ID');
+    const emailDomain   = Cypress.env('email_domain');
+    const formattedKey  = Cypress.env('apiSuite').user.formattedKey;
+    const contentType   = {
+        json: 'application/json; charset=utf-8'
     };
 
     let formattedToken;
@@ -48,14 +53,14 @@ describe('API', function() {
         cy.restoreLocalStorage();
     });
 
-    it(`Check endpoint ${baseUrl}${endpoints['auth-refresh-tokens']}`, function() {
+    it(`Refresh tokens ${baseUrl}${endpoints.auth['refresh-tokens']}`, function() {
         cy.request(
             {
                 method: 'POST',
-                url: baseUrl + endpoints['auth-refresh-tokens'],
+                url: baseUrl + endpoints.auth['refresh-tokens'],
                 body: {
-                    "refreshToken": this.refreshToken,
-                    "idToken": this.idToken
+                    'refreshToken': this.refreshToken,
+                    'idToken': this.idToken
                 }
             }
         ).should((response) => {
@@ -67,11 +72,11 @@ describe('API', function() {
         });
     });
 
-    it(`Check endpoint ${baseUrl}${endpoints['auth-cognito-pool-settings']}`, function() {
+    it(`Get cognito pool settings ${baseUrl}${endpoints.auth['cognito-pool-settings']}`, function() {
         cy.request(
             {
                 method: 'GET',
-                url: baseUrl + endpoints['auth-cognito-pool-settings'] + `?siteUrl=${siteUrl}`
+                url: baseUrl + endpoints.auth['cognito-pool-settings'] + `?siteUrl=${siteUrl}`
             }
         ).should((response) => {
             expect(response.status).to.eq(200);
@@ -80,6 +85,65 @@ describe('API', function() {
             expect(response.body.userPoolId).to.eq('us-east-1_4eXAijZrz');
             expect(response.body.userPoolsClientId).to.eq('5kj604040o8fadf368ub29glj3');
         });
+    });
+
+    it(`Add user ${baseUrl}${endpoints.auth['sign-up']} & remove user ${baseUrl}${endpoints.user['remove']}`, function() {
+        const firstName     = 'cypress' + getRandomCharLength(8);
+        const lastName      = 'cypress' + getRandomCharLength(8);
+        const email         = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + emailDomain;
+        const phoneNumber   = '+38098' + getRandomNumberLength(7);
+
+        cy.request(
+            {
+                method: 'POST',
+                url: baseUrl + endpoints.auth['sign-up'],
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
+                },
+                body: {
+                    'firstName': firstName,
+                    'lastName': lastName,
+                    'email': email,
+                    'phoneNumber': phoneNumber,
+                    'roleId': roleId
+                }
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.headers['content-type']).to.eq(contentType.json);
+            expect(response.body.firstName).to.eq(firstName);
+            expect(response.body.lastName).to.eq(lastName);
+            expect(response.body.email).to.eq(email);
+            expect(response.body.phoneNumber).to.eq(phoneNumber);
+            expect(response.body._id).to.eq(response.body.cognitoUserId);
+
+            // get new user ID
+            cy.wrap(response.body._id).as('userId');
+        });
+
+        // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-523
+        // cy.request(
+        //     {
+        //         method: 'POST',
+        //         url: baseUrl + endpoints.user['remove'],
+        //         auth: {
+        //             'bearer': this.accessToken
+        //         },
+        //         headers: {
+        //             'x-customer-id': customerId,
+        //             'x-id-token': this.idToken
+        //         },
+        //         body: {
+        //             'userId': this.userId
+        //         }
+        //     }
+        // ).should((response) => {
+        //     expect(response.status).to.eq(201);
+        // });
     });
 
 });

@@ -8,6 +8,7 @@
         "env": "stage",
         "MAILOSAUR_API_KEY": "wVQvfele7aeMbo5I",
         "MAILOSAUR_SERVER_ID": "u9eitg8h",
+        "email_domain": ".mailosaur.net",
         "urls": {
             "signUp": "https://staging-signup.qfortress.ai/sign-up",
             "confirm": "https://staging-signup.qfortress.ai/confirm",

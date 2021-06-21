@@ -6,14 +6,14 @@ import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, 
 
 describe('Restore Password', function() {
 
-    const signInLink = Cypress.env('urls').signIn;
-    const forgotPasswordLink = Cypress.env('urls').restorePassword;
-    const companyName = Cypress.env('customers').first.name;
-    const email = Cypress.env('users').sixth.email;
-    const invalidEmail = email.replace('@', '@@');
-    const newPassword = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
-    const currentTime = getCurrentTimeISO();
-    const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
+    const signInLink            = Cypress.env('urls').signIn;
+    const forgotPasswordLink    = Cypress.env('urls').restorePassword;
+    const companyName           = Cypress.env('customers').first.name;
+    const email                 = Cypress.env('users').sixth.email;
+    const invalidEmail          = email.replace('@', '@@');
+    const newPassword           = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
+    const currentTime           = getCurrentTimeISO();
+    const serverId              = Cypress.env('MAILOSAUR_SERVER_ID');
 
     beforeEach(() => {
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
