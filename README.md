@@ -5,7 +5,7 @@
 
 - Slack channel for Jenkins alerts https://fortress-kok8877.slack.com/archives/C01Q1QNJTUZ
 
-- If you run tests locally, the users will be the same as on DEV environment, because local env is pointing to DEV DB.
+- (!) If you run tests locally, the users will be the same as on DEV environment, because local env is pointing to DEV DB.
 
 ---
 ## Installation
@@ -25,29 +25,39 @@
 These commands open Cypress runner on a specific environment. After that you can select the test which you wish to execute. Keep in mind that once test is selected - making any changes to the code will re-run the test. This is embedded into Cypress architechture and can only be undone by closing the test runner manually.
 
 **Open test runner locally:**
-
 - `npm run open:local`
 
 **Open test runner on DEV:**
-
 - `npm run open:dev`
 
 **Open test runner on STAGE:**
-
 - `npm run open:stage`
+
 ---
-## Running tests
+## Running E2E tests
 
 **Run all e2e tests locally:**
-- `npm run cy:run:local`
+- `npm run cy:run:e2e:local`
 
 **Run all e2e tests on DEV:**
-- `npm run cy:run:dev`
+- `npm run cy:run:e2e:dev`
 
 **Run all e2e tests on STAGE:**
-- `npm run cy:run:stage`
+- `npm run cy:run:e2e:stage`
 
 **_HINT_**: video recording is enabled for failed tests on local env, the videos can be found in directory `./cypress/videos`
+
+---
+## Running API tests
+
+**Run all e2e tests locally:**
+- `npm run cy:run:api:local`
+
+**Run all e2e tests on DEV:**
+- `npm run cy:run:api:dev`
+
+**Run all e2e tests on STAGE:**
+- `npm run cy:run:api:stage`
 
 ---
 ## Skipping tests on specific env
