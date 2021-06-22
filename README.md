@@ -75,6 +75,9 @@ These commands open Cypress runner on a specific environment. After that you can
 (!) **_HINT_**
 - **_such command runs tests with 2 Cypress instances_**, in order to change the number of instances go to `package.json` and change value before the `-t` argument, which stands for `--threads`
 
+Here's how it looks:
+![Parallel in action](media/parallel-cypress.mp4)
+
 ---
 ## Skipping tests on specific env
 
@@ -100,4 +103,4 @@ In order to skip a test on the specific env, do the following in your `spec` fil
     ```
     
 Here's how it looks like in a real test:
-![Skip in action](images/conditional_skip.png)
+![Skip in action](media/conditional_skip.png)

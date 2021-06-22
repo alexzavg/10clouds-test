@@ -25,9 +25,9 @@
     "open:dev": "node_modules/.bin/cypress open --config-file cypress-dev.json",
     "open:stage": "node_modules/.bin/cypress open --config-file cypress-stage.json",
     "cy:run": "node_modules/.bin/cypress run",
-    "cy:parallel:e2e:local": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-local.json --browser chrome\"'",
-    "cy:parallel:e2e:dev": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"'",
-    "cy:parallel:e2e:stage": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"'"
+    "cy:parallel:e2e:local": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-local.json --browser chrome\"' -r mochawesome",
+    "cy:parallel:e2e:dev": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome",
+    "cy:parallel:e2e:stage": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome"
   },
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",
