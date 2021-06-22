@@ -25,7 +25,7 @@
     "open:local": "node_modules/.bin/cypress open --config-file cypress-local.json",
     "open:dev": "node_modules/.bin/cypress open --config-file cypress-dev.json",
     "open:stage": "node_modules/.bin/cypress open --config-file cypress-stage.json",
-    "cy:parallel:dev":"cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"'"
+    "cy:parallel:dev": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"'"
   },
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",
