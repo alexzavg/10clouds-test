@@ -17,7 +17,7 @@
 3. **Execute commands:**
     - `npm install`
     - `npm install -g "cypress@7.5.0"`
-    - `npm install "cypress@7.5.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands --save-dev`
+    - `npm install "cypress@7.5.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands cypress-parallel --save-dev`
 
 ---
 ## Open Cypress test runner for manual test selection
@@ -45,7 +45,8 @@ These commands open Cypress runner on a specific environment. After that you can
 **Run all e2e tests on STAGE:**
 - `npm run cy:run:e2e:stage`
 
-**_HINT_**: video recording is enabled for failed tests on local env, the videos can be found in directory `./cypress/videos`
+(!) **_HINT_**
+- video recording is enabled for failed tests on local env, the videos can be found in directory `./cypress/videos`
 
 ---
 ## Running API tests
@@ -58,6 +59,21 @@ These commands open Cypress runner on a specific environment. After that you can
 
 **Run all e2e tests on STAGE:**
 - `npm run cy:run:api:stage`
+
+---
+## Running tests in parallel
+
+**Run all e2e tests in parallel locally:**
+- `npm run cy:parallel:e2e:local`
+
+**Run all e2e tests in parallel on DEV:**
+- `npm run cy:parallel:e2e:dev`
+
+**Run all e2e tests in parallel on STAGE:**
+- `npm run cy:parallel:e2e:stage`
+
+(!) **_HINT_**
+- **_such command runs tests with 2 Cypress instances_**, in order to change the number of instances go to `package.json` and change value before the `-t` argument, which stands for `--threads`
 
 ---
 ## Skipping tests on specific env

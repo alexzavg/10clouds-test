@@ -1,1 +1,26 @@
-{}
+{
+  "cypress\\integration\\e2e\\dashboard\\dashboard.spec.js": {
+    "time": 5000,
+    "weight": 25
+  },
+  "cypress\\integration\\e2e\\mssp_configuration\\mssp_configuration.spec.js": {
+    "time": 10000,
+    "weight": 10
+  },
+  "cypress\\integration\\e2e\\restore_password\\restore_password.spec.js": {
+    "time": 15000,
+    "weight": 15
+  },
+  "cypress\\integration\\e2e\\sign_in\\sign_in.spec.js": {
+    "time": 20000,
+    "weight": 30
+  },
+  "cypress\\integration\\e2e\\sign_up\\sign_up.spec.js": {
+    "time": 25000,
+    "weight": 20
+  },
+  "cypress\\integration\\e2e\\users\\users.spec.js": {
+    "time": 30000,
+    "weight": 5
+  }
+}
