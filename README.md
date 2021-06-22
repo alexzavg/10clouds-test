@@ -19,7 +19,7 @@ Table of contents
 
 - Slack channel for Jenkins alerts https://fortress-kok8877.slack.com/archives/C01Q1QNJTUZ
 
-- (!) If you run tests locally, the users will be the same as on DEV environment, because local env is pointing to DEV DB.
+⚠️ If you run tests locally, the users will be the same as on DEV environment, because local env is pointing to DEV DB.
 
 ---
 ## Installation
@@ -59,7 +59,7 @@ These commands open Cypress runner on a specific environment. After that you can
 **Run all e2e tests on STAGE:**
 - `npm run cy:run:e2e:stage`
 
-(!) **_HINT_**
+:information_source: **_HINT_**
 - video recording is enabled for failed tests on local env, the videos can be found in directory `./cypress/videos`
 
 ---
@@ -86,7 +86,7 @@ These commands open Cypress runner on a specific environment. After that you can
 **Run all e2e tests in parallel on STAGE:**
 - `npm run cy:parallel:e2e:stage`
 
-(!) **_HINT_**
+:information_source: **_HINT_**
 - **_such command runs tests with 2 Cypress instances_**, in order to change the number of instances go to `package.json` and change value before the `-t` argument, which stands for `--threads`
 
 Here's how it looks:
