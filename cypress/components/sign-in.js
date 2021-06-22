@@ -32,6 +32,7 @@ export const signInPageData = {
         'emailRequired': 'Email is required.',
         'passwordRequired': 'Password is required.',
         'invalidCredentials': 'Incorrect login email or password',
+        'invalidCredentialsResponse': 'Incorrect username or password.',
         'unableToAuthorize': 'Unable to authorize user',
         'codeIsRequired': 'Code is required.',
         'passwordsDontMatch': 'Password and Confirm Password does not match.',

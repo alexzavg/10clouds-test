@@ -23,7 +23,11 @@
     "api:stage": "npm run pretest && npm run cy:run:api:stage && npm run posttest",
     "open:local": "node_modules/.bin/cypress open --config-file cypress-local.json",
     "open:dev": "node_modules/.bin/cypress open --config-file cypress-dev.json",
-    "open:stage": "node_modules/.bin/cypress open --config-file cypress-stage.json"
+    "open:stage": "node_modules/.bin/cypress open --config-file cypress-stage.json",
+    "cy:run": "node_modules/.bin/cypress run",
+    "cy:parallel:e2e:local": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-local.json --browser chrome\"' -r mochawesome",
+    "cy:parallel:e2e:dev": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome",
+    "cy:parallel:e2e:stage": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome"
   },
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",
@@ -37,6 +41,7 @@
     "cypress-localstorage-commands": "^1.4.5",
     "cypress-mailosaur": "^2.3.2",
     "cypress-multi-reporters": "^1.5.0",
+    "cypress-parallel": "^0.3.0",
     "mocha": "^8.4.0",
     "mochawesome": "^6.2.2",
     "mochawesome-merge": "^4.2.0",

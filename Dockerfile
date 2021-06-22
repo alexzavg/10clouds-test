@@ -19,7 +19,7 @@ RUN cypress verify
 COPY . /app
 
 RUN npm install
-RUN npm install "cypress@7.5.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands --save-dev
+RUN npm install "cypress@7.5.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands cypress-parallel --save-dev
 
 RUN cypress cache path
 RUN cypress cache list
