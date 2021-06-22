@@ -1,4 +1,18 @@
 # Cypress e2e tests for Fortress project
+
+Table of contents
+=================
+
+<!--ts-->
+   * [General info](#general-info)
+   * [Installation](#installation)
+   * [Open Cypress test runner for manual test selection](#open-cypress-test-runner-for-manual-test-selection)
+   * [Run E2E tests](#run-e2e-tests)
+   * [Run API tests](#run-api-tests)
+   * [Run tests in parallel](#run-tests-in-parallel)
+   * [Skip tests on specific env](#skip-tests-on-specific-env)
+<!--te-->
+
 ## General info
 
 - Jenkins job which runs the tests https://jenkins.qfortress.ai/job/autotests/job/cypress-dev/
@@ -34,7 +48,7 @@ These commands open Cypress runner on a specific environment. After that you can
 - `npm run open:stage`
 
 ---
-## Running E2E tests
+## Run E2E tests
 
 **Run all e2e tests locally:**
 - `npm run cy:run:e2e:local`
@@ -49,7 +63,7 @@ These commands open Cypress runner on a specific environment. After that you can
 - video recording is enabled for failed tests on local env, the videos can be found in directory `./cypress/videos`
 
 ---
-## Running API tests
+## Run API tests
 
 **Run all e2e tests locally:**
 - `npm run cy:run:api:local`
@@ -61,7 +75,7 @@ These commands open Cypress runner on a specific environment. After that you can
 - `npm run cy:run:api:stage`
 
 ---
-## Running tests in parallel
+## Run tests in parallel
 
 **Run all e2e tests in parallel locally:**
 - `npm run cy:parallel:e2e:local`
@@ -79,7 +93,7 @@ Here's how it looks:
 ![Parallel in action](media/parallel-cypress.gif)
 
 ---
-## Skipping tests on specific env
+## Skip tests on specific env
 
 Current solution is based on package https://github.com/cypress-io/cypress-skip-test
 
