@@ -1,36 +1,33 @@
-import {dashboardPageElements} from '../../components/dashboard.js';
-import {navbarElements, navbarData} from '../../components/navbar.js';
-import {signUpPageElements} from '../../components/sign-up.js';
-import {msspPageElements, msspPageData} from '../../components/mssp.js';
-import {requests} from '../../support/requests.js';
-import {emailsData} from '../../support/emailsData.js';
-import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
+import {dashboardPageElements} from '../../../components/dashboard.js';
+import {navbarElements, navbarData} from '../../../components/navbar.js';
+import {signUpPageElements} from '../../../components/sign-up.js';
+import {msspPageElements, msspPageData} from '../../../components/mssp.js';
+import {requests} from '../../../support/requests.js';
+import {emailsData} from '../../../support/emailsData.js';
+import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
 describe('MSSP Configuration', function() {
 
-    const signInLink = Cypress.env('urls').signIn;
-    const msspLink = Cypress.env('urls').mssp;
-    const signUpLink = Cypress.env('urls').signUp; 
-    const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
-
-    const userNameFirst = 'Autotest Autotest';
-    const emailFirst = Cypress.env('users').fourth.email;
-    const passwordFirst = Cypress.env('users').fourth.password;
-    const formattedKeyFirst = Cypress.env('users').fourth.formattedKey;
-
-    const userNameSecond = 'Autotests Autotests';
-    const emailSecond = Cypress.env('users').fifth.email;
-    const passwordSecond = Cypress.env('users').fifth.password;
-    const formattedKeySecond = Cypress.env('users').fifth.formattedKey;
-
-    const currentTime = getCurrentTimeISO();
-    const customerEmailFirst = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
-    const customerEmailSecond = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
-    
-    const companyName = Cypress.env('customers').second.name;
-    const companyEmail = Cypress.env('customers').second.email;
+    const signInLink            = Cypress.env('urls').signIn;
+    const msspLink              = Cypress.env('urls').mssp;
+    const signUpLink            = Cypress.env('urls').signUp; 
+    const serverId              = Cypress.env('MAILOSAUR_SERVER_ID');
+    const emailDomain           = Cypress.env('email_domain');
+    const userNameFirst         = 'Autotest Autotest';
+    const emailFirst            = Cypress.env('users').fourth.email;
+    const passwordFirst         = Cypress.env('users').fourth.password;
+    const formattedKeyFirst     = Cypress.env('users').fourth.formattedKey;
+    const userNameSecond        = 'Autotests Autotests';
+    const emailSecond           = Cypress.env('users').fifth.email;
+    const passwordSecond        = Cypress.env('users').fifth.password;
+    const formattedKeySecond    = Cypress.env('users').fifth.formattedKey;
+    const currentTime           = getCurrentTimeISO();
+    const customerEmailFirst    = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + emailDomain;
+    const customerEmailSecond   = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + emailDomain;
+    const companyName           = Cypress.env('customers').second.name;
+    const companyEmail          = Cypress.env('customers').second.email;
 
     beforeEach(() => {
         cy.intercept(requests['customer-search']).as('customer-search');
@@ -74,9 +71,9 @@ describe('MSSP Configuration', function() {
                 cy.get(msspPageElements.emailField).type(customerEmailFirst);
                 cy.get(msspPageElements.inviteBtn).click();
                 cy.wait('@customer-invitations').then((value) => {
-                    expect(value.response.statusCode).to.equal(201);
-                    expect(value.request.body.customerType).to.equal(msspPageData.customerType.regular.toUpperCase());
-                    expect(value.request.body.email).to.equal(customerEmailFirst);
+                    expect(value.response.statusCode).to.eq(201);
+                    expect(value.request.body.customerType).to.eq(msspPageData.customerType.regular.toUpperCase());
+                    expect(value.request.body.email).to.eq(customerEmailFirst);
                 });
             });
     
@@ -137,9 +134,9 @@ describe('MSSP Configuration', function() {
                 cy.get(msspPageElements.emailField).type(customerEmailSecond);
                 cy.get(msspPageElements.inviteBtn).click();
                 cy.wait('@customer-invitations').then((value) => {
-                    expect(value.response.statusCode).to.equal(201);
-                    expect(value.request.body.customerType).to.equal(msspPageData.customerType.mssp);
-                    expect(value.request.body.email).to.equal(customerEmailSecond);
+                    expect(value.response.statusCode).to.eq(201);
+                    expect(value.request.body.customerType).to.eq(msspPageData.customerType.mssp);
+                    expect(value.request.body.email).to.eq(customerEmailSecond);
                 });
             });
     
@@ -180,7 +177,6 @@ describe('MSSP Configuration', function() {
         });
     
         it('Search company by [Customer] param, check expanded info', function() {
-            
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible');
             });
@@ -226,7 +222,6 @@ describe('MSSP Configuration', function() {
         });
     
         it('Search company by [Email] param & switch context to this company', function() {
-            
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible');
             });

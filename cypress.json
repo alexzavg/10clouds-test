@@ -2,7 +2,7 @@
     "$schema": "https://on.cypress.io/cypress.schema.json",
     "theme": "dark",
     "scrollBehavior": false,
-    "experimentalStudio": false,
+    "experimentalStudio": true,
     "experimentalFetchPolyfill": false,
     "projectId": "",
     "includeShadowDom": true,

@@ -20,6 +20,7 @@ module.exports = (on, config) => {
 
       // ** CHROME ARGS https://peter.sh/experiments/chromium-command-line-switches
       launchOptions.args.push('--window-size=1920,1080');
+      launchOptions.args.push('--disable-dev-shm-usage');
       // launchOptions.args.push('--auto-open-devtools-for-tabs');
 
       /** 

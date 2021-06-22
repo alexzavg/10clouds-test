@@ -1,45 +1,45 @@
-import {signInPageElements} from '../../components/sign-in.js';
-import {signUpPageElements, signUpPageData} from '../../components/sign-up.js';
-import {dashboardPageElements} from '../../components/dashboard.js';
-import {requests} from '../../support/requests.js';
-import {emailsData} from '../../support/emailsData.js';
-import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
+import {signInPageElements} from '../../../components/sign-in.js';
+import {signUpPageElements, signUpPageData} from '../../../components/sign-up.js';
+import {dashboardPageElements} from '../../../components/dashboard.js';
+import {requests} from '../../../support/requests.js';
+import {emailsData} from '../../../support/emailsData.js';
+import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
 describe('Sign Up', function() {
 
-    const signUpLink = Cypress.env('urls').signUp;
-    const confirmLink = Cypress.env('urls').confirm;
-    const completeLink = Cypress.env('urls').complete;
-    const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
-    const firstName = 'autotest' + getRandomCharLength(8);
-    const email = 'autotest'+ getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
-    const phoneNumber = '+38067' + getRandomNumberLength(7);
-    const personalUrl = 'autotest' + getRandomCharLength(15);
-    const taxNumber = getRandomNumberLength(6);
-    const numberOfEmployees = getRandomNumberLength(1);
-    const companyWebAddress = 'https://' + getRandomCharLength(20) + '.com';
-    const country = 'Ukraine';
-    const countryValue = 'UA';
-    const state = 'Poltavs\'ka Oblast\'';
-    const stateValue = '53';
-    const city = 'Poltava';
+    const signUpLink            = Cypress.env('urls').signUp;
+    const confirmLink           = Cypress.env('urls').confirm;
+    const completeLink          = Cypress.env('urls').complete;
+    const serverId              = Cypress.env('MAILOSAUR_SERVER_ID');
+    const emailDomain           = Cypress.env('email_domain');
+    const firstName             = 'autotest' + getRandomCharLength(8);
+    const email                 = 'autotest'+ getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + emailDomain;
+    const phoneNumber           = '+38067' + getRandomNumberLength(7);
+    const personalUrl           = 'autotest' + getRandomCharLength(15);
+    const taxNumber             = getRandomNumberLength(6);
+    const numberOfEmployees     = getRandomNumberLength(1);
+    const companyWebAddress     = 'https://' + getRandomCharLength(20) + '.com';
+    const country               = 'Ukraine';
+    const countryValue          = 'UA';
+    const state                 = 'Poltavs\'ka Oblast\'';
+    const stateValue            = '53';
+    const city                  = 'Poltava';
     const zip = getRandomNumberLength(6);
-    const password = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
-    const invalidPasswordOne = 'W1_wwww';
-    const invalidPasswordTwo = 'wwwwww_1';
-    const invalidPasswordThree = 'WWWWWW_1';
-    const invalidPasswordFour = 'wwwWWWW_';
-    const invalidPasswordFive = 'W1wwwwww';
-    const testString = 'autotest.com';
-    const currentTime = getCurrentTimeISO();
-
-    const signInLink = Cypress.config().baseUrl + '/' + personalUrl + '/sign-in';
-    const prePaymentLink = Cypress.config().baseUrl + '/' + personalUrl + '/payment/pre';
-    const selectServicesLink = Cypress.config().baseUrl + '/' + personalUrl + '/select-services';
-    const dashboardLink = Cypress.config().baseUrl + '/' + personalUrl + '/dashboard';
-    const setupCompletedLink = Cypress.config().baseUrl + '/' + personalUrl + '/setup-completed';
+    const password              = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
+    const invalidPasswordOne    = 'W1_wwww';
+    const invalidPasswordTwo    = 'wwwwww_1';
+    const invalidPasswordThree  = 'WWWWWW_1';
+    const invalidPasswordFour   = 'wwwWWWW_';
+    const invalidPasswordFive   = 'W1wwwwww';
+    const testString            = 'autotest.com';
+    const currentTime           = getCurrentTimeISO();
+    const signInLink            = Cypress.config().baseUrl + '/' + personalUrl + '/sign-in';
+    const prePaymentLink        = Cypress.config().baseUrl + '/' + personalUrl + '/payment/pre';
+    const selectServicesLink    = Cypress.config().baseUrl + '/' + personalUrl + '/select-services';
+    const dashboardLink         = Cypress.config().baseUrl + '/' + personalUrl + '/dashboard';
+    const setupCompletedLink    = Cypress.config().baseUrl + '/' + personalUrl + '/setup-completed';
 
     let confirmationCode, otp;
 

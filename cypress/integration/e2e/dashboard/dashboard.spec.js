@@ -1,19 +1,19 @@
-import {dashboardPageElements, dashboardPageData} from '../../components/dashboard.js';
-import {signUpPageElements} from '../../components/sign-up.js';
-import {alertsPageElements} from '../../components/alerts.js';
-import {requests} from '../../support/requests.js';
-import {ValidInDays, ValidInWeeks, PostExtractTimes, ValidInHours} from '../../support/dataGenerator.js';
+import {dashboardPageElements, dashboardPageData} from '../../../components/dashboard.js';
+import {signUpPageElements} from '../../../components/sign-up.js';
+import {alertsPageElements} from '../../../components/alerts.js';
+import {requests} from '../../../support/requests.js';
+import {ValidInDays, ValidInWeeks, PostExtractTimes, ValidInHours} from '../../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
 describe('Dashboard', function() {
 
-    const signInLink = Cypress.env('urls').signIn;
+    const signInLink    = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
-    const alertsLink = Cypress.env('urls').alerts;
-    const email = Cypress.env('users').third.email;
-    const password = Cypress.env('users').third.password; 
-    const formattedKey = Cypress.env('users').third.formattedKey;
+    const alertsLink    = Cypress.env('urls').alerts;
+    const email         = Cypress.env('users').third.email;
+    const password      = Cypress.env('users').third.password; 
+    const formattedKey  = Cypress.env('users').third.formattedKey;
 
     let formattedToken;
  

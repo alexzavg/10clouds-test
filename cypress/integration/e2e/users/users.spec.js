@@ -1,28 +1,29 @@
-import {signInPageData, signInPageElements} from '../../components/sign-in.js';
-import {signUpPageElements} from '../../components/sign-up.js';
-import {dashboardPageElements} from '../../components/dashboard.js';
-import {usersPageElements, usersPageData} from '../../components/users.js';
-import {navbarElements, navbarData} from '../../components/navbar.js';
-import {requests} from '../../support/requests.js';
-import {emailsData} from '../../support/emailsData.js';
-import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
+import {signInPageData, signInPageElements} from '../../../components/sign-in.js';
+import {signUpPageElements} from '../../../components/sign-up.js';
+import {dashboardPageElements} from '../../../components/dashboard.js';
+import {usersPageElements, usersPageData} from '../../../components/users.js';
+import {navbarElements, navbarData} from '../../../components/navbar.js';
+import {requests} from '../../../support/requests.js';
+import {emailsData} from '../../../support/emailsData.js';
+import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
 describe('Users', function() {
 
-    const signInLink = Cypress.env('urls').signIn;
-    const usersLink = Cypress.env('urls').users;
-    const adminLogin = Cypress.env('users').second.email;
-    const adminPassword = Cypress.env('users').second.password;
-    const adminFormattedKey = Cypress.env('users').second.formattedKey;
-    const serverId = Cypress.env('MAILOSAUR_SERVER_ID');
-    const newUserFirstName = 'cypress' + getRandomCharLength(8);
-    const newUserEmail = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + '.mailosaur.net';
-    const newUserPhoneNumber = '+38093' + getRandomNumberLength(7);
-    const role = 'Organization Admin';
-    const newUserPassword = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
-    const currentTime = getCurrentTimeISO();
+    const signInLink            = Cypress.env('urls').signIn;
+    const usersLink             = Cypress.env('urls').users;
+    const adminLogin            = Cypress.env('users').second.email;
+    const adminPassword         = Cypress.env('users').second.password;
+    const adminFormattedKey     = Cypress.env('users').second.formattedKey;
+    const serverId              = Cypress.env('MAILOSAUR_SERVER_ID');
+    const emailDomain           = Cypress.env('email_domain');
+    const newUserFirstName      = 'cypress' + getRandomCharLength(8);
+    const newUserEmail          = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + emailDomain;
+    const newUserPhoneNumber    = '+38093' + getRandomNumberLength(7);
+    const role                  = 'Organization Admin';
+    const newUserPassword       = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
+    const currentTime           = getCurrentTimeISO();
 
     let adminOtp, adminOtpNew, newUserOtp;
     let temporaryPassword;

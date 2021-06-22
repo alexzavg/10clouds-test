@@ -8,6 +8,7 @@
         "env": "dev",
         "MAILOSAUR_API_KEY": "wVQvfele7aeMbo5I",
         "MAILOSAUR_SERVER_ID": "u9eitg8h",
+        "email_domain": ".mailosaur.net",
         "urls": {
             "signUp": "https://dev-signup.qfortress.ai/sign-up",
             "confirm": "https://dev-signup.qfortress.ai/confirm",
@@ -57,6 +58,30 @@
             "sixth": {
                 "email": "physical-solar@u9eitg8h.mailosaur.net"
             }
+        },
+        "apiSuite": {
+            "baseUrl": "https://develop-api.qfortress.ai",
+            "siteUrl": "fortress-mssp",
+            "customerId": "47bf4160-3495-11eb-a2dc-0919615e3fc5",
+            "roleId": "1e0a5130-c481-11eb-8068-6d80fe9bfef0",
+            "userId": "ef1289c4-08b0-445f-899c-58605e5458fa",
+            "alertId": "77f5ac00-c457-11eb-b1c2-8bb53a1798f8",
+            "startDate": "1991-04-29T10:00:00.000Z",
+            "severity": ["HIGH", "MEDIUM", "LOW", "NONE"],
+            "top": "5",
+            "aggregate": ["alerts", "endpoints", "users"],
+            "serviceType": ["EDP", "MAIL", "CLOUD_STORAGE"],
+            "subVerdict": ["CLN", "SPM", "MAL", "BLK", "SUS"],
+            "serviceLicenseId": "de347460-5689-11eb-9957-93051f103eed",
+            "serviceAccountId": "bdaacb50-be20-11eb-90f5-7548d68e111e",
+            "paymentProvider": "AuthorizeNet",
+            "targetCurrency": ["USD", "EUR"],
+            "baseCurrency": ["USD", "EUR", "ILS", "GBP", "AUD", "CAD", "CHF"],
+            "user": {
+                "email": "me41zavgorodnii+60@gmail.com",
+                "password": "wa12aszx34WA_",
+                "formattedKey": "LBRD3IADVNVN6MUVIMKTIX7LY2IOYJYJGGOEZQMJ24IX7OYFLT5Q"
+            }
         }
     }
-} 
+}

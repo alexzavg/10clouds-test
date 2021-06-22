@@ -32,6 +32,13 @@ export const signInPageData = {
         'emailRequired': 'Email is required.',
         'passwordRequired': 'Password is required.',
         'invalidCredentials': 'Incorrect login email or password',
-        'unableToAuthorize': 'Unable to authorize user'
+        'unableToAuthorize': 'Unable to authorize user',
+        'codeIsRequired': 'Code is required.',
+        'passwordsDontMatch': 'Password and Confirm Password does not match.',
+        'incorrectCode': 'Incorrect code, please refer to the email address provided initially',
+        'codeMismatchException': 'CodeMismatchException',
+        'invalidCodeProvided': 'Invalid verification code provided, please try again.',
+        'notAuthorizedException': 'NotAuthorizedException',
+        'invalidCodeReceivedForUser': 'Invalid code received for user'
     }
 }

@@ -1,18 +1,18 @@
-import {signInPageElements, signInPageData} from '../../components/sign-in.js';
-import {signUpPageElements} from '../../components/sign-up.js';
-import {dashboardPageElements} from '../../components/dashboard.js';
-import {requests} from '../../support/requests.js';
-import {getRandomCharLength} from '../../support/dataGenerator.js';
+import {signInPageElements, signInPageData} from '../../../components/sign-in.js';
+import {signUpPageElements} from '../../../components/sign-up.js';
+import {dashboardPageElements} from '../../../components/dashboard.js';
+import {requests} from '../../../support/requests.js';
+import {getRandomCharLength} from '../../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
 describe('Sign In', function() {
 
-    const signInLink = Cypress.env('urls').signIn;
+    const signInLink    = Cypress.env('urls').signIn;
     const dashboardLink = Cypress.env('urls').dashboard;
-    const email = Cypress.env('users').first.email;
-    const password = Cypress.env('users').first.password;
-    const formattedKey = Cypress.env('users').first.formattedKey;
+    const email         = Cypress.env('users').first.email;
+    const password      = Cypress.env('users').first.password;
+    const formattedKey  = Cypress.env('users').first.formattedKey;
     
     let formattedToken;
 
@@ -94,9 +94,9 @@ describe('Sign In', function() {
             cy.contains(signInPageElements.notificationDialogue, signInPageData.errors.invalidCredentials);
             cy.url().should('eq', signInLink);
             cy.wait('@cognito-idp').then((value) => {
-                expect(value.response.statusCode).to.equal(400);
-                expect(value.response.body.message).to.equal('Incorrect username or password.');
-                expect(value.response.body.__type).to.equal('NotAuthorizedException');
+                expect(value.response.statusCode).to.eq(400);
+                expect(value.response.body.message).to.eq(signInPageData.errors.invalidCredentials);
+                expect(value.response.body.__type).to.eq(signInPageData.errors.notAuthorizedException);
             });
         });
     });
@@ -139,9 +139,9 @@ describe('Sign In', function() {
             cy.contains(signInPageElements.notificationDialogue, signInPageData.errors.unableToAuthorize);
             cy.url().should('eq', signInLink);
             cy.wait('@cognito-idp').then((value) => {
-                expect(value.response.statusCode).to.equal(400);
-                expect(value.response.body.message).to.equal('Invalid code received for user');
-                expect(value.response.body.__type).to.equal('CodeMismatchException');
+                expect(value.response.statusCode).to.eq(400);
+                expect(value.response.body.message).to.eq(signInPageData.errors.invalidCodeReceivedForUser);
+                expect(value.response.body.__type).to.eq(signInPageData.errors.codeMismatchException);
             });
         });
     });   
