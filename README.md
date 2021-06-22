@@ -1,4 +1,4 @@
-# Cypress e2e tests for Fortress project
+# Cypress tests for Fortress project
 
 Table of contents
 =================
