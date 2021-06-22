@@ -71,9 +71,9 @@ describe('MSSP Configuration', function() {
                 cy.get(msspPageElements.emailField).type(customerEmailFirst);
                 cy.get(msspPageElements.inviteBtn).click();
                 cy.wait('@customer-invitations').then((value) => {
-                    expect(value.response.statusCode).to.equal(201);
-                    expect(value.request.body.customerType).to.equal(msspPageData.customerType.regular.toUpperCase());
-                    expect(value.request.body.email).to.equal(customerEmailFirst);
+                    expect(value.response.statusCode).to.eq(201);
+                    expect(value.request.body.customerType).to.eq(msspPageData.customerType.regular.toUpperCase());
+                    expect(value.request.body.email).to.eq(customerEmailFirst);
                 });
             });
     
@@ -134,9 +134,9 @@ describe('MSSP Configuration', function() {
                 cy.get(msspPageElements.emailField).type(customerEmailSecond);
                 cy.get(msspPageElements.inviteBtn).click();
                 cy.wait('@customer-invitations').then((value) => {
-                    expect(value.response.statusCode).to.equal(201);
-                    expect(value.request.body.customerType).to.equal(msspPageData.customerType.mssp);
-                    expect(value.request.body.email).to.equal(customerEmailSecond);
+                    expect(value.response.statusCode).to.eq(201);
+                    expect(value.request.body.customerType).to.eq(msspPageData.customerType.mssp);
+                    expect(value.request.body.email).to.eq(customerEmailSecond);
                 });
             });
     
@@ -177,7 +177,6 @@ describe('MSSP Configuration', function() {
         });
     
         it('Search company by [Customer] param, check expanded info', function() {
-            
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible');
             });
@@ -223,7 +222,6 @@ describe('MSSP Configuration', function() {
         });
     
         it('Search company by [Email] param & switch context to this company', function() {
-            
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible');
             });

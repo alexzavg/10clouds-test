@@ -14,6 +14,7 @@ describe('Restore Password', function() {
     const newPassword           = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
     const currentTime           = getCurrentTimeISO();
     const serverId              = Cypress.env('MAILOSAUR_SERVER_ID');
+    const incorrectCode         = '000000';
 
     beforeEach(() => {
         cy.intercept(requests['auth-cognito']).as('auth-cognito');
@@ -22,7 +23,7 @@ describe('Restore Password', function() {
         cy.intercept(requests['user-password-change']).as('user-password-change');
     });
  
-    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-418
+    // ! disabled due to: need fix for getting code 
     it.skip('Restore password, check email & login with new password', function() {
 
         cy.visit(signInLink);
@@ -35,19 +36,19 @@ describe('Restore Password', function() {
 
         cy.wait('@user-password-reset').then((value) => {
             // Request
-            expect(value.request.method).to.equal('POST');
-            expect(value.request.body.email).to.equal(email);
-            expect(value.request.body.siteUrl).to.equal(companyName);
+            expect(value.request.method).to.eq('POST');
+            expect(value.request.body.email).to.eq(email);
+            expect(value.request.body.siteUrl).to.eq(companyName);
             // Response
-            expect(value.response.statusCode).to.equal(201);
-            expect(value.response.body.email).to.equal(email);
-            expect(value.response.body.siteUrl).to.equal(companyName);
+            expect(value.response.statusCode).to.eq(201);
+            expect(value.response.body.email).to.eq(email);
+            expect(value.response.body.siteUrl).to.eq(companyName);
         });
         
         cy.mailosaurGetMessage(serverId, {
-            sentFrom: emailsData.emails.noReply,
+            sentFrom: emailsData.emails.support,
             sentTo: email,
-            subject: emailsData.subjects.emailVerification
+            subject: emailsData.subjects.resetUserPassword
         }, {
             receivedAfter: new Date(currentTime),
             timeout: 60000
@@ -63,15 +64,15 @@ describe('Restore Password', function() {
 
             cy.wait('@user-password-change').then((value) => {
                 // Request
-                expect(value.request.method).to.equal('POST');
-                expect(value.request.body.email).to.equal(email);
-                expect(value.request.body.newPassword).to.equal(newPassword);
-                expect(value.request.body.siteUrl).to.equal(companyName);
-                expect(value.request.body.verificationCode).to.equal(confirmationCode);
+                expect(value.request.method).to.eq('POST');
+                expect(value.request.body.email).to.eq(email);
+                expect(value.request.body.newPassword).to.eq(newPassword);
+                expect(value.request.body.siteUrl).to.eq(companyName);
+                expect(value.request.body.verificationCode).to.eq(confirmationCode);
                 // Response
-                expect(value.response.statusCode).to.equal(201);
-                expect(value.response.body.email).to.equal(email);
-                expect(value.response.body.siteUrl).to.equal(companyName);
+                expect(value.response.statusCode).to.eq(201);
+                expect(value.response.body.email).to.eq(email);
+                expect(value.response.body.siteUrl).to.eq(companyName);
             });
 
             cy.url().should('eq', signInLink);
@@ -84,29 +85,63 @@ describe('Restore Password', function() {
         });
     });
 
-    it('Validate error for empty [Email] field', function() {
+    it('Error for empty [Email] field', function() {
         cy.visit(forgotPasswordLink);
-        cy.url().should('eq', forgotPasswordLink);
         cy.get(signInPageElements.emailField).click();
         cy.clickOutside();
         cy.contains(signInPageElements.error, signInPageData.errors.emailRequired).should('be.visible');
         cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.restorePassword).should('be.visible');
     });
 
-    it('Validate error for invalid email in [Email] field', function() {
+    it('Error for invalid email in [Email] field', function() {
         cy.visit(forgotPasswordLink);
-        cy.url().should('eq', forgotPasswordLink);
         cy.get(signInPageElements.emailField).type(invalidEmail);
         cy.contains(signInPageElements.btn, signInPageData.buttons.restorePassword).click();
         cy.contains(signInPageElements.notificationDialogue, `Email ${invalidEmail} is not valid`);
         cy.url().should('eq', forgotPasswordLink);
         cy.wait('@user-password-reset').then((value) => {
             // Request
-            expect(value.request.method).to.equal('POST');
-            expect(value.request.body.email).to.equal(invalidEmail);
-            expect(value.request.body.siteUrl).to.equal(companyName);
+            expect(value.request.method).to.eq('POST');
+            expect(value.request.body.email).to.eq(invalidEmail);
+            expect(value.request.body.siteUrl).to.eq(companyName);
             // Response
-            expect(value.response.statusCode).to.equal(400);
+            expect(value.response.statusCode).to.eq(400);
+        });
+    });
+
+    it('Error for [New Password] & [Confirm Password] field values mismatch', function() {
+        cy.visit(forgotPasswordLink);
+        cy.get(signInPageElements.emailField).type(email);
+        cy.contains(signInPageElements.btn, signInPageData.buttons.restorePassword).click();
+        cy.get(signInPageElements.emailField).should('have.value', email);
+        cy.get(signInPageElements.newPasswordField).clear().type('1');
+        cy.get(signInPageElements.confirmPasswordField).clear().type('2');
+        cy.contains(signInPageElements.error, signInPageData.errors.passwordsDontMatch).should('be.visible');
+        cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.confirm).should('be.visible');
+    });
+
+    it('Error for empty [Code] field', function() {
+        cy.get(signInPageElements.confirmCodeField).click();
+        cy.clickOutside();
+        cy.contains(signInPageElements.error, signInPageData.errors.codeIsRequired).should('be.visible');
+    });
+
+    it('Error for incorrect code in [Code] field', function() {
+        cy.get(signInPageElements.newPasswordField).clear().type(newPassword);
+        cy.get(signInPageElements.confirmPasswordField).clear().type(newPassword);
+        cy.get(signInPageElements.confirmCodeField).clear().type(incorrectCode);
+        cy.contains(signInPageElements.btn, signInPageData.buttons.confirm).click();
+        cy.wait('@user-password-change').then((value) => {
+            // Request
+            expect(value.request.method).to.eq('POST');
+            expect(value.request.body.email).to.eq(email);
+            expect(value.request.body.siteUrl).to.eq(companyName);
+            expect(value.request.body.verificationCode).to.eq(incorrectCode);
+            // Response
+            expect(value.response.statusCode).to.eq(400);
+            expect(value.response.body.code).to.eq(signInPageData.errors.codeMismatchException);
+            expect(value.response.body.message).to.eq(signInPageData.errors.invalidCodeProvided);
+            expect(value.response.body.name).to.eq(signInPageData.errors.codeMismatchException);
         });
     });
  
