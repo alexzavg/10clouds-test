@@ -1,9 +1,9 @@
-import {signInPageElements} from '../../components/sign-in.js';
-import {signUpPageElements, signUpPageData} from '../../components/sign-up.js';
-import {dashboardPageElements} from '../../components/dashboard.js';
-import {requests} from '../../support/requests.js';
-import {emailsData} from '../../support/emailsData.js';
-import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../support/dataGenerator.js';
+import {signInPageElements} from '../../../components/sign-in.js';
+import {signUpPageElements, signUpPageData} from '../../../components/sign-up.js';
+import {dashboardPageElements} from '../../../components/dashboard.js';
+import {requests} from '../../../support/requests.js';
+import {emailsData} from '../../../support/emailsData.js';
+import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../../support/dataGenerator.js';
 
 const {generateToken} = require('authenticator');
 
