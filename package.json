@@ -6,6 +6,7 @@
   "scripts": {
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
     "pretest": "npm run clean:reports",
+    "cy:run": "node_modules/.bin/cypress run",
     "cy:run:e2e:local": "node_modules/.bin/cypress run --config-file cypress-local.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome --headless",
     "cy:run:e2e:dev": "node_modules/.bin/cypress run --config-file cypress-dev.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome --headless",
     "cy:run:e2e:stage": "node_modules/.bin/cypress run --config-file cypress-stage.json --spec \"cypress/integration/e2e/**/*.spec.js\" --browser chrome --headless",
@@ -23,7 +24,8 @@
     "api:stage": "npm run pretest && npm run cy:run:api:stage && npm run posttest",
     "open:local": "node_modules/.bin/cypress open --config-file cypress-local.json",
     "open:dev": "node_modules/.bin/cypress open --config-file cypress-dev.json",
-    "open:stage": "node_modules/.bin/cypress open --config-file cypress-stage.json"
+    "open:stage": "node_modules/.bin/cypress open --config-file cypress-stage.json",
+    "cy:parallel:dev":"cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"'"
   },
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",
@@ -41,5 +43,8 @@
     "mochawesome": "^6.2.2",
     "mochawesome-merge": "^4.2.0",
     "mochawesome-report-generator": "^5.2.0"
+  },
+  "dependencies": {
+    "cypress-parallel": "^0.3.0"
   }
 }

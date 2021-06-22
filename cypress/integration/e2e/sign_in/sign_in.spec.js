@@ -84,7 +84,6 @@ describe('Sign In', function() {
     });
 
     it('Sign in with invalid password', function() {
-
         cy.visit(signInLink);
         cy.url().should('eq', signInLink);
         
@@ -95,7 +94,7 @@ describe('Sign In', function() {
             cy.url().should('eq', signInLink);
             cy.wait('@cognito-idp').then((value) => {
                 expect(value.response.statusCode).to.eq(400);
-                expect(value.response.body.message).to.eq(signInPageData.errors.invalidCredentials);
+                expect(value.response.body.message).to.eq(signInPageData.errors.invalidCredentialsResponse);
                 expect(value.response.body.__type).to.eq(signInPageData.errors.notAuthorizedException);
             });
         });
