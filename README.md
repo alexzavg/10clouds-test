@@ -29,9 +29,9 @@ Table of contents
 2. **Go to root folder (fortress-cypress-tests)**
 
 3. **Execute commands:**
-    - `npm install`
-    - `npm install -g "cypress@7.5.0"`
-    - `npm install "cypress@7.5.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands cypress-parallel --save-dev`
+    - :fast_forward: `npm install`
+    - :fast_forward: `npm install -g "cypress@7.5.0"`
+    - :fast_forward: `npm install "cypress@7.5.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands cypress-parallel --save-dev`
 
 ---
 ## Open Cypress test runner for manual test selection
@@ -39,25 +39,25 @@ Table of contents
 These commands open Cypress runner on a specific environment. After that you can select the test which you wish to execute. Keep in mind that once test is selected - making any changes to the code will re-run the test. This is embedded into Cypress architechture and can only be undone by closing the test runner manually.
 
 **Open test runner locally:**
-- `npm run open:local`
+- :fast_forward: `npm run open:local`
 
 **Open test runner on DEV:**
-- `npm run open:dev`
+- :fast_forward: `npm run open:dev`
 
 **Open test runner on STAGE:**
-- `npm run open:stage`
+- :fast_forward: `npm run open:stage`
 
 ---
 ## Run E2E tests
 
 **Run all e2e tests locally:**
-- `npm run cy:run:e2e:local`
+- :fast_forward: `npm run cy:run:e2e:local`
 
 **Run all e2e tests on DEV:**
-- `npm run cy:run:e2e:dev`
+- :fast_forward: `npm run cy:run:e2e:dev`
 
 **Run all e2e tests on STAGE:**
-- `npm run cy:run:e2e:stage`
+- :fast_forward: `npm run cy:run:e2e:stage`
 
 :information_source: **_HINT_**
 - video recording is enabled for failed tests on local env, the videos can be found in directory `./cypress/videos`
@@ -66,25 +66,25 @@ These commands open Cypress runner on a specific environment. After that you can
 ## Run API tests
 
 **Run all e2e tests locally:**
-- `npm run cy:run:api:local`
+- :fast_forward: `npm run cy:run:api:local`
 
 **Run all e2e tests on DEV:**
-- `npm run cy:run:api:dev`
+- :fast_forward: `npm run cy:run:api:dev`
 
 **Run all e2e tests on STAGE:**
-- `npm run cy:run:api:stage`
+- :fast_forward: `npm run cy:run:api:stage`
 
 ---
 ## Run tests in parallel
 
 **Run all e2e tests in parallel locally:**
-- `npm run cy:parallel:e2e:local`
+- :fast_forward: `npm run cy:parallel:e2e:local`
 
 **Run all e2e tests in parallel on DEV:**
-- `npm run cy:parallel:e2e:dev`
+- :fast_forward: `npm run cy:parallel:e2e:dev`
 
 **Run all e2e tests in parallel on STAGE:**
-- `npm run cy:parallel:e2e:stage`
+- :fast_forward: `npm run cy:parallel:e2e:stage`
 
 :information_source: **_HINT_**
 - **_such command runs tests with 2 Cypress instances_**, in order to change the number of instances go to `package.json` and change value before the `-t` argument, which stands for `--threads`
