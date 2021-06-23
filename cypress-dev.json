@@ -56,7 +56,9 @@
                 "formattedKey": "IPBWV7GZXVTY5JMBLUZY2YW64XRWVPTOD6U26YJDBCDQ4P7HQMIQ"
             },
             "sixth": {
-                "email": "physical-solar@u9eitg8h.mailosaur.net"
+                "email": "physical-solar@u9eitg8h.mailosaur.net",
+                "firstName": "Autotest",
+                "lastName": "Do Not Remove"
             }
         },
         "apiSuite": {

@@ -56,7 +56,9 @@
                 "formattedKey": "YM3KML2HMBQY7MUUKYIBN32MG6Z5WUSHP77LV7Q7ZIHTB3BCO5BQ"
             },
             "sixth": {
-                "email": "impossible-perfectly@u9eitg8h.mailosaur.net"
+                "email": "impossible-perfectly@u9eitg8h.mailosaur.net",
+                "firstName": "Autotest",
+                "lastName": "Do Not Remove"
             }
         }
     }

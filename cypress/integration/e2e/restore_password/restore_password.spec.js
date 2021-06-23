@@ -10,6 +10,8 @@ describe('Restore Password', function() {
     const forgotPasswordLink    = Cypress.env('urls').restorePassword;
     const companyName           = Cypress.env('customers').first.name;
     const email                 = Cypress.env('users').sixth.email;
+    const firstName             = Cypress.env('users').sixth.firstName;
+    const lastName              = Cypress.env('users').sixth.lastName;
     const invalidEmail          = email.replace('@', '@@');
     const newPassword           = getRandomCharLength(1).toUpperCase() + getRandomSpecialCharLength(1) + getRandomCharLength(3) + getRandomNumberLength(3);
     const currentTime           = getCurrentTimeISO();
@@ -50,7 +52,11 @@ describe('Restore Password', function() {
             receivedAfter: new Date(currentTime),
             timeout: 60000
         }).then(mail => {
-            let confirmationCode = mail.text.body.split('following verification code\n\n')[1].slice(0,6);
+            const body = mail.text.body;
+            // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-573
+            // expect(mail).to.contain(firstName);
+            // expect(mail).to.contain(lastName);
+            let confirmationCode = body.split('following verification code\n\n')[1].slice(0,6);
             cy.log(confirmationCode);
 
             cy.get(signInPageElements.confirmEmailField).should('have.value', email);
