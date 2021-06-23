@@ -39,15 +39,12 @@ describe('Users', function() {
 
         it('Add new user, setup MFA & sign in', function() {
             cy.visit(signInLink);
-    
             adminOtp = generateToken(adminFormattedKey);
             cy.log('Admin User Google OTP is:', adminOtp);
             let array = Array.from(adminOtp);
-    
             cy.url().should('eq', signInLink);
             cy.signIn(adminLogin, adminPassword);
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
-    
             cy.get(dashboardPageElements.scoreValue).should('be.visible');
     
             // ! menu categories text isn't displayed when navbar is expanded, workaround:
@@ -103,7 +100,6 @@ describe('Users', function() {
                     newUserOtp = generateToken(value);
                     cy.log('New User Google OTP is:', newUserOtp);
                     let array = Array.from(newUserOtp);
-    
                     cy.contains(signInPageElements.btn, signInPageData.buttons.next).click();
                     cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
                     cy.get(dashboardPageElements.scoreValue).should('be.visible');

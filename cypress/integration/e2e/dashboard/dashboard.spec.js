@@ -16,22 +16,15 @@ describe('Dashboard', function() {
     const formattedKey  = Cypress.env('users').third.formattedKey;
 
     let formattedToken;
- 
-    describe('Sign In', function() {
-        it('Sign in', function() {
-            cy.visit(signInLink);
-            cy.url().should('eq', signInLink);
-    
-            formattedToken = generateToken(formattedKey);
-            cy.log('Google OTP is:', formattedToken);
-            let array = Array.from(formattedToken);
-            cy.log(array);
-    
-            cy.signIn(email, password);
-            cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
-            cy.get(signUpPageElements.spinner).should('not.exist');
-            cy.get(dashboardPageElements.scoreValue).should('be.visible');
-        });
+
+    before(() => {
+        cy.visit(signInLink);
+        formattedToken = generateToken(formattedKey);
+        let array = Array.from(formattedToken);
+        cy.signIn(email, password);
+        cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
+        cy.get(signUpPageElements.spinner).should('not.exist');
+        cy.get(dashboardPageElements.scoreValue).should('be.visible');
     });
 
     describe('Collapsed Top Menu', function() {
