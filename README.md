@@ -88,6 +88,7 @@ These commands open Cypress runner on a specific environment. After that you can
 
 :information_source: **_HINT_**
 - **_such command runs tests with 2 Cypress instances_**, in order to change the number of instances go to `package.json` and change value before the `-t` argument, which stands for `--threads`
+- inspired by [cypress-parallel](https://github.com/tnicola/cypress-parallel)
 
 Here's how it looks:
 ![Parallel in action](media/parallel-cypress.gif)

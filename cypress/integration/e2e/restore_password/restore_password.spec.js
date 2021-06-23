@@ -22,12 +22,9 @@ describe('Restore Password', function() {
         cy.intercept(requests['user-password-reset']).as('user-password-reset');
         cy.intercept(requests['user-password-change']).as('user-password-change');
     });
- 
-    // ! disabled due to: need fix for getting code 
-    it.skip('Restore password, check email & login with new password', function() {
-
+  
+    it('Restore password, check email & login with new password', function() {
         cy.visit(signInLink);
-        cy.url().should('eq', signInLink);
         cy.get(signInPageElements.forgotPasswordBtn).click();
 
         cy.url().should('eq', forgotPasswordLink);
@@ -53,8 +50,8 @@ describe('Restore Password', function() {
             receivedAfter: new Date(currentTime),
             timeout: 60000
         }).then(mail => {
-            const body = mail.html.body;
-            let confirmationCode = body.split('code: ')[1].slice(0,6); // get confirmation code from email
+            let confirmationCode = mail.text.body.split('following verification code\n\n')[1].slice(0,6);
+            cy.log(confirmationCode);
 
             cy.get(signInPageElements.confirmEmailField).should('have.value', email);
             cy.get(signInPageElements.confirmCodeField).type(confirmationCode);

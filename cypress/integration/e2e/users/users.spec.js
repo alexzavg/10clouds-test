@@ -19,6 +19,7 @@ describe('Users', function() {
     const serverId              = Cypress.env('MAILOSAUR_SERVER_ID');
     const emailDomain           = Cypress.env('email_domain');
     const newUserFirstName      = 'cypress' + getRandomCharLength(8);
+    const newUserLastName      = 'cypress' + getRandomCharLength(8);
     const newUserEmail          = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + emailDomain;
     const newUserPhoneNumber    = '+38093' + getRandomNumberLength(7);
     const role                  = 'Organization Admin';
@@ -39,15 +40,12 @@ describe('Users', function() {
 
         it('Add new user, setup MFA & sign in', function() {
             cy.visit(signInLink);
-    
             adminOtp = generateToken(adminFormattedKey);
             cy.log('Admin User Google OTP is:', adminOtp);
             let array = Array.from(adminOtp);
-    
             cy.url().should('eq', signInLink);
             cy.signIn(adminLogin, adminPassword);
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
-    
             cy.get(dashboardPageElements.scoreValue).should('be.visible');
     
             // ! menu categories text isn't displayed when navbar is expanded, workaround:
@@ -65,7 +63,7 @@ describe('Users', function() {
     
                 cy.get(usersPageElements.btnAddUser).click();
                 cy.get(usersPageElements.firstNameField).type(newUserFirstName);
-                cy.get(usersPageElements.lastNameField).type(newUserFirstName);
+                cy.get(usersPageElements.lastNameField).type(newUserLastName);
                 cy.get(usersPageElements.emailfield).type(newUserEmail);
                 cy.get(usersPageElements.phoneField).type(newUserPhoneNumber);
                 cy.get(usersPageElements.roleDropdown).select(role);
@@ -75,7 +73,6 @@ describe('Users', function() {
             cy.clearCookies();
             cy.clearLocalStorage();
         
-            // get verification code from email
             cy.mailosaurGetMessage(serverId, {
                 sentFrom: emailsData.emails.support,
                 sentTo: newUserEmail,
@@ -84,10 +81,12 @@ describe('Users', function() {
                 receivedAfter: new Date(currentTime),
                 timeout: 60000
             }).then(mail => {
-                const body = mail.html.body;
-                temporaryPassword = body.split('verification code: <b>')[1].slice(0,8);
+                const body = mail.text.body;
+                expect(body).to.contain(newUserFirstName);
+                expect(body).to.contain(newUserLastName);
+                temporaryPassword = body.split('verification code: *')[1].slice(0,8);
                 cy.log('Temporary password is', temporaryPassword);
-    
+
                 cy.visit(signInLink);
                 cy.url().should('eq', signInLink);
     
@@ -103,14 +102,13 @@ describe('Users', function() {
                     newUserOtp = generateToken(value);
                     cy.log('New User Google OTP is:', newUserOtp);
                     let array = Array.from(newUserOtp);
-    
                     cy.contains(signInPageElements.btn, signInPageData.buttons.next).click();
                     cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5]);
                     cy.get(dashboardPageElements.scoreValue).should('be.visible');
     
                     cy.clearCookies();
                     cy.clearLocalStorage();
-                });    
+                });
             });
         });
 
@@ -138,7 +136,7 @@ describe('Users', function() {
                     cy.wait('@device-search').its('response.statusCode').should('eq', 200);
                 });
     
-                cy.get(usersPageElements.searchField).type(newUserFirstName+'{enter}').then(() => {
+                cy.get(usersPageElements.searchField).type(newUserEmail+'{enter}').then(() => {
                     cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                         cy.contains('tr', newUserEmail).parent().within(() => {
                             cy.get(usersPageElements.kebabMenu).click();
