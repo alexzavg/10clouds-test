@@ -30,8 +30,8 @@ Table of contents
 
 3. **Execute commands:**
     - :fast_forward: `npm install`
-    - :fast_forward: `npm install -g "cypress@7.5.0"`
-    - :fast_forward: `npm install "cypress@7.5.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands cypress-parallel --save-dev`
+    - :fast_forward: `npm install -g "cypress@7.6.0"`
+    - :fast_forward: `npm install "cypress@7.6.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands cypress-parallel --save-dev`
 
 ---
 ## Open Cypress test runner for manual test selection
