@@ -11,8 +11,10 @@ Table of contents
    * [Run API tests](#run-api-tests)
    * [Run tests in parallel](#run-tests-in-parallel)
    * [Skip tests on specific env](#skip-tests-on-specific-env)
+   * [Error checking](#error-checking)
 <!--te-->
 
+---
 ## General info
 
 - Jenkins job which runs the tests https://jenkins.qfortress.ai/job/autotests/job/cypress-dev/
@@ -31,7 +33,7 @@ Table of contents
 3. **Execute commands:**
     - :fast_forward: `npm install`
     - :fast_forward: `npm install -g "cypress@7.6.0"`
-    - :fast_forward: `npm install "cypress@7.6.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands cypress-parallel --save-dev`
+    - :fast_forward: `npm install "cypress@7.6.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands cypress-parallel eslint eslint-plugin-chai-friendly eslint-plugin-cypress --save-dev`
 
 ---
 ## Open Cypress test runner for manual test selection
@@ -119,3 +121,17 @@ In order to skip a test on the specific env, do the following in your `spec` fil
     
 Here's how it looks like in a real test:
 ![Skip in action](media/conditional_skip.png)
+
+---
+## Error checking
+Typical error fixing can be done via `eslint`.
+
+Config file can be found in project root `.eslintrc.json`.
+
+[Eslint rules list](https://eslint.org/docs/rules/)
+
+- check project root folder
+`./node_modules/.bin/eslint ./`
+
+- fix errors
+`./node_modules/.bin/eslint ./ --fix`

@@ -8,7 +8,6 @@
 // You can read more here:
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
-const cypressEslint = require('cypress-eslint-preprocessor')
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
@@ -16,7 +15,6 @@ const cypressEslint = require('cypress-eslint-preprocessor')
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  on('file:preprocessor', cypressEslint())
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
 
