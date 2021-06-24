@@ -130,8 +130,8 @@ Config file can be found in project root `.eslintrc.json`.
 
 [Eslint rules list](https://eslint.org/docs/rules/)
 
-- check project root folder
-`./node_modules/.bin/eslint ./`
+**check project root folder**
+- :fast_forward: `./node_modules/.bin/eslint ./`
 
-- fix errors
-`./node_modules/.bin/eslint ./ --fix`
+**fix errors**
+- :fast_forward: `./node_modules/.bin/eslint ./ --fix`
