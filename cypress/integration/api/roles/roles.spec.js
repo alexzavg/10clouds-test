@@ -76,14 +76,6 @@ describe('API', function() {
                             ],
                             "children": [
                                 permission
-                            ],
-                            "customers": [
-                                {
-                                    "id": userId,
-                                    "permissions": [
-                                        permission
-                                    ]
-                                }
                             ]
                         },
                         "description": description
@@ -94,7 +86,6 @@ describe('API', function() {
                 expect(response.body.name).to.eq(name);
                 expect(response.body.permissions.root).to.contain(permission);
                 expect(response.body.permissions.children).to.contain(permission);
-                expect(response.body.permissions.customers[0].permissions).to.contain(permission);
                 expect(response.body.description).to.eq(description);
                 expect(response.body.createdBy).to.eq(userId);
                 expect(response.body.createdAt).to.have.lengthOf.greaterThan(0);
@@ -123,14 +114,6 @@ describe('API', function() {
                             ],
                             "children": [
                                 permissionNew
-                            ],
-                            "customers": [
-                                {
-                                    "id": userId,
-                                    "permissions": [
-                                        permissionNew
-                                    ]
-                                }
                             ]
                         },
                         "description": descriptionNew
@@ -159,7 +142,6 @@ describe('API', function() {
                 expect(response.body.name).to.eq(nameNew);
                 expect(response.body.permissions.root).to.contain(permissionNew);
                 expect(response.body.permissions.children).to.contain(permissionNew);
-                expect(response.body.permissions.customers[0].permissions).to.contain(permissionNew);
                 expect(response.body.description).to.eq(descriptionNew);
                 expect(response.body.createdBy).to.eq(userId);
                 expect(response.body.createdAt).to.have.lengthOf.greaterThan(0);
@@ -167,9 +149,7 @@ describe('API', function() {
             });
         });
 
-        // ! due to error 500, reason for error unknown
-        // TODO investigate in Swagger
-        it.skip(`Search role ${baseUrl}${endpoints.role['role-search']}`, function() {
+        it(`Search role ${baseUrl}${endpoints.role['role-search']}`, function() {
             cy.request(
                 {
                     method: 'POST',
@@ -182,24 +162,25 @@ describe('API', function() {
                         'x-id-token': this.idToken
                     },
                     body: {
-                        "name": nameNew,
-                        "permissions": [
-                            permissionNew
-                        ],
-                        "description": descriptionNew,
-                        "createdBy": userId
+                        "fullTextSearch": {
+                          "fields": [
+                            "description",
+                            "name"
+                          ],
+                          "value": nameNew
+                        }
                     }
                 }
             ).should((response) => {
                 expect(response.status).to.eq(200);
-                expect(response.body.name).to.eq(nameNew);
-                expect(response.body.permissions.root).to.contain(permissionNew);
-                expect(response.body.permissions.children).to.contain(permissionNew);
-                expect(response.body.permissions.customers[0].permissions).to.contain(permissionNew);
-                expect(response.body.description).to.eq(descriptionNew);
-                expect(response.body.createdBy).to.eq(userId);
-                expect(response.body.createdAt).to.have.lengthOf.greaterThan(0);
-                expect(response.body.updatedAt).to.have.lengthOf.greaterThan(0);
+                expect(response.body.records[0]._id).to.eq(this.roleId);
+                expect(response.body.records[0].name).to.eq(nameNew);
+                expect(response.body.records[0].permissions.root[0]).to.contain(permissionNew);
+                expect(response.body.records[0].permissions.children[0]).to.contain(permissionNew);
+                expect(response.body.records[0].description).to.eq(descriptionNew);
+                expect(response.body.records[0].createdBy).to.eq(userId);
+                expect(response.body.records[0].createdAt).to.have.lengthOf.greaterThan(0);
+                expect(response.body.records[0].updatedAt).to.have.lengthOf.greaterThan(0);
             });
         });
     });
