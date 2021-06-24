@@ -3,7 +3,7 @@ export const navbarElements = {
     'category': '.menu-list > li',
     'user': '.mat-menu-trigger > .icon-wrapper > img',
     'logout': '.logout'
-};
+}
 
 export const navbarData = {
     'settings': 'Settings',
