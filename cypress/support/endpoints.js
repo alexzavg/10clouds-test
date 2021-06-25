@@ -1,4 +1,4 @@
-export const sections = {
+export const swaggerSections = {
   'auth': '/api/#/auth',
   'role': '/api/#/role',
   'user': '/api/#/user',
@@ -17,6 +17,26 @@ export const sections = {
   'exchange-rate': '/api/#/exchange-rate',
 }
 
+export const swaggerLinks = {
+  'refresh-tokens': '/api/#/auth/refreshTokens',
+  'cognito-pool-settings':'/api/#/auth/getCognitoPoolSettings',
+  'sign-up': '/api/#/auth/signUp',
+  'sign-in': '/api/#/auth/signIn',
+  'sign-out': '/api/#/auth/signOut',
+  'role-create': '/api/#/role/createRole',
+  'role-update': '/api/#/role/updateRole',
+  'role-get': '/api/#/role/getRole',
+  'role-search': '/api/#/role/searchForRoles',
+  'user-me': '/api/#/user/getMe',
+  'get-user-by-id': '/api/#/user/getUserById',
+  'update-user': '/api/#/user/updateUser',
+  'find-users': '/api/#/user/findUsers',
+  'user-change-password': '/api/#/user/userChangePassword',
+  'user-reset-password': '/api/#/user/userResetPassword',
+  'reset-user-mfa': '/api/#/user/resetUserMFA',
+  'remove-user': '/api/#/user/removeUser'
+}
+
 export const endpoints = {
   'auth': {
     'refresh-tokens':'/auth/refresh-tokens',
@@ -30,6 +50,12 @@ export const endpoints = {
     'role-search': '/role/search'
   },
   'user': {
-    'remove': '/user/remove'
+    'user-me': '/user/me',
+    'user': '/user',
+    'user-search': '/user/search',
+    'user-password-change': '/user/password/change',
+    'user-password-reset': '/user/password/reset',
+    'user-mfa-reset': '/user/mfa/reset',
+    'user-remove': '/user/remove'
   }
 }

@@ -89,6 +89,16 @@
                     "email": "me41zavgorodnii+62@gmail.com",
                     "password": "wa12aszx34WA_",
                     "formattedKey": "ORTHLRYBHUTTUBLZUPOQSUMKWGWXYGME6MZF2B7XGGZ45STLMSRQ"
+                },
+                "third": {
+                    "id": "12b668dc-ea3e-44d2-865e-3f35dd42a42d",
+                    "firstName": "API",
+                    "lastName": "Autotest",
+                    "phoneNumber": "+380994444441",
+                    "status": true,
+                    "email": "me41zavgorodnii+64@gmail.com",
+                    "password": "wa12aszx34WA_",
+                    "formattedKey": "AZ633KOQAHXHDZGSGSHYYDUMU6RSM37EH65ZRDTA3QX3PQSBGSQQ"
                 }
             }
         }

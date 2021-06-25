@@ -19,8 +19,8 @@ module.exports = (on, config) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
 
       // ** CHROME ARGS https://peter.sh/experiments/chromium-command-line-switches
-      launchOptions.args.push('--window-size=1920,1080');
-      launchOptions.args.push('--disable-dev-shm-usage');
+      launchOptions.args.push('--window-size=1920,1080')
+      launchOptions.args.push('--disable-dev-shm-usage')
       // launchOptions.args.push('--auto-open-devtools-for-tabs');
 
       /** 
@@ -37,11 +37,11 @@ module.exports = (on, config) => {
       // * CHROME EXTENSIONS https://docs.cypress.io/api/plugins/browser-launch-api#Modify-browser-launch-arguments-preferences-and-extensions
       // launchOptions.extensions.push('/path/to/extension');
 
-      console.log(launchOptions.args);
+      console.log(launchOptions.args)
 
       return launchOptions
     }
-  });
+  })
 
-  return require('@bahmutov/cypress-extends')(config.configFile);
+  return require('@bahmutov/cypress-extends')(config.configFile)
 }
