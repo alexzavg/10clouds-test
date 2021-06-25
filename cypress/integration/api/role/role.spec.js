@@ -1,6 +1,6 @@
 import {dashboardPageElements} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
-import {sections, endpoints} from '../../../support/endpoints.js'
+import {swaggerSections, swaggerLinks, endpoints} from '../../../support/endpoints.js'
 import {getRandomCharLength} from '../../../support/dataGenerator.js'
 
 const {generateToken} = require('authenticator')
@@ -47,7 +47,7 @@ describe('API', function() {
         cy.restoreLocalStorage()
     })
 
-    describe(`[Role] section ${baseUrl}${sections.role}`, function() {
+    describe(`Section ${baseUrl}${swaggerSections['role']}`, function() {
 
         const name              = getRandomCharLength(30)
         const description       = getRandomCharLength(30)
@@ -56,7 +56,7 @@ describe('API', function() {
         const descriptionNew    = getRandomCharLength(30)
         const permissionNew     = 'USER_SEARCH'
 
-        it(`Create role ${baseUrl}${endpoints.role['role']}`, function() {
+        it(`Request ${baseUrl}${swaggerLinks['role-create']}`, function() {
             cy.request(
                 {
                     method: 'POST',
@@ -94,7 +94,7 @@ describe('API', function() {
             })
         })
 
-        it(`Update role ${baseUrl}${endpoints.role['role']}/${this.roleId}`, function() {
+        it(`Request ${baseUrl}${swaggerLinks['role-update']}`, function() {
             cy.request(
                 {
                     method: 'PATCH',
@@ -124,7 +124,7 @@ describe('API', function() {
             })
         })
 
-        it(`Get role ${baseUrl}${endpoints.role['role']}/${this.roleId}`, function() {
+        it(`Request ${baseUrl}${swaggerLinks['role-get']}`, function() {
             cy.request(
                 {
                     method: 'GET',
@@ -149,7 +149,7 @@ describe('API', function() {
             })
         })
 
-        it(`Search role ${baseUrl}${endpoints.role['role-search']}`, function() {
+        it(`Request ${baseUrl}${swaggerLinks['role-search']}`, function() {
             cy.request(
                 {
                     method: 'POST',

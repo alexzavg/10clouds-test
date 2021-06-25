@@ -1,7 +1,6 @@
 import {dashboardPageElements} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
-import {sections, endpoints} from '../../../support/endpoints.js'
-import {getRandomCharLength, getRandomNumberLength} from '../../../support/dataGenerator.js'
+import {swaggerSections, swaggerLinks, endpoints} from '../../../support/endpoints.js'
 
 const {generateToken} = require('authenticator')
 
@@ -14,9 +13,6 @@ describe('API', function() {
     const formattedKey  = Cypress.env('apiSuite').users.first.formattedKey
     const siteUrl       = Cypress.env('apiSuite').siteUrl
     const customerId    = Cypress.env('apiSuite').customerId
-    const roleId        = Cypress.env('apiSuite').roleId
-    const serverId      = Cypress.env('MAILOSAUR_SERVER_ID')
-    const emailDomain   = Cypress.env('email_domain')
 
     let formattedToken
 
@@ -50,14 +46,9 @@ describe('API', function() {
         cy.restoreLocalStorage()
     })
 
-    describe(`[Auth] section ${baseUrl}${sections.auth}`, function() {
+    describe(`Section ${baseUrl}${swaggerSections['auth']}`, function() {
 
-        const firstName     = 'cypress' + getRandomCharLength(8)
-        const lastName      = 'cypress' + getRandomCharLength(8)
-        const email         = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + emailDomain
-        const phoneNumber   = '+38098' + getRandomNumberLength(7)
-
-        it(`Refresh tokens ${baseUrl}${endpoints.auth['refresh-tokens']}`, function() {
+        it(`Request ${baseUrl}${swaggerLinks['refresh-tokens']}`, function() {
             cy.request(
                 {
                     method: 'POST',
@@ -75,7 +66,7 @@ describe('API', function() {
             })
         })
 
-        it(`Get cognito pool settings ${baseUrl}${endpoints.auth['cognito-pool-settings']}`, function() {
+        it(`Request ${baseUrl}${swaggerLinks['cognito-pool-settings']}`, function() {
             cy.request(
                 {
                     method: 'GET',
@@ -89,58 +80,7 @@ describe('API', function() {
             })
         })
 
-        it(`Add user ${baseUrl}${endpoints.auth['sign-up']} & remove user ${baseUrl}${endpoints.user['remove']}`, function() {
-            cy.request(
-                {
-                    method: 'POST',
-                    url: baseUrl + endpoints.auth['sign-up'],
-                    auth: {
-                        'bearer': this.accessToken
-                    },
-                    headers: {
-                        'x-customer-id': customerId,
-                        'x-id-token': this.idToken
-                    },
-                    body: {
-                        'firstName': firstName,
-                        'lastName': lastName,
-                        'email': email,
-                        'phoneNumber': phoneNumber,
-                        'roleId': roleId
-                    }
-                }
-            ).should((response) => {
-                expect(response.status).to.eq(200)
-                expect(response.body.firstName).to.eq(firstName)
-                expect(response.body.lastName).to.eq(lastName)
-                expect(response.body.email).to.eq(email)
-                expect(response.body.phoneNumber).to.eq(phoneNumber)
-                expect(response.body._id).to.eq(response.body.cognitoUserId)
-                cy.wrap(response.body._id).as('userId')
-            })
-
-            // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-523
-            // cy.request(
-            //     {
-            //         method: 'POST',
-            //         url: baseUrl + endpoints.user['remove'],
-            //         auth: {
-            //             'bearer': this.accessToken
-            //         },
-            //         headers: {
-            //             'x-customer-id': customerId,
-            //             'x-id-token': this.idToken
-            //         },
-            //         body: {
-            //             'userId': this.userId
-            //         }
-            //     }
-            // ).should((response) => {
-            //     expect(response.status).to.eq(201);
-            // });
-        })
-
-        it(`Check if user is logged in ${baseUrl}${endpoints.auth['sign-in']}`, function() {
+        it(`Request ${baseUrl}${swaggerLinks['sign-in']}`, function() {
             cy.request(
                 {
                     method: 'POST',
@@ -158,7 +98,7 @@ describe('API', function() {
             })
         })
 
-        it(`User logout ${baseUrl}${endpoints.auth['sign-out']}`, function() {
+        it(`Request ${baseUrl}${swaggerLinks['sign-out']}`, function() {
             cy.request(
                 {
                     method: 'POST',
