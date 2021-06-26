@@ -27,13 +27,18 @@
     "cy:run": "node_modules/.bin/cypress run",
     "cy:parallel:e2e:local": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-local.json --browser chrome\"' -r mochawesome",
     "cy:parallel:e2e:dev": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome",
-    "cy:parallel:e2e:stage": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome"
+    "cy:parallel:e2e:stage": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome",
+    "allure:clean": "rm -R -f allure-results && mkdir allure-results",
+    "allure:results": "allure generate allure-results --clean -o allure-report && allure open allure-report",
+    "test": "node_modules/.bin/cypress run --config-file cypress-dev.json --spec \"cypress/integration/e2e/sign_in/*.spec.js\" --browser chrome --reporter mocha-allure-reporter",
+    "demo": "npm run allure:clear && npm run test && npm run allure:results"
   },
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",
   "devDependencies": {
     "@bahmutov/cypress-extends": "^1.1.0",
     "@cypress/skip-test": "^2.6.1",
+    "allure-commandline": "^2.13.8",
     "authenticator": "^1.1.5",
     "cypress": "^7.6.0",
     "cypress-commands": "^1.1.0",
@@ -46,6 +51,7 @@
     "eslint-plugin-chai-friendly": "^0.7.1",
     "eslint-plugin-cypress": "^2.11.3",
     "mocha": "^8.4.0",
+    "mocha-allure-reporter": "^1.4.0",
     "mochawesome": "^6.2.2",
     "mochawesome-merge": "^4.2.0",
     "mochawesome-report-generator": "^5.2.0"

@@ -1,6 +1,6 @@
 {
     "extends": "./cypress.json",
-    "video": false,
+    "video": true,
     "videoCompression": 51,
     "videoUploadOnPasses": false,
     "baseUrl": "https://dev.qfortress.ai",
