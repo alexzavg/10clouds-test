@@ -19,7 +19,7 @@ describe('Users', function() {
     const serverId              = Cypress.env('MAILOSAUR_SERVER_ID')
     const emailDomain           = Cypress.env('email_domain')
     const newUserFirstName      = 'cypress' + getRandomCharLength(8)
-    const newUserLastName      = 'cypress' + getRandomCharLength(8)
+    const newUserLastName       = 'cypress' + getRandomCharLength(8)
     const newUserEmail          = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + emailDomain
     const newUserPhoneNumber    = '+38093' + getRandomNumberLength(7)
     const role                  = 'Organization Admin'
@@ -36,7 +36,8 @@ describe('Users', function() {
         cy.intercept(requests['user-remove']).as('user-remove')
     })
 
-    describe('Add & Delete new user', function() {
+    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-649
+    describe.skip('Add & Delete new user', function() {
 
         it('Add new user, setup MFA & sign in', function() {
             cy.visit(signInLink)
