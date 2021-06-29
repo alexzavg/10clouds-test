@@ -787,7 +787,7 @@ describe('Dashboard', function() {
                 cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
                     cy.wait(1500)
                     cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
-                        if (value.text().includes(dashboardPageData.nothingFound)) {
+                        if (value.text().includes(dashboardPageData.nothingHere)) {
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).click()
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).should('not.exist')
                             cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist')
@@ -820,7 +820,7 @@ describe('Dashboard', function() {
                 cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
                     cy.wait(1500)
                     cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
-                        if (value.text().includes(dashboardPageData.nothingFound)) {
+                        if (value.text().includes(dashboardPageData.nothingHere)) {
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).click()
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).should('not.exist')
                             cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist')
@@ -853,7 +853,7 @@ describe('Dashboard', function() {
                 cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
                     cy.wait(1500)
                     cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
-                        if (value.text().includes(dashboardPageData.nothingFound)) {
+                        if (value.text().includes(dashboardPageData.nothingHere)) {
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).click()
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('not.exist')
                             cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist')

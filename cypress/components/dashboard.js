@@ -32,7 +32,7 @@ export const dashboardPageData = {
     'topAlerts': 'Top Alerts',
     'topUsers': 'Top Users',
     'topNews': 'Fortress News',
-    'nothingFound': 'Nothing found',
+    'nothingHere': 'Nothing here',
     'severityHigh': 'High',
     'severityMedium': 'Medium',
     'severityLow': 'Low'

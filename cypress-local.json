@@ -1,6 +1,6 @@
 {
     "extends": "./cypress.json",
-    "video": true,
+    "video": false,
     "videoCompression": 51,
     "videoUploadOnPasses": false,
     "baseUrl": "http://localhost:4001",
