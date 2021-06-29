@@ -25,7 +25,8 @@ describe('Restore Password', function() {
         cy.intercept(requests['user-password-change']).as('user-password-change')
     })
   
-    it('Restore password, check email & login with new password', function() {
+    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-648
+    it.skip('Restore password, check email & login with new password', function() {
         cy.visit(signInLink)
         cy.get(signInPageElements.forgotPasswordBtn).click()
 
@@ -112,7 +113,8 @@ describe('Restore Password', function() {
         })
     })
 
-    it('Error for [New Password] & [Confirm Password] field values mismatch', function() {
+    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-648
+    it.skip('Error for [New Password] & [Confirm Password] field values mismatch', function() {
         cy.visit(forgotPasswordLink)
         cy.get(signInPageElements.emailField).type(email)
         cy.contains(signInPageElements.btn, signInPageData.buttons.restorePassword).click()
@@ -123,13 +125,15 @@ describe('Restore Password', function() {
         cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.confirm).should('be.visible')
     })
 
-    it('Error for empty [Code] field', function() {
+    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-648
+    it.skip('Error for empty [Code] field', function() {
         cy.get(signInPageElements.confirmCodeField).click()
         cy.clickOutside()
         cy.contains(signInPageElements.error, signInPageData.errors.codeIsRequired).should('be.visible')
     })
 
-    it('Error for incorrect code in [Code] field', function() {
+    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-648
+    it.skip('Error for incorrect code in [Code] field', function() {
         cy.get(signInPageElements.newPasswordField).clear().type(newPassword)
         cy.get(signInPageElements.confirmPasswordField).clear().type(newPassword)
         cy.get(signInPageElements.confirmCodeField).clear().type(incorrectCode)

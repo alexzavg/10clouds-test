@@ -36,7 +36,8 @@ describe('Users', function() {
         cy.intercept(requests['user-remove']).as('user-remove')
     })
 
-    describe('Add & Delete new user', function() {
+    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-649
+    describe.skip('Add & Delete new user', function() {
 
         it('Add new user, setup MFA & sign in', function() {
             cy.visit(signInLink)
