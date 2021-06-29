@@ -34,7 +34,8 @@ export const swaggerLinks = {
   'user-change-password': '/api/#/user/userChangePassword',
   'user-reset-password': '/api/#/user/userResetPassword',
   'reset-user-mfa': '/api/#/user/resetUserMFA',
-  'remove-user': '/api/#/user/removeUser'
+  'remove-user': '/api/#/user/removeUser',
+  'search-customer-alerts': '/api/#/alert/searchCustomerAlerts'
 }
 
 export const endpoints = {
@@ -57,5 +58,8 @@ export const endpoints = {
     'user-password-reset': '/user/password/reset',
     'user-mfa-reset': '/user/mfa/reset',
     'user-remove': '/user/remove'
+  },
+  'alert': {
+    'alert-search': '/alert/search'
   }
 }
