@@ -106,6 +106,41 @@ describe('API', function() {
                     expect(response.body.status).to.eq(status)
                 })
             })
+
+            it(`Request ${baseUrl}${swaggerLinks['find-users']}`, function() {
+                cy.request(
+                    {
+                        method: 'POST',
+                        url: baseUrl + endpoints.user['user-search'],
+                        auth: {
+                            'bearer': this.accessToken
+                        },
+                        headers: {
+                            'x-customer-id': customerId,
+                            'x-id-token': this.idToken
+                        },
+                        body: {
+                            'fullTextSearch': {
+                                'fields': [
+                                    'email',
+                                    'firstName',
+                                    'lastName'
+                                ],
+                                'value': email
+                            }
+                        }
+                    }
+                ).should((response) => {
+                    expect(response.status).to.eq(200)
+                    expect(response.body.records[0].cognitoUserId).to.eq(id)
+                    expect(response.body.records[0].firstName).to.eq(firstName)
+                    expect(response.body.records[0].lastName).to.eq(lastName)
+                    expect(response.body.records[0].email).to.eq(email)
+                    expect(response.body.records[0].phoneNumber).to.eq(phoneNumber)
+                    expect(response.body.records[0]._id).to.eq(id)
+                    expect(response.body.records[0].status).to.eq(status)
+                })
+            })
         })
 
         describe('New user', function() {
