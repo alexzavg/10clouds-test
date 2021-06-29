@@ -11,7 +11,7 @@ Table of contents
    * [Run API tests](#run-api-tests)
    * [Run tests in parallel](#run-tests-in-parallel)
    * [Skip tests on specific env](#skip-tests-on-specific-env)
-   * [Error checking](#error-checking)
+   * [Code error checking](#code-error-checking)
 <!--te-->
 
 ---
@@ -123,7 +123,7 @@ Here's how it looks like in a real test:
 ![Skip in action](media/conditional_skip.png)
 
 ---
-## Error checking
+## Code error checking
 Typical error fixing can be done via `eslint`.
 
 Config file can be found in project root `.eslintrc.json`.
