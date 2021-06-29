@@ -56,7 +56,7 @@ describe('API', function() {
         const descriptionNew    = getRandomCharLength(30)
         const permissionNew     = 'USER_SEARCH'
 
-        it(`Request ${baseUrl}${swaggerLinks['role-create']}`, function() {
+        it(`Create role ${baseUrl}${swaggerLinks['role-create']}`, function() {
             cy.request(
                 {
                     method: 'POST',
@@ -94,7 +94,7 @@ describe('API', function() {
             })
         })
 
-        it(`Request ${baseUrl}${swaggerLinks['role-update']}`, function() {
+        it(`Update role ${baseUrl}${swaggerLinks['role-update']}`, function() {
             cy.request(
                 {
                     method: 'PATCH',
@@ -124,7 +124,7 @@ describe('API', function() {
             })
         })
 
-        it(`Request ${baseUrl}${swaggerLinks['role-get']}`, function() {
+        it(`Get role info ${baseUrl}${swaggerLinks['role-get']}`, function() {
             cy.request(
                 {
                     method: 'GET',
@@ -149,7 +149,7 @@ describe('API', function() {
             })
         })
 
-        it(`Request ${baseUrl}${swaggerLinks['role-search']}`, function() {
+        it(`Search role ${baseUrl}${swaggerLinks['role-search']}`, function() {
             cy.request(
                 {
                     method: 'POST',

@@ -48,7 +48,7 @@ describe('API', function() {
 
     describe(`Section ${baseUrl}${swaggerSections['auth']}`, function() {
 
-        it(`Request ${baseUrl}${swaggerLinks['refresh-tokens']}`, function() {
+        it(`Refresh tokens ${baseUrl}${swaggerLinks['refresh-tokens']}`, function() {
             cy.request(
                 {
                     method: 'POST',
@@ -66,7 +66,7 @@ describe('API', function() {
             })
         })
 
-        it(`Request ${baseUrl}${swaggerLinks['cognito-pool-settings']}`, function() {
+        it(`Get Cognito pool settings ${baseUrl}${swaggerLinks['cognito-pool-settings']}`, function() {
             cy.request(
                 {
                     method: 'GET',
@@ -80,7 +80,7 @@ describe('API', function() {
             })
         })
 
-        it(`Request ${baseUrl}${swaggerLinks['sign-in']}`, function() {
+        it(`Sign in ${baseUrl}${swaggerLinks['sign-in']}`, function() {
             cy.request(
                 {
                     method: 'POST',
@@ -98,7 +98,7 @@ describe('API', function() {
             })
         })
 
-        it(`Request ${baseUrl}${swaggerLinks['sign-out']}`, function() {
+        it(`Sign out ${baseUrl}${swaggerLinks['sign-out']}`, function() {
             cy.request(
                 {
                     method: 'POST',

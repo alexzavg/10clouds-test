@@ -1,7 +1,8 @@
 import {dashboardPageElements} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
 import {swaggerSections, swaggerLinks, endpoints} from '../../../support/endpoints.js'
-import {getRandomCharLength, getRandomNumberLength} from '../../../support/dataGenerator.js'
+import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../../support/dataGenerator.js'
+import {emailsData} from '../../../support/emailsData.js'
 
 const {generateToken} = require('authenticator')
 
@@ -21,6 +22,8 @@ describe('API', function() {
     const roleId        = Cypress.env('apiSuite').roleId
     const serverId      = Cypress.env('MAILOSAUR_SERVER_ID')
     const emailDomain   = Cypress.env('email_domain')
+    const siteUrl       = Cypress.env('apiSuite').siteUrl
+    const currentTime   = getCurrentTimeISO()
 
     let formattedToken
 
@@ -57,7 +60,7 @@ describe('API', function() {
     describe(`Section ${baseUrl}${swaggerSections['user']}`, function() {
 
         describe('Existing user', function() {
-            it(`Request ${baseUrl}${swaggerLinks['user-me']}`, function() {
+            it(`Get current user info ${baseUrl}${swaggerLinks['user-me']}`, function() {
                 cy.request(
                     {
                         method: 'GET',
@@ -82,7 +85,7 @@ describe('API', function() {
                 })
             })
 
-            it(`Request ${baseUrl}${swaggerLinks['get-user-by-id']}`, function() {
+            it(`Get user by id ${baseUrl}${swaggerLinks['get-user-by-id']}`, function() {
                 cy.request(
                     {
                         method: 'GET',
@@ -107,7 +110,7 @@ describe('API', function() {
                 })
             })
 
-            it(`Request ${baseUrl}${swaggerLinks['find-users']}`, function() {
+            it(`Find user ${baseUrl}${swaggerLinks['find-users']}`, function() {
                 cy.request(
                     {
                         method: 'POST',
@@ -150,7 +153,7 @@ describe('API', function() {
             const email         = getRandomCharLength(15) + getRandomNumberLength(5) + '@' + serverId + emailDomain
             const phoneNumber   = '+38098' + getRandomNumberLength(7)
 
-            it(`Request ${baseUrl}${swaggerLinks['sign-up']}`, function() {
+            it(`Create user ${baseUrl}${swaggerLinks['sign-up']}`, function() {
                 cy.request(
                     {
                         method: 'POST',
@@ -181,7 +184,7 @@ describe('API', function() {
                 })
             })
 
-            it(`Request ${baseUrl}${swaggerLinks['update-user']}`, function() {
+            it(`Update user ${baseUrl}${swaggerLinks['update-user']}`, function() {
                 cy.request(
                     {
                         method: 'PATCH',
@@ -208,9 +211,83 @@ describe('API', function() {
                     expect(response.status).to.eq(200)
                 })
             })
+
+            // ! due to blocked https://qfortress.atlassian.net/browse/FORT-635
+            it.skip(`Reset password ${baseUrl}${swaggerLinks['user-reset-password']}`, function() {
+                cy.request(
+                    {
+                        method: 'POST',
+                        url: baseUrl + endpoints.user['user-password-reset'],
+                        body: {
+                            'email': email,
+                            'siteUrl': siteUrl
+                        }
+                    }
+                ).should((response) => {
+                    expect(response.status).to.eq(201)
+                    expect(response.body.email).to.eq(email)
+                    expect(response.body.siteUrl).to.eq(siteUrl)
+                })
+
+                // get code from email
+                cy.mailosaurGetMessage(serverId, {
+                    sentFrom: emailsData.emails.support,
+                    sentTo: email,
+                    subject: emailsData.subjects.resetUserPassword
+                }, {
+                    receivedAfter: new Date(currentTime),
+                    timeout: 60000
+                }).then(mail => {
+                    const body = mail.text.body
+                    let confirmationCode = body.split('following verification code\n\n')[1].slice(0,6)
+                    cy.log(confirmationCode)
+                    cy.wrap(confirmationCode).as('confirmationCode')
+                })
+            })
+
+            // ! due to blocked https://qfortress.atlassian.net/browse/FORT-634
+            it.skip(`Change password ${baseUrl}${swaggerLinks['user-change-password']}`, function() {
+                cy.request(
+                    {
+                        method: 'POST',
+                        url: baseUrl + endpoints.user['user-password-change'],
+                        body: {
+                            'verificationCode': this.confirmationCode,
+                            'newPassword': password,
+                            'email': email,
+                            'siteUrl': siteUrl
+                        }
+                    }
+                ).should((response) => {
+                    expect(response.status).to.eq(201)
+                    expect(response.body.email).to.eq(email)
+                    expect(response.body.siteUrl).to.eq(siteUrl)
+                })
+            })
+
+            // ! due to blocked https://qfortress.atlassian.net/browse/FORT-636
+            it.skip(`Reset MFA ${baseUrl}${swaggerLinks['reset-user-mfa']}`, function() {
+                cy.request(
+                    {
+                        method: 'POST',
+                        url: baseUrl + endpoints.user['user-mfa-reset'],
+                        auth: {
+                            'bearer': this.accessToken
+                        },
+                        headers: {
+                            'x-id-token': this.idToken
+                        },
+                        body: {
+                            'userId': this.userId
+                        }
+                    }
+                ).should((response) => {
+                    expect(response.status).to.eq(201)
+                })
+            })
     
             // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-523
-            it.skip(`Request ${baseUrl}${swaggerLinks['remove-user']}`, function() {
+            it.skip(`Remove user ${baseUrl}${swaggerLinks['remove-user']}`, function() {
                 cy.request(
                     {
                         method: 'POST',
