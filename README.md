@@ -12,6 +12,9 @@ Table of contents
    * [Run tests in parallel](#run-tests-in-parallel)
    * [Skip tests on specific env](#skip-tests-on-specific-env)
    * [Code error checking](#code-error-checking)
+   * [Reports](#reports)
+     * [Mochawesome](#mochawesome)
+     * [Allure](#allure)
 <!--te-->
 
 ---
@@ -33,7 +36,7 @@ Table of contents
 3. **Execute commands:**
     - :fast_forward: `npm install`
     - :fast_forward: `npm install -g "cypress@7.6.0"`
-    - :fast_forward: `npm install "cypress@7.6.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@bahmutov/cypress-extends" "@cypress/skip-test" cypress-localstorage-commands cypress-parallel eslint eslint-plugin-chai-friendly eslint-plugin-cypress --save-dev`
+    - :fast_forward: `npm install --save-dev "cypress@7.6.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@cypress/skip-test" cypress-localstorage-commands cypress-parallel eslint eslint-plugin-chai-friendly eslint-plugin-cypress "@shelex/cypress-allure-plugin" allure-commandline`
 
 ---
 ## Open Cypress test runner for manual test selection
@@ -135,3 +138,35 @@ Config file can be found in project root `.eslintrc.json`.
 
 **fix errors**
 - :fast_forward: `./node_modules/.bin/eslint ./ --fix`
+
+---
+## Reports
+### Mochawesome
+* commands that contain `npm run pretest` & `npm run posttest` (e.g. `e2e:dev`) will run tests with `mochawesome` reporter
+* in order to view results - open report file `cypress/reports/mochareports/report.html`
+
+Example:
+![Mochawesome](media/mochawesome_report.png)
+
+### Allure
+Command sequence for correct report creation
+
+1. move previous results to history
+- :fast_forward: `npm run allure:history`
+
+2. remove assets
+- :fast_forward: `npm run allure:clear`
+
+3. run required tests, for example:
+- :fast_forward: `npm run cy:run:e2e:dev`
+
+4. generate report
+- :fast_forward: `npm run allure:report`
+
+5. there are 2 ways to open generated report
+- :fast_forward: `npm run allure:open`
+  or
+- open file `allure-report/index.html`
+
+Example:
+![Allure](media/allure_open.gif)

@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="@shelex/cypress-allure-plugin" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -8,6 +9,7 @@
 // You can read more here:
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
+const allureWriter = require('@shelex/cypress-allure-plugin/writer')
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
@@ -15,6 +17,7 @@
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
+  allureWriter(on, config)
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
 
@@ -42,6 +45,5 @@ module.exports = (on, config) => {
       return launchOptions
     }
   })
-
-  return require('@bahmutov/cypress-extends')(config.configFile)
+  return config
 }
