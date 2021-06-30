@@ -882,11 +882,9 @@ describe('Dashboard', function() {
             })
         })
 
-        // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-667
-        it.skip('[Polygon] - click on [EDP] service & check redirect to [EDP] page', function() {
+        it('[Polygon] - click on [EDP] service & check redirect to [EDP] page', function() {
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).should('be.visible').then(val => {
-                    cy.wait(1500)
                     if (val.text().includes(dashboardPageData.notProtected)) {
                         cy.log('Service is not active')
                     }
@@ -908,11 +906,9 @@ describe('Dashboard', function() {
             })
         })
 
-        // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-667
-        it.skip('[Polygon] - click on [MAIL] service & check redirect to [MAIL] page', function() {
+        it('[Polygon] - click on [MAIL] service & check redirect to [MAIL] page', function() {
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).should('be.visible').then(val => {
-                    cy.wait(1500)
                     if (val.text().includes(dashboardPageData.notProtected)) {
                         cy.log('Service is not active')
                     }
@@ -934,11 +930,9 @@ describe('Dashboard', function() {
             })
         })
 
-        // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-667
-        it.skip('[Polygon] - click on [CLOUD STORAGE] service & check redirect to [CLOUD STORAGE] page', function() {
+        it('[Polygon] - click on [CLOUD STORAGE] service & check redirect to [CLOUD STORAGE] page', function() {
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).should('be.visible').then(val => {
-                    cy.wait(1500)
                     if (val.text().includes(dashboardPageData.notProtected)) {
                         cy.log('Service is not active')
                     }
