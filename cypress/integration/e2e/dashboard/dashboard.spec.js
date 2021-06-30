@@ -882,52 +882,79 @@ describe('Dashboard', function() {
             })
         })
 
-        it.only('[Polygon] - click on [EDP] service & check redirect to [EDP] page', function() {
+        // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-667
+        it.skip('[Polygon] - click on [EDP] service & check redirect to [EDP] page', function() {
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-                cy.contains('.part', 'Endpoint').then(val => {
-                    if (val.text().includes('Not protected')) {
+                cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).should('be.visible').then(val => {
+                    cy.wait(1500)
+                    if (val.text().includes(dashboardPageData.notProtected)) {
                         cy.log('Service is not active')
                     }
                     else {
-                        cy.contains('.title', 'Endpoint').click()
-                        cy.url().should('eq', alertsLink)
+                        cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.edp).find(dashboardPageElements.polygon.alertsChart).click()
+                        cy.url().should('eq', edpLink)
                         cy.get(alertsPageElements.filtersBtn).should('be.visible')
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200)
+                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200)
                         cy.visit(dashboardLink)
-                        cy.get(signUpPageElements.spinner).should('not.exist')
                     }
                 })
             })
         })
 
-        it.only('[Polygon] - click on [MAIL] service & check redirect to [MAIL] page', function() {
+        // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-667
+        it.skip('[Polygon] - click on [MAIL] service & check redirect to [MAIL] page', function() {
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-                cy.contains('.part', 'Mail').then(val => {
-                    if (val.text().includes('Not protected')) {
+                cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).should('be.visible').then(val => {
+                    cy.wait(1500)
+                    if (val.text().includes(dashboardPageData.notProtected)) {
                         cy.log('Service is not active')
                     }
                     else {
-                        cy.contains('.title', 'Mail').click()
-                        cy.url().should('eq', alertsLink)
+                        cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).find(dashboardPageElements.polygon.alertsChart).click()
+                        cy.url().should('eq', mailLink)
                         cy.get(alertsPageElements.filtersBtn).should('be.visible')
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200)
+                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200)
                         cy.visit(dashboardLink)
-                        cy.get(signUpPageElements.spinner).should('not.exist')
                     }
                 })
             })
         })
 
-        it.only('[Polygon] - click on [CLOUD STORAGE] service & check redirect to [CLOUD STORAGE] page', function() {
+        // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-667
+        it.skip('[Polygon] - click on [CLOUD STORAGE] service & check redirect to [CLOUD STORAGE] page', function() {
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
-                cy.contains('.part', 'Cloud Storage').then(val => {
-                    if (val.text().includes('Not protected')) {
+                cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).should('be.visible').then(val => {
+                    cy.wait(1500)
+                    if (val.text().includes(dashboardPageData.notProtected)) {
                         cy.log('Service is not active')
                     }
                     else {
-                        cy.contains('.title', 'Cloud Storage').click()
-                        cy.url().should('eq', alertsLink)
+                        cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.cloudStorage).find(dashboardPageElements.polygon.alertsChart).click()
+                        cy.url().should('eq', cloudStorageLink)
                         cy.get(alertsPageElements.filtersBtn).should('be.visible')
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200)
+                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200)
                         cy.visit(dashboardLink)
-                        cy.get(signUpPageElements.spinner).should('not.exist')
                     }
                 })
             })
