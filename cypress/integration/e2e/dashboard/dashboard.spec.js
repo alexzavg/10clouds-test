@@ -8,12 +8,15 @@ const {generateToken} = require('authenticator')
 
 describe('Dashboard', function() {
 
-    const signInLink    = Cypress.env('urls').signIn
-    const dashboardLink = Cypress.env('urls').dashboard
-    const alertsLink    = Cypress.env('urls').alerts
-    const email         = Cypress.env('users').third.email
-    const password      = Cypress.env('users').third.password 
-    const formattedKey  = Cypress.env('users').third.formattedKey
+    const signInLink        = Cypress.env('urls').signIn
+    const dashboardLink     = Cypress.env('urls').dashboard
+    const alertsLink        = Cypress.env('urls').alerts
+    const edpLink           = Cypress.env('urls').edp
+    const mailLink          = Cypress.env('urls').mail
+    const cloudStorageLink  = Cypress.env('urls').cloudStorage
+    const email             = Cypress.env('users').third.email
+    const password          = Cypress.env('users').third.password 
+    const formattedKey      = Cypress.env('users').third.formattedKey
 
     let formattedToken
 
@@ -875,6 +878,57 @@ describe('Dashboard', function() {
                             })
                         }
                     })
+                })
+            })
+        })
+
+        it.only('[Polygon] - click on [EDP] service & check redirect to [EDP] page', function() {
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.contains('.part', 'Endpoint').then(val => {
+                    if (val.text().includes('Not protected')) {
+                        cy.log('Service is not active')
+                    }
+                    else {
+                        cy.contains('.title', 'Endpoint').click()
+                        cy.url().should('eq', alertsLink)
+                        cy.get(alertsPageElements.filtersBtn).should('be.visible')
+                        cy.visit(dashboardLink)
+                        cy.get(signUpPageElements.spinner).should('not.exist')
+                    }
+                })
+            })
+        })
+
+        it.only('[Polygon] - click on [MAIL] service & check redirect to [MAIL] page', function() {
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.contains('.part', 'Mail').then(val => {
+                    if (val.text().includes('Not protected')) {
+                        cy.log('Service is not active')
+                    }
+                    else {
+                        cy.contains('.title', 'Mail').click()
+                        cy.url().should('eq', alertsLink)
+                        cy.get(alertsPageElements.filtersBtn).should('be.visible')
+                        cy.visit(dashboardLink)
+                        cy.get(signUpPageElements.spinner).should('not.exist')
+                    }
+                })
+            })
+        })
+
+        it.only('[Polygon] - click on [CLOUD STORAGE] service & check redirect to [CLOUD STORAGE] page', function() {
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.contains('.part', 'Cloud Storage').then(val => {
+                    if (val.text().includes('Not protected')) {
+                        cy.log('Service is not active')
+                    }
+                    else {
+                        cy.contains('.title', 'Cloud Storage').click()
+                        cy.url().should('eq', alertsLink)
+                        cy.get(alertsPageElements.filtersBtn).should('be.visible')
+                        cy.visit(dashboardLink)
+                        cy.get(signUpPageElements.spinner).should('not.exist')
+                    }
                 })
             })
         })

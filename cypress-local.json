@@ -59,6 +59,9 @@
             "dashboard": "http://localhost:4001/fortress-mssp/dashboard",
             "users": "http://localhost:4001/fortress-mssp/settings/users",
             "alerts": "http://localhost:4001/fortress-mssp/alerts",
+            "edp": "http://localhost:4001/fortress-mssp/services/EDP",
+            "mail": "http://localhost:4001/fortress-mssp/services/MAIL",
+            "cloudStorage": "http://localhost:4001/fortress-mssp/services/CLOUD_STORAGE",
             "mssp": "http://localhost:4001/fortress-mssp/mssp"
         },
         "customers": {

@@ -59,6 +59,9 @@
             "dashboard": "https://staging.qfortress.ai/qmasters-demo/dashboard",
             "users": "https://staging.qfortress.ai/qmasters-demo/settings/users",
             "alerts": "https://staging.qfortress.ai/qmasters-demo/alerts",
+            "edp": "https://staging.qfortress.ai/fortress-mssp/services/EDP",
+            "mail": "https://staging.qfortress.ai/fortress-mssp/services/MAIL",
+            "cloudStorage": "https://staging.qfortress.ai/fortress-mssp/services/CLOUD_STORAGE",
             "mssp": "https://staging.qfortress.ai/qmasters-demo/mssp"
         },
         "customers": {
