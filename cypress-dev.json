@@ -59,6 +59,9 @@
             "dashboard": "https://dev.qfortress.ai/fortress-mssp/dashboard",
             "users": "https://dev.qfortress.ai/fortress-mssp/settings/users",
             "alerts": "https://dev.qfortress.ai/fortress-mssp/alerts",
+            "edp": "https://dev.qfortress.ai/fortress-mssp/services/EDP",
+            "mail": "https://dev.qfortress.ai/fortress-mssp/services/MAIL",
+            "cloudStorage": "https://dev.qfortress.ai/fortress-mssp/services/CLOUD_STORAGE",
             "mssp": "https://dev.qfortress.ai/fortress-mssp/mssp"
         },
         "customers": {

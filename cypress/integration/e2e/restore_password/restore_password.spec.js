@@ -54,8 +54,8 @@ describe('Restore Password', function() {
         }).then(mail => {
             const body = mail.text.body
             // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-573
-            // expect(mail).to.contain(firstName);
-            // expect(mail).to.contain(lastName);
+            // expect(body).to.contain(firstName)
+            // expect(body).to.contain(lastName)
             let confirmationCode = body.split('following verification code\n\n')[1].slice(0,6)
             cy.log(confirmationCode)
 
