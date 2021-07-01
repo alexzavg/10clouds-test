@@ -38,7 +38,7 @@
         "runMode": 0,
         "openMode": 0
     },
-    "video": true,
+    "video": false,
     "videoCompression": false,
     "videoUploadOnPasses": false,
     "baseUrl": "http://localhost:4001",

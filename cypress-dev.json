@@ -38,7 +38,7 @@
         "runMode": 0,
         "openMode": 0
     },
-    "video": true,
+    "video": false,
     "videoCompression": false,
     "videoUploadOnPasses": false,
     "baseUrl": "https://dev.qfortress.ai",
@@ -110,7 +110,9 @@
             "siteUrl": "fortress-mssp",
             "customerId": "47bf4160-3495-11eb-a2dc-0919615e3fc5",
             "roleId": "1e0a5130-c481-11eb-8068-6d80fe9bfef0",
-            "alertId": "77f5ac00-c457-11eb-b1c2-8bb53a1798f8",
+            "alertIds": {
+                "edp": "77f5ac00-c457-11eb-b1c2-8bb53a1798f8"
+            },
             "serviceLicenseId": "de347460-5689-11eb-9957-93051f103eed",
             "serviceAccountId": "bdaacb50-be20-11eb-90f5-7548d68e111e",
             "paymentProvider": "AuthorizeNet",

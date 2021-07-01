@@ -58,9 +58,9 @@ describe(`API - Section ${baseUrl}${swaggerSections['auth']}`, function() {
             }
         ).should((response) => {
             expect(response.status).to.eq(200)
-            expect(response.body.jwtToken).to.have.lengthOf.greaterThan(0)
-            expect(response.body.refreshToken).to.have.lengthOf.greaterThan(0)
-            expect(response.body.idToken).to.have.lengthOf.greaterThan(0)
+            expect(response.body.jwtToken).to.be.a('string')
+            expect(response.body.refreshToken).to.be.a('string')
+            expect(response.body.idToken).to.be.a('string')
         })
     })
 
@@ -72,9 +72,9 @@ describe(`API - Section ${baseUrl}${swaggerSections['auth']}`, function() {
             }
         ).should((response) => {
             expect(response.status).to.eq(200)
-            expect(response.body.region).to.eq('us-east-1')
-            expect(response.body.userPoolId).to.eq('us-east-1_4eXAijZrz')
-            expect(response.body.userPoolsClientId).to.eq('5kj604040o8fadf368ub29glj3')
+            expect(response.body.region).to.be.a('string')
+            expect(response.body.userPoolId).to.be.a('string')
+            expect(response.body.userPoolsClientId).to.be.a('string')
         })
     })
 

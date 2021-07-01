@@ -11,11 +11,12 @@ const email             = Cypress.env('apiSuite').users.sixth.email
 const password          = Cypress.env('apiSuite').users.sixth.password
 const formattedKey      = Cypress.env('apiSuite').users.sixth.formattedKey
 const customerId        = Cypress.env('apiSuite').customerId
-const alertId           = Cypress.env('apiSuite').alertId
+const alertIdEdp        = Cypress.env('apiSuite').alertIds.edp
 const alertActions      = ['ALERT_DISMISS', 'ALERT_UNDISMISS']
 const serviceTypes      = ['EDP', 'WEB', 'MAIL', 'CLOUD_STORAGE', 'BACKUP', 'VMDR', 'MOBILE', 'AWARENESS', 'ASK_THE_ANALYST']
 const aggregate         = ['alerts', 'endpoints', 'users']
 const statuses          = ['OPEN', 'CLOSED', 'DISMISSED', 'QUARANTINED']
+const comment           = 'cypress_autotest'
 
 let formattedToken
 
@@ -98,9 +99,9 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
                     body: {
                         'action': action,
                         'alertsIds': [
-                          alertId
+                          alertIdEdp
                         ],
-                        'reason': 'test'
+                        'reason': comment
                     }
                 }
             ).should((response) => {
@@ -108,7 +109,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
                 expect(response.body.actionType).to.eq(action)
                 expect(response.body.committedCount).to.eq(1)
                 expect(response.body.failedCount).to.eq(0)
-                expect(response.body.results[0].alertId).to.eq(alertId)
+                expect(response.body.results[0].alertId).to.eq(alertIdEdp)
                 expect(response.body.results[0].actionType).to.eq(action)
             })
         })
@@ -118,7 +119,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
         cy.request(
             {
                 method: requestTypes.patch,
-                url: baseUrl + endpoints.alert['alert-assign'] + '/' + alertId,
+                url: baseUrl + endpoints.alert['alert-assign'] + '/' + alertIdEdp,
                 auth: {
                     'bearer': this.accessToken
                 },
@@ -247,7 +248,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
         cy.request(
             {
                 method: requestTypes.get,
-                url: baseUrl + endpoints.alert['alert'] + '/' + alertId,
+                url: baseUrl + endpoints.alert['alert'] + '/' + alertIdEdp,
                 auth: {
                     'bearer': this.accessToken
                 },
@@ -258,7 +259,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
             }
         ).should((response) => {
             expect(response.status).to.eq(200)
-            expect(response.body._id).to.eq(alertId)
+            expect(response.body._id).to.eq(alertIdEdp)
         })
     })
 
