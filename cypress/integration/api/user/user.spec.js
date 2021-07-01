@@ -146,7 +146,7 @@ describe('API', function() {
             })
         })
 
-        describe('New user', function() {
+        describe.only('New user', function() {
 
             const firstName     = 'cypress' + getRandomCharLength(8)
             const lastName      = 'cypress' + getRandomCharLength(8)
@@ -213,7 +213,7 @@ describe('API', function() {
             })
 
             // ! due to blocked https://qfortress.atlassian.net/browse/FORT-635
-            it.skip(`Reset password ${baseUrl}${swaggerLinks['user-reset-password']}`, function() {
+            it(`Reset password ${baseUrl}${swaggerLinks['user-reset-password']}`, function() {
                 cy.request(
                     {
                         method: 'POST',
@@ -246,7 +246,7 @@ describe('API', function() {
             })
 
             // ! due to blocked https://qfortress.atlassian.net/browse/FORT-634
-            it.skip(`Change password ${baseUrl}${swaggerLinks['user-change-password']}`, function() {
+            it(`Change password ${baseUrl}${swaggerLinks['user-change-password']}`, function() {
                 cy.request(
                     {
                         method: 'POST',
