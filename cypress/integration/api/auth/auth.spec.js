@@ -4,7 +4,7 @@ import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endp
 
 const {generateToken} = require('authenticator')
 
-describe('API', function() {
+describe(`API - Section ${baseUrl}${swaggerSections['auth']}`, function() {
 
     const baseUrl       = Cypress.env('apiSuite').baseUrl
     const signInLink    = Cypress.env('urls').signIn
@@ -46,74 +46,71 @@ describe('API', function() {
         cy.restoreLocalStorage()
     })
 
-    describe(`Section ${baseUrl}${swaggerSections['auth']}`, function() {
-
-        it(`Refresh tokens ${baseUrl}${swaggerLinks['refresh-tokens']}`, function() {
-            cy.request(
-                {
-                    method: 'POST',
-                    url: baseUrl + endpoints.auth['refresh-tokens'],
-                    body: {
-                        'refreshToken': this.refreshToken,
-                        'idToken': this.idToken
-                    }
+    it(`Refresh tokens ${baseUrl}${swaggerLinks['refresh-tokens']}`, function() {
+        cy.request(
+            {
+                method: 'POST',
+                url: baseUrl + endpoints.auth['refresh-tokens'],
+                body: {
+                    'refreshToken': this.refreshToken,
+                    'idToken': this.idToken
                 }
-            ).should((response) => {
-                expect(response.status).to.eq(200)
-                expect(response.body.jwtToken).to.have.lengthOf.greaterThan(0)
-                expect(response.body.refreshToken).to.have.lengthOf.greaterThan(0)
-                expect(response.body.idToken).to.have.lengthOf.greaterThan(0)
-            })
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body.jwtToken).to.have.lengthOf.greaterThan(0)
+            expect(response.body.refreshToken).to.have.lengthOf.greaterThan(0)
+            expect(response.body.idToken).to.have.lengthOf.greaterThan(0)
         })
+    })
 
-        it(`Get Cognito pool settings ${baseUrl}${swaggerLinks['cognito-pool-settings']}`, function() {
-            cy.request(
-                {
-                    method: 'GET',
-                    url: baseUrl + endpoints.auth['cognito-pool-settings'] + `?siteUrl=${siteUrl}`
-                }
-            ).should((response) => {
-                expect(response.status).to.eq(200)
-                expect(response.body.region).to.eq('us-east-1')
-                expect(response.body.userPoolId).to.eq('us-east-1_4eXAijZrz')
-                expect(response.body.userPoolsClientId).to.eq('5kj604040o8fadf368ub29glj3')
-            })
+    it(`Get Cognito pool settings ${baseUrl}${swaggerLinks['cognito-pool-settings']}`, function() {
+        cy.request(
+            {
+                method: 'GET',
+                url: baseUrl + endpoints.auth['cognito-pool-settings'] + `?siteUrl=${siteUrl}`
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body.region).to.eq('us-east-1')
+            expect(response.body.userPoolId).to.eq('us-east-1_4eXAijZrz')
+            expect(response.body.userPoolsClientId).to.eq('5kj604040o8fadf368ub29glj3')
         })
+    })
 
-        it(`Sign in ${baseUrl}${swaggerLinks['sign-in']}`, function() {
-            cy.request(
-                {
-                    method: 'POST',
-                    url: baseUrl + endpoints.auth['sign-in'],
-                    auth: {
-                        'bearer': this.accessToken
-                    },
-                    headers: {
-                        'x-customer-id': customerId,
-                        'x-id-token': this.idToken
-                    }
+    it(`Sign in ${baseUrl}${swaggerLinks['sign-in']}`, function() {
+        cy.request(
+            {
+                method: 'POST',
+                url: baseUrl + endpoints.auth['sign-in'],
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
                 }
-            ).should((response) => {
-                expect(response.status).to.eq(200)
-            })
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
         })
+    })
 
-        it(`Sign out ${baseUrl}${swaggerLinks['sign-out']}`, function() {
-            cy.request(
-                {
-                    method: 'POST',
-                    url: baseUrl + endpoints.auth['sign-out'],
-                    auth: {
-                        'bearer': this.accessToken
-                    },
-                    headers: {
-                        'x-customer-id': customerId,
-                        'x-id-token': this.idToken
-                    }
+    it(`Sign out ${baseUrl}${swaggerLinks['sign-out']}`, function() {
+        cy.request(
+            {
+                method: 'POST',
+                url: baseUrl + endpoints.auth['sign-out'],
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
                 }
-            ).should((response) => {
-                expect(response.status).to.eq(200)
-            })
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
         })
     })
 

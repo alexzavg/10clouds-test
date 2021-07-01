@@ -4,7 +4,7 @@ import {swaggerSections, swaggerLinks, endpoints} from '../../../support/endpoin
 
 const {generateToken} = require('authenticator')
 
-describe('API', function() {
+describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
 
     const baseUrl       = Cypress.env('apiSuite').baseUrl
     const signInLink    = Cypress.env('urls').signIn
@@ -46,23 +46,21 @@ describe('API', function() {
         cy.restoreLocalStorage()
     })
 
-    describe(`Section ${baseUrl}${swaggerSections['alert']}`, function() {
-        it(`Search alert ${baseUrl}${swaggerLinks['search-customer-alerts']}`, function() {
-            cy.request(
-                {
-                    method: 'POST',
-                    url: baseUrl + endpoints.alert['alert-search'],
-                    auth: {
-                        'bearer': this.accessToken
-                    },
-                    headers: {
-                        'x-customer-id': customerId,
-                        'x-id-token': this.idToken
-                    }
+    it(`Search alert ${baseUrl}${swaggerLinks['search-customer-alerts']}`, function() {
+        cy.request(
+            {
+                method: 'POST',
+                url: baseUrl + endpoints.alert['alert-search'],
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
                 }
-            ).should((response) => {
-                expect(response.status).to.eq(200)
-            })
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
         })
     })
 
