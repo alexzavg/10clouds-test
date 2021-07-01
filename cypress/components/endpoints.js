@@ -45,7 +45,8 @@ export const swaggerLinks = {
   'remove-user': '/api/#/user/removeUser',
   'search-customer-alerts': '/api/#/alert/searchCustomerAlerts',
   'alert-action': '/api/#/alert/alertsAction',
-  'alert-assign': '/api/#/alert/assignUser'
+  'alert-assign': '/api/#/alert/assignUser',
+  'get-customer-alert-statistics': '/api/#/alert/getCustomerAlertsStatistics'
 }
 
 export const endpoints = {
@@ -72,6 +73,7 @@ export const endpoints = {
   'alert': {
     'alert-search': '/alert/search',
     'alert-action': '/alert/action',
-    'alert-assign': '/alert/assign'
+    'alert-assign': '/alert/assign',
+    'alert-customer-statistics': '/alert/customer-statistics'
   }
 }

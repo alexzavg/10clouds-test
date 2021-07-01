@@ -111,17 +111,9 @@
             "customerId": "47bf4160-3495-11eb-a2dc-0919615e3fc5",
             "roleId": "1e0a5130-c481-11eb-8068-6d80fe9bfef0",
             "alertId": "77f5ac00-c457-11eb-b1c2-8bb53a1798f8",
-            "startDate": "1991-04-29T10:00:00.000Z",
-            "severity": ["HIGH", "MEDIUM", "LOW", "NONE"],
-            "top": "5",
-            "aggregate": ["alerts", "endpoints", "users"],
-            "serviceType": ["EDP", "MAIL", "CLOUD_STORAGE"],
-            "subVerdict": ["CLN", "SPM", "MAL", "BLK", "SUS"],
             "serviceLicenseId": "de347460-5689-11eb-9957-93051f103eed",
             "serviceAccountId": "bdaacb50-be20-11eb-90f5-7548d68e111e",
             "paymentProvider": "AuthorizeNet",
-            "targetCurrency": ["USD", "EUR"],
-            "baseCurrency": ["USD", "EUR", "ILS", "GBP", "AUD", "CAD", "CHF"],
             "users": {
                 "first": {
                     "email": "me41zavgorodnii+60@gmail.com",

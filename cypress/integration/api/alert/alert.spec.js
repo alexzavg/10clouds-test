@@ -75,8 +75,8 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
             }
         ).should((response) => {
             expect(response.status).to.eq(200)
-            expect(response.body).to.have.property('pagination')
-            expect(response.body).to.have.property('records')
+            expect(response.body.pagination).to.be.an('object')
+            expect(response.body.records).to.be.an('array')
         })
     })
 
@@ -159,6 +159,39 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
         ).should((response) => {
             expect(response.status).to.eq(200)
             expect(response.body.assignedTo[0]._id).to.eq(userId)
+        })
+    })
+
+    it(`Get customer alert statistics ${baseUrl}${swaggerLinks['get-customer-alert-statistics']}`, function() {
+        cy.request(
+            {
+                method: requestTypes.post,
+                url: baseUrl + endpoints.alert['alert-customer-statistics'],
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
+                },
+                body: {
+                    'startDate': '1991-04-29T00:00:00.000Z',
+                    'endDate': '2091-04-29T00:00:00.000Z',
+                    'severity': [
+                        'HIGH', 
+                        'MEDIUM', 
+                        'LOW', 
+                        'NONE'
+                    ]
+                }
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body.count).to.be.a('number')
+            expect(response.body.entities).to.be.a('number')
+            expect(response.body.trend).to.be.a('string')
+            expect(response.body.severity).to.be.an('object')
+            expect(response.body.types).to.be.an('array')
         })
     })
 
