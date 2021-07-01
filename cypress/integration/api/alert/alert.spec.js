@@ -4,12 +4,15 @@ import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endp
 
 const {generateToken} = require('authenticator')
 
-const baseUrl       = Cypress.env('apiSuite').baseUrl
-const signInLink    = Cypress.env('urls').signIn
-const email         = Cypress.env('apiSuite').users.sixth.email
-const password      = Cypress.env('apiSuite').users.sixth.password
-const formattedKey  = Cypress.env('apiSuite').users.sixth.formattedKey
-const customerId    = Cypress.env('apiSuite').customerId
+const baseUrl           = Cypress.env('apiSuite').baseUrl
+const signInLink        = Cypress.env('urls').signIn
+const email             = Cypress.env('apiSuite').users.sixth.email
+const password          = Cypress.env('apiSuite').users.sixth.password
+const formattedKey      = Cypress.env('apiSuite').users.sixth.formattedKey
+const customerId        = Cypress.env('apiSuite').customerId
+const alertId           = Cypress.env('apiSuite').alertId
+const alertDismiss      = 'ALERT_DISMISS'
+const alertUndismiss    = 'ALERT_UNDISMISS'
 
 let formattedToken
 
@@ -73,6 +76,64 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
             expect(response.status).to.eq(200)
             expect(response.body).to.have.property('pagination')
             expect(response.body).to.have.property('records')
+        })
+    })
+
+    it(`Dismiss & undismiss alert ${baseUrl}${swaggerLinks['alert-action']}`, function() {
+        cy.request(
+            {
+                method: 'PATCH',
+                url: baseUrl + endpoints.alert['alert-action'],
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
+                },
+                body: {
+                    'action': alertDismiss,
+                    'alertsIds': [
+                      alertId
+                    ],
+                    'reason': 'test'
+                }
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body.actionType).to.eq(alertDismiss)
+            expect(response.body.committedCount).to.eq(1)
+            expect(response.body.failedCount).to.eq(0)
+            expect(response.body.results[0].alertId).to.eq(alertId)
+            expect(response.body.results[0].actionType).to.eq(alertDismiss)
+        })
+
+        cy.request(
+            {
+                method: 'PATCH',
+                url: baseUrl + endpoints.alert['alert-action'],
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
+                },
+                body: {
+                    'action': alertUndismiss,
+                    'alertsIds': [
+                      alertId
+                    ],
+                    'reason': 'test'
+                }
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body.actionType).to.eq(alertUndismiss)
+            expect(response.body.committedCount).to.eq(1)
+            expect(response.body.failedCount).to.eq(0)
+            expect(response.body.results[0].alertId).to.eq(alertId)
+            expect(response.body.results[0].actionType).to.eq(alertUndismiss)
         })
     })
 
