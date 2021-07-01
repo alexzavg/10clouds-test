@@ -12,8 +12,10 @@ const password          = Cypress.env('apiSuite').users.sixth.password
 const formattedKey      = Cypress.env('apiSuite').users.sixth.formattedKey
 const customerId        = Cypress.env('apiSuite').customerId
 const alertId           = Cypress.env('apiSuite').alertId
-const alertDismiss      = 'ALERT_DISMISS'
-const alertUndismiss    = 'ALERT_UNDISMISS'
+const alertActions      = ['ALERT_DISMISS', 'ALERT_UNDISMISS']
+const serviceTypes      = ['EDP', 'WEB', 'MAIL', 'CLOUD_STORAGE', 'BACKUP', 'VMDR', 'MOBILE', 'AWARENESS', 'ASK_THE_ANALYST']
+const aggregate         = ['alerts', 'endpoints', 'users']
+const statuses          = ['OPEN', 'CLOSED', 'DISMISSED', 'QUARANTINED']
 
 let formattedToken
 
@@ -81,60 +83,34 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
     })
 
     it(`Dismiss & undismiss alert ${baseUrl}${swaggerLinks['alert-action']}`, function() {
-        cy.request(
-            {
-                method: requestTypes.patch,
-                url: baseUrl + endpoints.alert['alert-action'],
-                auth: {
-                    'bearer': this.accessToken
-                },
-                headers: {
-                    'x-customer-id': customerId,
-                    'x-id-token': this.idToken
-                },
-                body: {
-                    'action': alertDismiss,
-                    'alertsIds': [
-                      alertId
-                    ],
-                    'reason': 'test'
+        alertActions.forEach(action => {
+            cy.request(
+                {
+                    method: requestTypes.patch,
+                    url: baseUrl + endpoints.alert['alert-action'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'action': action,
+                        'alertsIds': [
+                          alertId
+                        ],
+                        'reason': 'test'
+                    }
                 }
-            }
-        ).should((response) => {
-            expect(response.status).to.eq(200)
-            expect(response.body.actionType).to.eq(alertDismiss)
-            expect(response.body.committedCount).to.eq(1)
-            expect(response.body.failedCount).to.eq(0)
-            expect(response.body.results[0].alertId).to.eq(alertId)
-            expect(response.body.results[0].actionType).to.eq(alertDismiss)
-        })
-
-        cy.request(
-            {
-                method: requestTypes.patch,
-                url: baseUrl + endpoints.alert['alert-action'],
-                auth: {
-                    'bearer': this.accessToken
-                },
-                headers: {
-                    'x-customer-id': customerId,
-                    'x-id-token': this.idToken
-                },
-                body: {
-                    'action': alertUndismiss,
-                    'alertsIds': [
-                      alertId
-                    ],
-                    'reason': 'test'
-                }
-            }
-        ).should((response) => {
-            expect(response.status).to.eq(200)
-            expect(response.body.actionType).to.eq(alertUndismiss)
-            expect(response.body.committedCount).to.eq(1)
-            expect(response.body.failedCount).to.eq(0)
-            expect(response.body.results[0].alertId).to.eq(alertId)
-            expect(response.body.results[0].actionType).to.eq(alertUndismiss)
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+                expect(response.body.actionType).to.eq(action)
+                expect(response.body.committedCount).to.eq(1)
+                expect(response.body.failedCount).to.eq(0)
+                expect(response.body.results[0].alertId).to.eq(alertId)
+                expect(response.body.results[0].actionType).to.eq(action)
+            })
         })
     })
 
@@ -162,7 +138,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
         })
     })
 
-    it(`Get customer alert statistics ${baseUrl}${swaggerLinks['get-customer-alert-statistics']}`, function() {
+    it(`Get customer alert statistics ${baseUrl}${swaggerLinks['get-customer-alerts-statistics']}`, function() {
         cy.request(
             {
                 method: requestTypes.post,
@@ -192,6 +168,78 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
             expect(response.body.trend).to.be.a('string')
             expect(response.body.severity).to.be.an('object')
             expect(response.body.types).to.be.an('array')
+        })
+    })
+
+    it(`Get customer top statistics ${baseUrl}${swaggerLinks['get-customer-top-statistics']}`, function() {
+        serviceTypes.forEach(service => {
+            aggregate.forEach(category => {
+                cy.request(
+                    {
+                        method: requestTypes.post,
+                        url: baseUrl + endpoints.alert['alert-customer-top-statistics'],
+                        auth: {
+                            'bearer': this.accessToken
+                        },
+                        headers: {
+                            'x-customer-id': customerId,
+                            'x-id-token': this.idToken
+                        },
+                        body: {
+                            'startDate': '1991-04-29T00:00:00.000Z',
+                            'endDate': '2091-04-29T00:00:00.000Z',
+                            'top': '5',
+                            'aggregate': category,
+                            'serviceType': service,
+                            'severity': [
+                                'HIGH', 
+                                'MEDIUM', 
+                                'LOW', 
+                                'NONE'
+                            ]
+                        }
+                    }
+                ).should((response) => {
+                    expect(response.status).to.eq(200)
+                    expect(response.body).to.have.property(category).that.is.an('array')
+                })
+            })
+        })
+    })
+
+    it(`Get service alerts statistics ${baseUrl}${swaggerLinks['get-customer-alerts-statistics']}`, function() {
+        serviceTypes.forEach(service => {
+            statuses.forEach(status => {
+                cy.request(
+                    {
+                        method: requestTypes.post,
+                        url: baseUrl + endpoints.alert['alert-service-statistics'],
+                        auth: {
+                            'bearer': this.accessToken
+                        },
+                        headers: {
+                            'x-customer-id': customerId,
+                            'x-id-token': this.idToken
+                        },
+                        body: {
+                            'serviceType': service,
+                            'startDate': '1991-04-29T00:00:00.000Z',
+                            'endDate': '2091-04-29T00:00:00.000Z',
+                            'status': [
+                                status
+                            ]
+                        }
+                    }
+                ).should((response) => {
+                    expect(response.status).to.eq(200)
+                    expect(response.body.serviceType).to.be.an('array')
+                    expect(response.body.count).to.be.a('number')
+                    expect(response.body.entities).to.be.a('number')
+                    expect(response.body.severity).to.be.an('object')
+                    expect(response.body.category).to.be.an('array')
+                    expect(response.body.attackVector).to.be.an('array')
+                })
+            })
         })
     })
 
