@@ -1,7 +1,7 @@
 import {dashboardPageElements, dashboardPageData} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
 import {alertsPageElements} from '../../../components/alerts.js'
-import {requests} from '../../../support/requests.js'
+import {requests} from '../../../components/requests.js'
 import {ValidInDays, ValidInWeeks, PostExtractTimes, ValidInHours} from '../../../support/dataGenerator.js'
 
 const {generateToken} = require('authenticator')

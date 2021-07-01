@@ -1,7 +1,7 @@
 import {signInPageElements, signInPageData} from '../../../components/sign-in.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
 import {dashboardPageElements} from '../../../components/dashboard.js'
-import {requests} from '../../../support/requests.js'
+import {requests} from '../../../components/requests.js'
 import {getRandomCharLength} from '../../../support/dataGenerator.js'
 
 const {generateToken} = require('authenticator')
