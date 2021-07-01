@@ -38,8 +38,8 @@
         "runMode": 0,
         "openMode": 0
     },
-    "video": false,
-    "videoCompression": 51,
+    "video": true,
+    "videoCompression": false,
     "videoUploadOnPasses": false,
     "baseUrl": "https://dev.qfortress.ai",
     "env": {
