@@ -1,3 +1,11 @@
+export const requestTypes = {
+  'get': 'GET',
+  'post': 'POST',
+  'put': 'PUT',
+  'patch': 'PATCH',
+  'delete': 'DELETE'
+}
+
 export const swaggerSections = {
   'auth': '/api/#/auth',
   'role': '/api/#/role',
@@ -34,7 +42,14 @@ export const swaggerLinks = {
   'user-change-password': '/api/#/user/userChangePassword',
   'user-reset-password': '/api/#/user/userResetPassword',
   'reset-user-mfa': '/api/#/user/resetUserMFA',
-  'remove-user': '/api/#/user/removeUser'
+  'remove-user': '/api/#/user/removeUser',
+  'search-customer-alerts': '/api/#/alert/searchCustomerAlerts',
+  'alert-action': '/api/#/alert/alertsAction',
+  'alert-assign': '/api/#/alert/assignUser',
+  'get-customer-alerts-statistics': '/api/#/alert/getCustomerAlertsStatistics',
+  'get-customer-top-statistics': '/api/#/alert/getCustomerTopStatistics',
+  'get-service-alerts-statistics': '/api/#/alert/getServiceAlertsStatistics',
+  'get-customer-alert-by-id': '/api/#/alert/getCustomerAlertById'
 }
 
 export const endpoints = {
@@ -57,5 +72,14 @@ export const endpoints = {
     'user-password-reset': '/user/password/reset',
     'user-mfa-reset': '/user/mfa/reset',
     'user-remove': '/user/remove'
+  },
+  'alert': {
+    'alert-search': '/alert/search',
+    'alert-action': '/alert/action',
+    'alert-assign': '/alert/assign',
+    'alert-customer-statistics': '/alert/customer-statistics',
+    'alert-customer-top-statistics': '/alert/customer-top-statistics',
+    'alert-service-statistics': '/alert/service-statistics',
+    'alert': '/alert'
   }
 }
