@@ -6,26 +6,26 @@ import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endp
 
 const {generateToken} = require('authenticator')
 
+const baseUrl       = Cypress.env('apiSuite').baseUrl
+const signInLink    = Cypress.env('urls').signIn
+const email         = Cypress.env('apiSuite').users.third.email
+const password      = Cypress.env('apiSuite').users.third.password
+const id            = Cypress.env('apiSuite').users.third.id
+const firstName     = Cypress.env('apiSuite').users.third.firstName
+const lastName      = Cypress.env('apiSuite').users.third.lastName
+const phoneNumber   = Cypress.env('apiSuite').users.third.phoneNumber
+const status        = Cypress.env('apiSuite').users.third.status
+const formattedKey  = Cypress.env('apiSuite').users.third.formattedKey
+const customerId    = Cypress.env('apiSuite').customerId
+const roleId        = Cypress.env('apiSuite').roleId
+const serverId      = Cypress.env('MAILOSAUR_SERVER_ID')
+const emailDomain   = Cypress.env('email_domain')
+const siteUrl       = Cypress.env('apiSuite').siteUrl
+const currentTime   = getCurrentTimeISO()
+
+let formattedToken
+
 describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
-
-    const baseUrl       = Cypress.env('apiSuite').baseUrl
-    const signInLink    = Cypress.env('urls').signIn
-    const email         = Cypress.env('apiSuite').users.third.email
-    const password      = Cypress.env('apiSuite').users.third.password
-    const id            = Cypress.env('apiSuite').users.third.id
-    const firstName     = Cypress.env('apiSuite').users.third.firstName
-    const lastName      = Cypress.env('apiSuite').users.third.lastName
-    const phoneNumber   = Cypress.env('apiSuite').users.third.phoneNumber
-    const status        = Cypress.env('apiSuite').users.third.status
-    const formattedKey  = Cypress.env('apiSuite').users.third.formattedKey
-    const customerId    = Cypress.env('apiSuite').customerId
-    const roleId        = Cypress.env('apiSuite').roleId
-    const serverId      = Cypress.env('MAILOSAUR_SERVER_ID')
-    const emailDomain   = Cypress.env('email_domain')
-    const siteUrl       = Cypress.env('apiSuite').siteUrl
-    const currentTime   = getCurrentTimeISO()
-
-    let formattedToken
 
     before(() => {
         // sign in

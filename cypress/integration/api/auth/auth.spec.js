@@ -4,17 +4,17 @@ import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endp
 
 const {generateToken} = require('authenticator')
 
+const baseUrl       = Cypress.env('apiSuite').baseUrl
+const signInLink    = Cypress.env('urls').signIn
+const email         = Cypress.env('apiSuite').users.first.email
+const password      = Cypress.env('apiSuite').users.first.password
+const formattedKey  = Cypress.env('apiSuite').users.first.formattedKey
+const siteUrl       = Cypress.env('apiSuite').siteUrl
+const customerId    = Cypress.env('apiSuite').customerId
+
+let formattedToken
+
 describe(`API - Section ${baseUrl}${swaggerSections['auth']}`, function() {
-
-    const baseUrl       = Cypress.env('apiSuite').baseUrl
-    const signInLink    = Cypress.env('urls').signIn
-    const email         = Cypress.env('apiSuite').users.first.email
-    const password      = Cypress.env('apiSuite').users.first.password
-    const formattedKey  = Cypress.env('apiSuite').users.first.formattedKey
-    const siteUrl       = Cypress.env('apiSuite').siteUrl
-    const customerId    = Cypress.env('apiSuite').customerId
-
-    let formattedToken
 
     before(() => {
         // sign in

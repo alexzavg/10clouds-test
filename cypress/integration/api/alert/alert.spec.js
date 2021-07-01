@@ -4,17 +4,16 @@ import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endp
 
 const {generateToken} = require('authenticator')
 
+const baseUrl       = Cypress.env('apiSuite').baseUrl
+const signInLink    = Cypress.env('urls').signIn
+const email         = Cypress.env('apiSuite').users.sixth.email
+const password      = Cypress.env('apiSuite').users.sixth.password
+const formattedKey  = Cypress.env('apiSuite').users.sixth.formattedKey
+const customerId    = Cypress.env('apiSuite').customerId
+
+let formattedToken
+
 describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
-
-    const baseUrl       = Cypress.env('apiSuite').baseUrl
-    const signInLink    = Cypress.env('urls').signIn
-    // todo new user
-    const email         = Cypress.env('apiSuite').users.third.email
-    const password      = Cypress.env('apiSuite').users.third.password
-    const formattedKey  = Cypress.env('apiSuite').users.third.formattedKey
-    const customerId    = Cypress.env('apiSuite').customerId
-
-    let formattedToken
 
     before(() => {
         // sign in
@@ -57,10 +56,23 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
                 headers: {
                     'x-customer-id': customerId,
                     'x-id-token': this.idToken
+                },
+                body: {
+                    'pagination': {
+                        'skip': 0,
+                        'take': 25,
+                        'sort': 'createdAt',
+                        'sortDir': 'DESC'
+                    },
+                    'status': [
+                        'OPEN'
+                    ]
                 }
             }
         ).should((response) => {
             expect(response.status).to.eq(200)
+            expect(response.body).to.have.property('pagination')
+            expect(response.body).to.have.property('records')
         })
     })
 

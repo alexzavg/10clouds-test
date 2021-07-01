@@ -5,23 +5,23 @@ import {getRandomCharLength} from '../../../support/dataGenerator.js'
 
 const {generateToken} = require('authenticator')
 
+const baseUrl           = Cypress.env('apiSuite').baseUrl
+const signInLink        = Cypress.env('urls').signIn
+const userId            = Cypress.env('apiSuite').users.second.id
+const email             = Cypress.env('apiSuite').users.second.email
+const password          = Cypress.env('apiSuite').users.second.password
+const formattedKey      = Cypress.env('apiSuite').users.second.formattedKey
+const customerId        = Cypress.env('apiSuite').customerId
+const name              = getRandomCharLength(30)
+const description       = getRandomCharLength(30)
+const permission        = 'GET_PROTECTION_SCORE'
+const nameNew           = getRandomCharLength(30)
+const descriptionNew    = getRandomCharLength(30)
+const permissionNew     = 'USER_SEARCH'
+
+let formattedToken
+
 describe(`API - Section ${baseUrl}${swaggerSections['role']}`, function() {
-
-    const baseUrl           = Cypress.env('apiSuite').baseUrl
-    const signInLink        = Cypress.env('urls').signIn
-    const userId            = Cypress.env('apiSuite').users.second.id
-    const email             = Cypress.env('apiSuite').users.second.email
-    const password          = Cypress.env('apiSuite').users.second.password
-    const formattedKey      = Cypress.env('apiSuite').users.second.formattedKey
-    const customerId        = Cypress.env('apiSuite').customerId
-    const name              = getRandomCharLength(30)
-    const description       = getRandomCharLength(30)
-    const permission        = 'GET_PROTECTION_SCORE'
-    const nameNew           = getRandomCharLength(30)
-    const descriptionNew    = getRandomCharLength(30)
-    const permissionNew     = 'USER_SEARCH'
-
-    let formattedToken
 
     before(() => {
         // sign in
