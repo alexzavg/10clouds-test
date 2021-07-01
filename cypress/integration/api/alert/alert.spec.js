@@ -243,4 +243,23 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
         })
     })
 
+    it(`Get customer alert by id ${baseUrl}${swaggerLinks['get-customer-alert-by-id']}`, function() {
+        cy.request(
+            {
+                method: requestTypes.get,
+                url: baseUrl + endpoints.alert['alert'] + '/' + alertId,
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
+                }
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body._id).to.eq(alertId)
+        })
+    })
+
 })
