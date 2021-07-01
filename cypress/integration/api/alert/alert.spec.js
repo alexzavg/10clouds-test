@@ -138,4 +138,28 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
         })
     })
 
+    it(`Assign alert to user ${baseUrl}${swaggerLinks['alert-assign']}`, function() {
+        cy.request(
+            {
+                method: requestTypes.patch,
+                url: baseUrl + endpoints.alert['alert-assign'] + '/' + alertId,
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
+                },
+                body: {
+                    'usersIds': [
+                        userId
+                    ]
+                }
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body.assignedTo[0]._id).to.eq(userId)
+        })
+    })
+
 })

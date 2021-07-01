@@ -44,7 +44,8 @@ export const swaggerLinks = {
   'reset-user-mfa': '/api/#/user/resetUserMFA',
   'remove-user': '/api/#/user/removeUser',
   'search-customer-alerts': '/api/#/alert/searchCustomerAlerts',
-  'alert-action': '/api/#/alert/alertsAction'
+  'alert-action': '/api/#/alert/alertsAction',
+  'alert-assign': '/api/#/alert/assignUser'
 }
 
 export const endpoints = {
@@ -70,6 +71,7 @@ export const endpoints = {
   },
   'alert': {
     'alert-search': '/alert/search',
-    'alert-action': '/alert/action'
+    'alert-action': '/alert/action',
+    'alert-assign': '/alert/assign'
   }
 }
