@@ -1,6 +1,6 @@
 import {dashboardPageElements} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
-import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
+import {requestTypes, swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
 
 const {generateToken} = require('authenticator')
 
@@ -49,7 +49,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['auth']}`, function() {
     it(`Refresh tokens ${baseUrl}${swaggerLinks['refresh-tokens']}`, function() {
         cy.request(
             {
-                method: 'POST',
+                method: requestTypes.post,
                 url: baseUrl + endpoints.auth['refresh-tokens'],
                 body: {
                     'refreshToken': this.refreshToken,
@@ -67,7 +67,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['auth']}`, function() {
     it(`Get Cognito pool settings ${baseUrl}${swaggerLinks['cognito-pool-settings']}`, function() {
         cy.request(
             {
-                method: 'GET',
+                method: requestTypes.get,
                 url: baseUrl + endpoints.auth['cognito-pool-settings'] + `?siteUrl=${siteUrl}`
             }
         ).should((response) => {
@@ -81,7 +81,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['auth']}`, function() {
     it(`Sign in ${baseUrl}${swaggerLinks['sign-in']}`, function() {
         cy.request(
             {
-                method: 'POST',
+                method: requestTypes.post,
                 url: baseUrl + endpoints.auth['sign-in'],
                 auth: {
                     'bearer': this.accessToken
@@ -99,7 +99,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['auth']}`, function() {
     it(`Sign out ${baseUrl}${swaggerLinks['sign-out']}`, function() {
         cy.request(
             {
-                method: 'POST',
+                method: requestTypes.post,
                 url: baseUrl + endpoints.auth['sign-out'],
                 auth: {
                     'bearer': this.accessToken

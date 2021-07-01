@@ -2,7 +2,7 @@ import {dashboardPageElements} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
 import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../../support/dataGenerator.js'
 import {emailsData} from '../../../components/emailsData.js'
-import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
+import {requestTypes, swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
 
 const {generateToken} = require('authenticator')
 
@@ -62,7 +62,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
         it(`Get current user info ${baseUrl}${swaggerLinks['user-me']}`, function() {
             cy.request(
                 {
-                    method: 'GET',
+                    method: requestTypes.get,
                     url: baseUrl + endpoints.user['user-me'],
                     auth: {
                         'bearer': this.accessToken
@@ -87,7 +87,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
         it(`Get user by id ${baseUrl}${swaggerLinks['get-user-by-id']}`, function() {
             cy.request(
                 {
-                    method: 'GET',
+                    method: requestTypes.get,
                     url: baseUrl + endpoints.user['user'] + '/' + id,
                     auth: {
                         'bearer': this.accessToken
@@ -112,7 +112,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
         it(`Find user ${baseUrl}${swaggerLinks['find-users']}`, function() {
             cy.request(
                 {
-                    method: 'POST',
+                    method: requestTypes.post,
                     url: baseUrl + endpoints.user['user-search'],
                     auth: {
                         'bearer': this.accessToken
@@ -153,7 +153,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
         it(`Reset password ${baseUrl}${swaggerLinks['user-reset-password']}`, function() {
             cy.request(
                 {
-                    method: 'POST',
+                    method: requestTypes.post,
                     url: baseUrl + endpoints.user['user-password-reset'],
                     body: {
                         'email': resetPswdUserEmail,
@@ -185,7 +185,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
         it(`Change password ${baseUrl}${swaggerLinks['user-change-password']}`, function() {
             cy.request(
                 {
-                    method: 'POST',
+                    method: requestTypes.post,
                     url: baseUrl + endpoints.user['user-password-change'],
                     body: {
                         'verificationCode': this.confirmationCode,
@@ -209,7 +209,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
         it(`Reset MFA ${baseUrl}${swaggerLinks['reset-user-mfa']}`, function() {
             cy.request(
                 {
-                    method: 'POST',
+                    method: requestTypes.post,
                     url: baseUrl + endpoints.user['user-mfa-reset'],
                     auth: {
                         'bearer': this.accessToken
@@ -237,7 +237,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
         it(`Create user ${baseUrl}${swaggerLinks['sign-up']}`, function() {
             cy.request(
                 {
-                    method: 'POST',
+                    method: requestTypes.post,
                     url: baseUrl + endpoints.auth['sign-up'],
                     auth: {
                         'bearer': this.accessToken
@@ -268,7 +268,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
         it(`Update user ${baseUrl}${swaggerLinks['update-user']}`, function() {
             cy.request(
                 {
-                    method: 'PATCH',
+                    method: requestTypes.patch,
                     url: baseUrl + endpoints.user['user'] + '/' + this.userId,
                     auth: {
                         'bearer': this.accessToken
@@ -297,7 +297,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['user']}`, function() {
         it.skip(`Remove user ${baseUrl}${swaggerLinks['remove-user']}`, function() {
             cy.request(
                 {
-                    method: 'POST',
+                    method: requestTypes.post,
                     url: baseUrl + endpoints.user['user-remove'],
                     auth: {
                         'bearer': this.accessToken

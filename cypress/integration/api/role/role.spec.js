@@ -1,6 +1,6 @@
 import {dashboardPageElements} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
-import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
+import {requestTypes, swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
 import {getRandomCharLength} from '../../../support/dataGenerator.js'
 
 const {generateToken} = require('authenticator')
@@ -56,7 +56,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['role']}`, function() {
     it(`Create role ${baseUrl}${swaggerLinks['role-create']}`, function() {
         cy.request(
             {
-                method: 'POST',
+                method: requestTypes.post,
                 url: baseUrl + endpoints.role['role'],
                 auth: {
                     'bearer': this.accessToken
@@ -94,7 +94,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['role']}`, function() {
     it(`Update role ${baseUrl}${swaggerLinks['role-update']}`, function() {
         cy.request(
             {
-                method: 'PATCH',
+                method: requestTypes.patch,
                 url: baseUrl + endpoints.role['role'] + '/' + this.roleId,
                 auth: {
                     'bearer': this.accessToken
@@ -124,7 +124,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['role']}`, function() {
     it(`Get role info ${baseUrl}${swaggerLinks['role-get']}`, function() {
         cy.request(
             {
-                method: 'GET',
+                method: requestTypes.get,
                 url: baseUrl + endpoints.role['role'] + '/' + this.roleId,
                 auth: {
                     'bearer': this.accessToken
@@ -149,7 +149,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['role']}`, function() {
     it(`Search role ${baseUrl}${swaggerLinks['role-search']}`, function() {
         cy.request(
             {
-                method: 'POST',
+                method: requestTypes.post,
                 url: baseUrl + endpoints.role['role-search'],
                 auth: {
                     'bearer': this.accessToken

@@ -1,3 +1,11 @@
+export const requestTypes = {
+  'get': 'GET',
+  'post': 'POST',
+  'put': 'PUT',
+  'patch': 'PATCH',
+  'delete': 'DELETE'
+}
+
 export const swaggerSections = {
   'auth': '/api/#/auth',
   'role': '/api/#/role',

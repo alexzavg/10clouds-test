@@ -1,11 +1,12 @@
 import {dashboardPageElements} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
-import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
+import {requestTypes, swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
 
 const {generateToken} = require('authenticator')
 
 const baseUrl           = Cypress.env('apiSuite').baseUrl
 const signInLink        = Cypress.env('urls').signIn
+const userId            = Cypress.env('apiSuite').users.sixth.id
 const email             = Cypress.env('apiSuite').users.sixth.email
 const password          = Cypress.env('apiSuite').users.sixth.password
 const formattedKey      = Cypress.env('apiSuite').users.sixth.formattedKey
@@ -51,7 +52,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
     it(`Search alert ${baseUrl}${swaggerLinks['search-customer-alerts']}`, function() {
         cy.request(
             {
-                method: 'POST',
+                method: requestTypes.post,
                 url: baseUrl + endpoints.alert['alert-search'],
                 auth: {
                     'bearer': this.accessToken
@@ -82,7 +83,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
     it(`Dismiss & undismiss alert ${baseUrl}${swaggerLinks['alert-action']}`, function() {
         cy.request(
             {
-                method: 'PATCH',
+                method: requestTypes.patch,
                 url: baseUrl + endpoints.alert['alert-action'],
                 auth: {
                     'bearer': this.accessToken
@@ -110,7 +111,7 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
 
         cy.request(
             {
-                method: 'PATCH',
+                method: requestTypes.patch,
                 url: baseUrl + endpoints.alert['alert-action'],
                 auth: {
                     'bearer': this.accessToken
