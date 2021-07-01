@@ -3,8 +3,8 @@ import {signUpPageElements} from '../../../components/sign-up.js'
 import {dashboardPageElements} from '../../../components/dashboard.js'
 import {usersPageElements, usersPageData} from '../../../components/users.js'
 import {navbarElements, navbarData} from '../../../components/navbar.js'
-import {requests} from '../../../support/requests.js'
-import {emailsData} from '../../../support/emailsData.js'
+import {requests} from '../../../components/requests.js'
+import {emailsData} from '../../../components/emailsData.js'
 import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../../support/dataGenerator.js'
 
 const {generateToken} = require('authenticator')
@@ -36,8 +36,7 @@ describe('Users', function() {
         cy.intercept(requests['user-remove']).as('user-remove')
     })
 
-    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-649
-    describe.skip('Add & Delete new user', function() {
+    describe('Add & Delete new user', function() {
 
         it('Add new user, setup MFA & sign in', function() {
             cy.visit(signInLink)

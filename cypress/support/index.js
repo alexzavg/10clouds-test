@@ -19,6 +19,7 @@
 require('./commands')
 require('cypress-commands')
 require('cypress-dark')
+require('@shelex/cypress-allure-plugin')
 
 // Add Screenshot to Mochawesome Report
 import addContext from 'mochawesome/addContext'

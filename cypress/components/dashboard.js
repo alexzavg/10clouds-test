@@ -17,7 +17,11 @@ export const dashboardPageElements = {
         'medium': '.selected-medium',
         'low': '.selected-low'
     },
-    'severityUnselectBtn': '[aria-label="Clear"]'
+    'severityUnselectBtn': '[aria-label="Clear"]',
+    'polygon': {
+        'serviceArea': '.part',
+        'alertsChart': '.chartjs-render-monitor'
+    }
 }
 
 export const dashboardPageData = {
@@ -32,8 +36,14 @@ export const dashboardPageData = {
     'topAlerts': 'Top Alerts',
     'topUsers': 'Top Users',
     'topNews': 'Fortress News',
-    'nothingFound': 'Nothing found',
+    'nothingHere': 'Nothing here',
     'severityHigh': 'High',
     'severityMedium': 'Medium',
-    'severityLow': 'Low'
+    'severityLow': 'Low',
+    'services': {
+        'edp': 'Endpoint',
+        'mail': 'Mail',
+        'cloudStorage': 'Cloud Storage'
+    },
+    'notProtected': 'Not protected'
 }

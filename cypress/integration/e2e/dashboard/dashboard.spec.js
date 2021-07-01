@@ -1,19 +1,22 @@
 import {dashboardPageElements, dashboardPageData} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
 import {alertsPageElements} from '../../../components/alerts.js'
-import {requests} from '../../../support/requests.js'
+import {requests} from '../../../components/requests.js'
 import {ValidInDays, ValidInWeeks, PostExtractTimes, ValidInHours} from '../../../support/dataGenerator.js'
 
 const {generateToken} = require('authenticator')
 
 describe('Dashboard', function() {
 
-    const signInLink    = Cypress.env('urls').signIn
-    const dashboardLink = Cypress.env('urls').dashboard
-    const alertsLink    = Cypress.env('urls').alerts
-    const email         = Cypress.env('users').third.email
-    const password      = Cypress.env('users').third.password 
-    const formattedKey  = Cypress.env('users').third.formattedKey
+    const signInLink        = Cypress.env('urls').signIn
+    const dashboardLink     = Cypress.env('urls').dashboard
+    const alertsLink        = Cypress.env('urls').alerts
+    const edpLink           = Cypress.env('urls').edp
+    const mailLink          = Cypress.env('urls').mail
+    const cloudStorageLink  = Cypress.env('urls').cloudStorage
+    const email             = Cypress.env('users').third.email
+    const password          = Cypress.env('users').third.password 
+    const formattedKey      = Cypress.env('users').third.formattedKey
 
     let formattedToken
 
@@ -787,7 +790,7 @@ describe('Dashboard', function() {
                 cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
                     cy.wait(1500)
                     cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
-                        if (value.text().includes(dashboardPageData.nothingFound)) {
+                        if (value.text().includes(dashboardPageData.nothingHere)) {
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).click()
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topEndpoints).should('not.exist')
                             cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist')
@@ -820,7 +823,7 @@ describe('Dashboard', function() {
                 cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
                     cy.wait(1500)
                     cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
-                        if (value.text().includes(dashboardPageData.nothingFound)) {
+                        if (value.text().includes(dashboardPageData.nothingHere)) {
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).click()
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topAlerts).should('not.exist')
                             cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist')
@@ -853,7 +856,7 @@ describe('Dashboard', function() {
                 cy.get(dashboardPageElements.rightMenuCategoryOpen).should('be.visible').then(() => {
                     cy.wait(1500)
                     cy.get(dashboardPageElements.rightMenuCategoryOpen).then((value) => {
-                        if (value.text().includes(dashboardPageData.nothingFound)) {
+                        if (value.text().includes(dashboardPageData.nothingHere)) {
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).click()
                             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.topUsers).should('not.exist')
                             cy.get(dashboardPageElements.rightMenuCategoryOpen).should('not.exist')
@@ -875,6 +878,78 @@ describe('Dashboard', function() {
                             })
                         }
                     })
+                })
+            })
+        })
+
+        it('[Polygon] - click on [EDP] service & check redirect to [EDP] page', function() {
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).should('be.visible').then(val => {
+                    if (val.text().includes(dashboardPageData.notProtected)) {
+                        cy.log('Service is not active')
+                    }
+                    else {
+                        cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.edp).find(dashboardPageElements.polygon.alertsChart).click()
+                        cy.url().should('eq', edpLink)
+                        cy.get(alertsPageElements.filtersBtn).should('be.visible')
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200)
+                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200)
+                        cy.visit(dashboardLink)
+                    }
+                })
+            })
+        })
+
+        it('[Polygon] - click on [MAIL] service & check redirect to [MAIL] page', function() {
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).should('be.visible').then(val => {
+                    if (val.text().includes(dashboardPageData.notProtected)) {
+                        cy.log('Service is not active')
+                    }
+                    else {
+                        cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).find(dashboardPageElements.polygon.alertsChart).click()
+                        cy.url().should('eq', mailLink)
+                        cy.get(alertsPageElements.filtersBtn).should('be.visible')
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200)
+                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200)
+                        cy.visit(dashboardLink)
+                    }
+                })
+            })
+        })
+
+        it('[Polygon] - click on [CLOUD STORAGE] service & check redirect to [CLOUD STORAGE] page', function() {
+            cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
+                cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.mail).should('be.visible').then(val => {
+                    if (val.text().includes(dashboardPageData.notProtected)) {
+                        cy.log('Service is not active')
+                    }
+                    else {
+                        cy.contains(dashboardPageElements.polygon.serviceArea, dashboardPageData.services.cloudStorage).find(dashboardPageElements.polygon.alertsChart).click()
+                        cy.url().should('eq', cloudStorageLink)
+                        cy.get(alertsPageElements.filtersBtn).should('be.visible')
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@customer-top-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@protection-scores').its('response.statusCode').should('eq', 200)
+                        cy.wait('@service-statistics').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@device-search').its('response.statusCode').should('eq', 200)
+                        cy.wait('@alert-search').its('response.statusCode').should('eq', 200)
+                        cy.visit(dashboardLink)
+                    }
                 })
             })
         })

@@ -1,7 +1,7 @@
 import {signInPageElements, signInPageData} from '../../../components/sign-in.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
-import {requests} from '../../../support/requests.js'
-import {emailsData} from '../../../support/emailsData.js'
+import {requests} from '../../../components/requests.js'
+import {emailsData} from '../../../components/emailsData.js'
 import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../../support/dataGenerator.js'
 
 describe('Restore Password', function() {
@@ -25,8 +25,7 @@ describe('Restore Password', function() {
         cy.intercept(requests['user-password-change']).as('user-password-change')
     })
   
-    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-648
-    it.skip('Restore password, check email & login with new password', function() {
+    it('Restore password, check email & login with new password', function() {
         cy.visit(signInLink)
         cy.get(signInPageElements.forgotPasswordBtn).click()
 
@@ -55,8 +54,8 @@ describe('Restore Password', function() {
         }).then(mail => {
             const body = mail.text.body
             // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-573
-            // expect(mail).to.contain(firstName);
-            // expect(mail).to.contain(lastName);
+            // expect(body).to.contain(firstName)
+            // expect(body).to.contain(lastName)
             let confirmationCode = body.split('following verification code\n\n')[1].slice(0,6)
             cy.log(confirmationCode)
 
@@ -113,8 +112,7 @@ describe('Restore Password', function() {
         })
     })
 
-    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-648
-    it.skip('Error for [New Password] & [Confirm Password] field values mismatch', function() {
+    it('Error for [New Password] & [Confirm Password] field values mismatch', function() {
         cy.visit(forgotPasswordLink)
         cy.get(signInPageElements.emailField).type(email)
         cy.contains(signInPageElements.btn, signInPageData.buttons.restorePassword).click()
@@ -125,15 +123,13 @@ describe('Restore Password', function() {
         cy.contains(signInPageElements.btnDisabled, signInPageData.buttons.confirm).should('be.visible')
     })
 
-    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-648
-    it.skip('Error for empty [Code] field', function() {
+    it('Error for empty [Code] field', function() {
         cy.get(signInPageElements.confirmCodeField).click()
         cy.clickOutside()
         cy.contains(signInPageElements.error, signInPageData.errors.codeIsRequired).should('be.visible')
     })
 
-    // ! disabled due to bug https://qfortress.atlassian.net/browse/FORT-648
-    it.skip('Error for incorrect code in [Code] field', function() {
+    it('Error for incorrect code in [Code] field', function() {
         cy.get(signInPageElements.newPasswordField).clear().type(newPassword)
         cy.get(signInPageElements.confirmPasswordField).clear().type(newPassword)
         cy.get(signInPageElements.confirmCodeField).clear().type(incorrectCode)

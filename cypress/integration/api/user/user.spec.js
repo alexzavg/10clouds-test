@@ -1,8 +1,8 @@
 import {dashboardPageElements} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
-import {swaggerSections, swaggerLinks, endpoints} from '../../../support/endpoints.js'
 import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../../support/dataGenerator.js'
 import {emailsData} from '../../../support/emailsData.js'
+import {swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
 
 const {generateToken} = require('authenticator')
 
