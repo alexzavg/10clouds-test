@@ -1,8 +1,8 @@
-import {signInPageElements, signInPageData} from '../../../components/sign-in.js'
-import {signUpPageElements} from '../../../components/sign-up.js'
-import {requests} from '../../../components/requests.js'
-import {emailsData} from '../../../components/emailsData.js'
-import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../../support/dataGenerator.js'
+import {signInPageElements, signInPageData} from '../../../../components/sign-in.js'
+import {signUpPageElements} from '../../../../components/sign-up.js'
+import {requests} from '../../../../components/requests.js'
+import {emailsData} from '../../../../components/emailsData.js'
+import {getRandomCharLength, getRandomNumberLength, getRandomSpecialCharLength, getCurrentTimeISO} from '../../../../support/dataGenerator.js'
 
 describe('Restore Password', function() {
 

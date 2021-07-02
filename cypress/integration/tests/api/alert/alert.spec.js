@@ -1,6 +1,6 @@
-import {dashboardPageElements} from '../../../components/dashboard.js'
-import {signUpPageElements} from '../../../components/sign-up.js'
-import {requestTypes, swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
+import {dashboardPageElements} from '../../../../components/dashboard.js'
+import {signUpPageElements} from '../../../../components/sign-up.js'
+import {requestTypes, swaggerSections, swaggerLinks, endpoints} from '../../../../components/endpoints.js'
 
 const {generateToken} = require('authenticator')
 
