@@ -49,7 +49,8 @@ export const swaggerLinks = {
   'get-customer-alerts-statistics': '/api/#/alert/getCustomerAlertsStatistics',
   'get-customer-top-statistics': '/api/#/alert/getCustomerTopStatistics',
   'get-service-alerts-statistics': '/api/#/alert/getServiceAlertsStatistics',
-  'get-customer-alert-by-id': '/api/#/alert/getCustomerAlertById'
+  'get-customer-alert-by-id': '/api/#/alert/getCustomerAlertById',
+  'alert-change-vector': '/api/#/alert/changeVector'
 }
 
 export const endpoints = {
@@ -80,6 +81,7 @@ export const endpoints = {
     'alert-customer-statistics': '/alert/customer-statistics',
     'alert-customer-top-statistics': '/alert/customer-top-statistics',
     'alert-service-statistics': '/alert/service-statistics',
-    'alert': '/alert'
+    'alert': '/alert',
+    'alert-change-vector': '/alert/change-vector'
   }
 }

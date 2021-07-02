@@ -31,7 +31,8 @@
     "cy:run": "node_modules/.bin/cypress run",
     "cy:parallel:e2e:local": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-local.json --browser chrome\"' -r mochawesome",
     "cy:parallel:e2e:dev": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome",
-    "cy:parallel:e2e:stage": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome"
+    "cy:parallel:e2e:stage": "cypress-parallel -s cy:run -t 2 -d cypress/integration/e2e/ -a '\"--config-file cypress-dev.json --browser chrome\"' -r mochawesome",
+    "eslint:fix": "./node_modules/.bin/eslint ./ --fix"
   },
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",

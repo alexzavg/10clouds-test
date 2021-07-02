@@ -12,6 +12,7 @@ const password          = Cypress.env('apiSuite').users.sixth.password
 const formattedKey      = Cypress.env('apiSuite').users.sixth.formattedKey
 const customerId        = Cypress.env('apiSuite').customerId
 const alertIdEdp        = Cypress.env('apiSuite').alertIds.edp
+const alertIdMail       = Cypress.env('apiSuite').alertIds.mail
 const alertActions      = ['ALERT_DISMISS', 'ALERT_UNDISMISS']
 const serviceTypes      = ['EDP', 'WEB', 'MAIL', 'CLOUD_STORAGE', 'BACKUP', 'VMDR', 'MOBILE', 'AWARENESS', 'ASK_THE_ANALYST']
 const aggregate         = ['alerts', 'endpoints', 'users']
@@ -260,6 +261,69 @@ describe(`API - Section ${baseUrl}${swaggerSections['alert']}`, function() {
         ).should((response) => {
             expect(response.status).to.eq(200)
             expect(response.body._id).to.eq(alertIdEdp)
+        })
+    })
+
+    it(`Change MAIL alert vector ${baseUrl}${swaggerLinks['alert-change-vector']}`, function() {
+        cy.request(
+            {
+                method: requestTypes.get,
+                url: baseUrl + endpoints.alert['alert'] + '/' + alertIdMail,
+                auth: {
+                    'bearer': this.accessToken
+                },
+                headers: {
+                    'x-customer-id': customerId,
+                    'x-id-token': this.idToken
+                }
+            }
+        ).should((response) => {
+            expect(response.status).to.eq(200)
+            cy.wrap(response.body.serviceDetails.verdict.verdict).as('subVerdict')
+        })
+
+        cy.get('@subVerdict').then(subVerdict => {
+            let verdicts
+            
+            // get verdicts that !== current verdict
+            if(subVerdict == 'Clean'){
+                verdicts = [ 'SPM', 'MAL', 'BLK', 'SUS' ]
+            }
+            if(subVerdict == 'Spam'){
+                verdicts = [ 'CLN', 'MAL', 'BLK', 'SUS' ]
+            }
+            if(subVerdict == 'Malicious'){
+                verdicts = [ 'CLN', 'SPM', 'BLK', 'SUS' ]
+            }
+            if(subVerdict == 'Restricted'){
+                verdicts = [ 'CLN', 'SPM', 'MAL', 'SUS' ]
+            }
+            if(subVerdict == 'Suspicious'){
+                verdicts = [ 'CLN', 'SPM', 'MAL', 'BLK' ]
+            }
+
+            verdicts.forEach(verdict => {
+                cy.request(
+                    {
+                        method: requestTypes.put,
+                        url: baseUrl + endpoints.alert['alert-change-vector'] + '/' + alertIdMail,
+                        auth: {
+                            'bearer': this.accessToken
+                        },
+                        headers: {
+                            'x-customer-id': customerId,
+                            'x-id-token': this.idToken
+                        },
+                        body: {
+                            'comment': comment,
+                            'sub_verdict': verdict,
+                            'handle_investigation': true
+                        }
+                    }
+                ).should((response) => {
+                    expect(response.status).to.eq(200)
+                })
+            })
         })
     })
 
