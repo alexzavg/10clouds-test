@@ -1,0 +1,49 @@
+{
+    "_id": "8ffd1d10-dc26-11eb-b5d4-17d9788dfbf7",
+    "serviceType": "EDP",
+    "serviceProvider": "CARBON_BLACK",
+    "type": "EDP",
+    "details": {
+      "processName": "c:\\windows\\system32\\svchost.exe",
+      "processCmdLine": [
+        "C:\\WINDOWS\\system32\\svchost.exe -k LocalSystemNetworkRestricted -p -s SysMain"
+      ],
+      "processUsername": [
+        "NT AUTHORITY\\SYSTEM"
+      ],
+      "eventType": "childproc",
+      "ttp": [
+        "RUN_MALWARE_APP",
+        "POLICY_DENY"
+      ],
+      "parentName": "c:\\windows\\system32\\services.exe",
+      "parentHash": [
+        "dfbea9e8c316d9bc118b454b0c722cd674c30d0a256340200e2c3a7480cba674"
+      ],
+      "deviceTimestampt": "2021-07-03T17:43:05.429Z",
+      "ingressTimestampt": "2021-07-03T17:43:22.000Z",
+      "processStartTimestampt": "2021-06-10T00:39:49.661Z",
+      "deviceOs": "WINDOWS",
+      "deviceOsVersion": "Windows 10 x64",
+      "deviceId": "9795bc00-db3e-11eb-8463-317608bada14",
+      "deviceExternalIp": "192.117.142.58",
+      "deviceInternalIp": "192.168.66.171",
+      "deviceLocation": "OFFSITE",
+      "eventDescription": "The application \"<share><link hash=\"643ec58e82e0272c97c2a59f6020970d881af19c0ad5029db9c958c13b6558c7\">C:\\WINDOWS\\system32\\svchost.exe -k LocalSystemNetworkRestricted -p -s SysMain</link></share>\" invoked the application \"<share><link hash=\"b4d73b07aa627674b03f9c96dd5883dcd78b73e5baba6426dcc87ff0e771b265\">C:\\users\\fortress\\downloads\\qmdev-virus-downloader-main\\qmdev-virus-downloader-main\\viruses\\b4d73b07aa627674b03f9c96dd5883dcd78b73e5baba6426dcc87ff0e771b265.exe</link></share>\". The operation was <accent>blocked by Cb Defense</accent>.",
+      "processHash": [
+        "f586835082f632dc8d9404d83bc16316",
+        "643ec58e82e0272c97c2a59f6020970d881af19c0ad5029db9c958c13b6558c7"
+      ],
+      "processCmdline": [
+        "C:\\WINDOWS\\system32\\svchost.exe -k LocalSystemNetworkRestricted -p -s SysMain"
+      ],
+      "deviceName": "desktop-uo8q0kh",
+      "parentEffectiveReputation": "TRUSTED_WHITE_LIST",
+      "alertCategory": [
+        "THREAT"
+      ],
+      "severity": "NONE"
+    },
+    "alert": "42832110-dc26-11eb-aec8-e9b2de8f41c0",
+    "alertNanoid": "XDEGZG0I"
+  }

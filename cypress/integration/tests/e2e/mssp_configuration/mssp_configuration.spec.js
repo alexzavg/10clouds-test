@@ -1,10 +1,10 @@
-import {dashboardPageElements} from '../../../components/dashboard.js'
-import {navbarElements, navbarData} from '../../../components/navbar.js'
-import {signUpPageElements} from '../../../components/sign-up.js'
-import {msspPageElements, msspPageData} from '../../../components/mssp.js'
-import {requests} from '../../../components/requests.js'
-import {emailsData} from '../../../components/emailsData.js'
-import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../../support/dataGenerator.js'
+import {dashboardPageElements} from '../../../../components/dashboard.js'
+import {navbarElements, navbarData} from '../../../../components/navbar.js'
+import {signUpPageElements} from '../../../../components/sign-up.js'
+import {msspPageElements, msspPageData} from '../../../../components/mssp.js'
+import {requests} from '../../../../components/requests.js'
+import {emailsData} from '../../../../components/emailsData.js'
+import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../../../support/dataGenerator.js'
 
 const {generateToken} = require('authenticator')
 
