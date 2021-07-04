@@ -857,7 +857,7 @@ describe('API', function() {
         })
     })
 
-    describe.only('services', function() {  
+    describe('services', function() {  
         it(`Get services info ${baseUrl}${swaggerLinks['services']}`, function() {
             cy.request(
                 {
