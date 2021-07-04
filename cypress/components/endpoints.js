@@ -6,25 +6,6 @@ export const requestTypes = {
   'delete': 'DELETE'
 }
 
-export const swaggerSections = {
-  'auth': '/api/#/auth',
-  'role': '/api/#/role',
-  'user': '/api/#/user',
-  'alert': '/api/#/alert',
-  'alert-events': '/api/#/alert-events',
-  'services': '/api/#/services',
-  'service-licenses': '/api/#/service-licenses',
-  'service-accounts': '/api/#/service-accounts',
-  'services-statistics': '/api/#/services-statistics',
-  'protection-scores': '/api/#/protection-scores',
-  'customer': '/api/#/customer',
-  'customer-invitations': '/api/#/Customer%20Invitations',
-  'pricing-configuration': '/api/#/pricing-configuration',
-  'device': '/api/#/device',
-  'payments': '/api/#/payments',
-  'exchange-rate': '/api/#/exchange-rate',
-}
-
 export const swaggerLinks = {
   'refresh-tokens': '/api/#/auth/refreshTokens',
   'cognito-pool-settings':'/api/#/auth/getCognitoPoolSettings',
@@ -52,7 +33,9 @@ export const swaggerLinks = {
   'get-customer-alert-by-id': '/api/#/alert/getCustomerAlertById',
   'alert-change-vector': '/api/#/alert/changeVector',
   'search-customer-alert-events': '/api/#/alert-events/searchCustomerAlertsEvents',
-  'get-customer-alert-event-by-id': '/api/#/alert-events/getCustomerAlertEventById'
+  'get-customer-alert-event-by-id': '/api/#/alert-events/getCustomerAlertEventById',
+  'services': '/api/#/services',
+  'get-all-customer-services': '/api/#/services/getAllCustomerServices'
 }
 
 export const endpoints = {
@@ -89,5 +72,9 @@ export const endpoints = {
   'alert_events': {
     'alert-events-search': '/alert-events/search',
     'alert-events': '/alert-events'
+  },
+  'services': {
+    'services': '/services',
+    'services-customer': '/services/customer'
   }
 }

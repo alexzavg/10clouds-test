@@ -1,6 +1,6 @@
 import {dashboardPageElements} from '../../../components/dashboard.js'
 import {signUpPageElements} from '../../../components/sign-up.js'
-import {requestTypes, swaggerSections, swaggerLinks, endpoints} from '../../../components/endpoints.js'
+import {requestTypes, swaggerLinks, endpoints} from '../../../components/endpoints.js'
 import {getRandomCharLength, getRandomNumberLength, getCurrentTimeISO} from '../../../support/dataGenerator.js'
 import {emailsData} from '../../../components/emailsData.js'
 
@@ -65,13 +65,18 @@ describe('API', function() {
             cy.wrap(accessToken).as('accessToken')
         })
         cy.saveLocalStorage()
+
+        // get fixtures
+        cy.fixture('alert_event.json').as('alert_event')
+        cy.fixture('services.json').as('services')
+        cy.fixture('services_customer.json').as('services_customer')
     })
 
     beforeEach(() => {
         cy.restoreLocalStorage()
     })
 
-    describe(`Section ${baseUrl}${swaggerSections['auth']}`, function() {
+    describe('auth', function() {
         it(`Refresh tokens ${baseUrl}${swaggerLinks['refresh-tokens']}`, function() {
             cy.request(
                 {
@@ -123,7 +128,7 @@ describe('API', function() {
         })
     })
 
-    describe(`Section ${baseUrl}${swaggerSections['role']}`, function() {
+    describe('role', function() {
         it(`Create role ${baseUrl}${swaggerLinks['role-create']}`, function() {
             cy.request(
                 {
@@ -254,8 +259,8 @@ describe('API', function() {
     
     })
 
-    describe(`Section ${baseUrl}${swaggerSections['user']}`, function() {
-        describe('Existing user', function() {
+    describe('user', function() {
+        describe('existing user', function() {
             it(`Get current user info ${baseUrl}${swaggerLinks['user-me']}`, function() {
                 cy.request(
                     {
@@ -342,7 +347,7 @@ describe('API', function() {
             })
         })
     
-        describe('Existing user - reset & change password', function() {
+        describe('existing user - reset & change password', function() {
     
             const resetPswdUserEmail    = Cypress.env('apiSuite').users.second.email
             const resetPswdUserPassword = Cypress.env('apiSuite').users.second.password
@@ -401,7 +406,7 @@ describe('API', function() {
     
         // ! due to bug https://qfortress.atlassian.net/browse/FORT-650
         // todo after fix -> create additional user for this case
-        describe.skip('Existing user - reset MFA', function() {
+        describe.skip('existing user - reset MFA', function() {
             it(`Reset MFA ${baseUrl}${swaggerLinks['reset-user-mfa']}`, function() {
                 cy.request(
                     {
@@ -423,7 +428,7 @@ describe('API', function() {
             })
         })
     
-        describe('New user', function() {
+        describe('new user', function() {
     
             const firstName     = 'cypress' + getRandomCharLength(8)
             const lastName      = 'cypress' + getRandomCharLength(8)
@@ -513,7 +518,7 @@ describe('API', function() {
         })
     })
 
-    describe(`Section ${baseUrl}${swaggerSections['alert']}`, function() {
+    describe('alert', function() {
         it(`Search alert ${baseUrl}${swaggerLinks['search-customer-alerts']}`, function() {
             cy.request(
                 {
@@ -790,7 +795,7 @@ describe('API', function() {
     
     })
     
-    describe(`Section ${baseUrl}${swaggerSections['alert-events']}`, function() {
+    describe('alert-events', function() {
         it(`Get EDP alert events ${baseUrl}${swaggerLinks['search-customer-alerts']}`, function() {
             cy.request(
                 {
@@ -833,29 +838,59 @@ describe('API', function() {
         })
     
         it(`Get EDP alert event info ${baseUrl}${swaggerLinks['get-customer-alert-event-by-id']}`, function() {
-            cy.fixture('alert_event.json').then(alert_event => {
-                cy.request(
-                    {
-                        method: requestTypes.get,
-                        url: baseUrl + endpoints.alert_events['alert-events'] + '/' + alertEventId,
-                        auth: {
-                            'bearer': this.accessToken
-                        },
-                        headers: {
-                            'x-customer-id': customerId,
-                            'x-id-token': this.idToken
-                        }
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.alert_events['alert-events'] + '/' + alertEventId,
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
                     }
-                ).should((response) => {
-                    expect(response.status).to.eq(200)
-                    expect(response.body).to.deep.eq(alert_event)
-                })
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+                expect(response.body).to.deep.eq(this.alert_event)
             })
         })
-    
     })
 
-    describe('Log out', function() {
+    describe.only('services', function() {  
+        it(`Get services info ${baseUrl}${swaggerLinks['services']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.services['services']
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+                expect(response.body).to.deep.eq(this.services)
+            })
+        })
+
+        it(`Get services info ${baseUrl}${swaggerLinks['get-all-customer-services']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.services['services-customer'] + '/' + customerId,
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+                expect(response.body).to.deep.eq(this.services_customer)
+            })
+        })
+    })
+
+    describe('sign out', function() {
         it(`Sign out ${baseUrl}${swaggerLinks['sign-out']}`, function() {
             cy.request(
                 {

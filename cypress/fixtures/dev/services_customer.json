@@ -1,0 +1,159 @@
+{
+    "records": [
+      {
+        "_id": "56c5afa0-3a21-11eb-88e2-9109c939a458",
+        "type": "EDP",
+        "options": [
+          {
+            "name": "policy",
+            "type": "RADIO_BUTTON",
+            "options": [
+              {
+                "label": "HIGH",
+                "value": "HIGH"
+              },
+              {
+                "label": "MEDIUM",
+                "value": "MEDIUM"
+              },
+              {
+                "label": "LOW",
+                "value": "LOW"
+              }
+            ],
+            "defaultValue": "MEDIUM",
+            "required": true
+          }
+        ]
+      },
+      {
+        "_id": "d250fd3f-e31a-4d96-8710-efddf6be624e",
+        "type": "MAIL",
+        "options": [
+          {
+            "name": "cloudProvider",
+            "type": "RADIO_BUTTON",
+            "options": [
+              {
+                "label": "Gsuite",
+                "value": "Gsuite"
+              },
+              {
+                "label": "Office365",
+                "value": "Office365"
+              }
+            ],
+            "defaultValue": "Office365",
+            "required": true
+          },
+          {
+            "name": "customerDomains",
+            "type": "TEXTAREA",
+            "required": true
+          },
+          {
+            "name": "cloudEnvironment",
+            "type": "RADIO_BUTTON",
+            "options": [
+              {
+                "label": "EU",
+                "value": "EU"
+              },
+              {
+                "label": "US",
+                "value": "US"
+              }
+            ],
+            "defaultValue": "US",
+            "required": true
+          },
+          {
+            "name": "smtpServers",
+            "type": "TEXTAREA"
+          }
+        ]
+      },
+      {
+        "_id": "08c361df-fc23-434a-9d16-340190dc1379",
+        "type": "CLOUD_STORAGE",
+        "options": [
+          {
+            "name": "cloudProvider",
+            "type": "RADIO_BUTTON",
+            "options": [
+              {
+                "label": "Gsuite",
+                "value": "Gsuite"
+              },
+              {
+                "label": "Office365",
+                "value": "Office365"
+              }
+            ],
+            "defaultValue": "Office365",
+            "required": true
+          },
+          {
+            "name": "customerDomains",
+            "type": "TEXTAREA",
+            "required": true
+          },
+          {
+            "name": "cloudEnvironment",
+            "type": "RADIO_BUTTON",
+            "options": [
+              {
+                "label": "EU",
+                "value": "EU"
+              },
+              {
+                "label": "US",
+                "value": "US"
+              }
+            ],
+            "defaultValue": "US",
+            "required": true
+          },
+          {
+            "name": "storageProviders",
+            "type": "MULTI_SELECT",
+            "options": [
+              {
+                "label": "Google Drive",
+                "value": "Google Drive"
+              },
+              {
+                "label": "One Drive",
+                "value": "One Drive"
+              },
+              {
+                "label": "Microsoft teams",
+                "value": "Microsoft teams"
+              },
+              {
+                "label": "SharePoint",
+                "value": "SharePoint"
+              },
+              {
+                "label": "Dropbox",
+                "value": "Dropbox"
+              },
+              {
+                "label": "Box",
+                "value": "box"
+              },
+              {
+                "label": "Salesforce",
+                "value": "Salesforce"
+              },
+              {
+                "label": "Amazon S3",
+                "value": "Amazon S3"
+              }
+            ],
+            "required": true
+          }
+        ]
+      }
+    ]
+  }
