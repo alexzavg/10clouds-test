@@ -35,7 +35,8 @@ describe('MSSP Configuration', function() {
         cy.intercept(requests['services-statistics']).as('services-statistics')
     })
 
-    describe('Invite [Regular] company', function() {
+    // ! disabled due to disabling of [Invite Company]
+    describe.skip('Invite [Regular] company', function() {
 
         it('Sign in', function() {
             cy.visit(signInLink)
@@ -97,7 +98,8 @@ describe('MSSP Configuration', function() {
 
     })
 
-    describe('Invite [MSSP] company', function() {
+    // ! disabled due to disabling of [Invite Company]
+    describe.skip('Invite [MSSP] company', function() {
 
         it('Sign in', function() {
             cy.visit(signInLink)
