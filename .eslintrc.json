@@ -15,12 +15,12 @@
     },
     "rules": {
         "cypress/no-assigning-return-values": "error",
-        "cypress/no-unnecessary-waiting": 0,
+        "cypress/no-unnecessary-waiting": "off",
         "cypress/assertion-before-screenshot": "error",
         "cypress/no-force": "warn",
         "cypress/no-async-tests": "error",
-        "no-unused-expressions": 0,
-        "chai-friendly/no-unused-expressions": 2,
+        "no-unused-expressions": "off",
+        "chai-friendly/no-unused-expressions": "warn",
         "semi": ["error", "never"],
         "quotes": ["error", "single"],
         "no-console": "off"
