@@ -35,7 +35,7 @@ describe('MSSP Configuration', function() {
         cy.intercept(requests['services-statistics']).as('services-statistics')
     })
 
-    // ! disabled due to disabling of [Invite Company]
+    // ! disabled due to disabling of [Invite Company] https://qfortress.atlassian.net/browse/FORT-508
     describe.skip('Invite [Regular] company', function() {
 
         it('Sign in', function() {
@@ -98,7 +98,7 @@ describe('MSSP Configuration', function() {
 
     })
 
-    // ! disabled due to disabling of [Invite Company]
+    // ! disabled due to disabling of [Invite Company] https://qfortress.atlassian.net/browse/FORT-508
     describe.skip('Invite [MSSP] company', function() {
 
         it('Sign in', function() {
