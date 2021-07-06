@@ -59,9 +59,9 @@
             "dashboard": "https://staging.qfortress.ai/qmasters-demo/dashboard",
             "users": "https://staging.qfortress.ai/qmasters-demo/settings/users",
             "alerts": "https://staging.qfortress.ai/qmasters-demo/alerts",
-            "edp": "https://staging.qfortress.ai/fortress-mssp/services/EDP",
-            "mail": "https://staging.qfortress.ai/fortress-mssp/services/MAIL",
-            "cloudStorage": "https://staging.qfortress.ai/fortress-mssp/services/CLOUD_STORAGE",
+            "edp": "https://staging.qfortress.ai/qmasters-demo/services/EDP",
+            "mail": "https://staging.qfortress.ai/qmasters-demo/services/MAIL",
+            "cloudStorage": "https://staging.qfortress.ai/qmasters-demo/services/CLOUD_STORAGE",
             "mssp": "https://staging.qfortress.ai/qmasters-demo/mssp"
         },
         "customers": {
@@ -92,12 +92,12 @@
             "fourth": {
                 "email": "me41zavgorodnii+56@gmail.com",
                 "password": "wa12aszx34",
-                "formattedKey": "RFTXGM5ZJAJ4F46KJM4LUCHYV3JIBDX2NZQFVHEBSGWEVXMVD4RA"
+                "formattedKey": "AEFPPBHOL5CML4NW7THCIRJLUY6STLVIRW7KD6736NJVTL5EIFCA"
             },
             "fifth": {
                 "email": "me41zavgorodnii+57@gmail.com",
-                "password": "wa12aszx34",
-                "formattedKey": "YM3KML2HMBQY7MUUKYIBN32MG6Z5WUSHP77LV7Q7ZIHTB3BCO5BQ"
+                "password": "WA12aszx34_",
+                "formattedKey": "LPFCWVB4PINRKNR34NC2DBV2S2CUD62ZQ6JURKXOJWXI4HTXLDHQ"
             },
             "sixth": {
                 "email": "impossible-perfectly@u9eitg8h.mailosaur.net",

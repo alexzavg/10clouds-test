@@ -37,22 +37,15 @@ describe('MSSP Configuration', function() {
 
     // ! disabled due to disabling of [Invite Company] https://qfortress.atlassian.net/browse/FORT-508
     describe.skip('Invite [Regular] company', function() {
-
         it('Sign in', function() {
             cy.visit(signInLink)
-            cy.url().should('eq', signInLink)
-    
             let formattedToken = generateToken(formattedKeyFirst)
-            cy.log('Google OTP is:', formattedToken)
             let array = Array.from(formattedToken)
-            cy.log(array)
-    
             cy.signIn(emailFirst, passwordFirst)
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5])
         })
     
         it('Invite [REGULAR] company & check invitation link from mail', function() {
-            
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible')
     
@@ -95,27 +88,19 @@ describe('MSSP Configuration', function() {
             cy.clearCookies()
             cy.clearLocalStorage()
         })
-
     })
 
     // ! disabled due to disabling of [Invite Company] https://qfortress.atlassian.net/browse/FORT-508
     describe.skip('Invite [MSSP] company', function() {
-
         it('Sign in', function() {
             cy.visit(signInLink)
-            cy.url().should('eq', signInLink)
-    
             let formattedToken = generateToken(formattedKeySecond)
-            cy.log('Google OTP is:', formattedToken)
             let array = Array.from(formattedToken)
-            cy.log(array)
-    
             cy.signIn(emailSecond, passwordSecond)
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5])
         })
     
         it('Invite [MSSP] company & check invitation link from mail', function() {
-            
             cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                 cy.get(dashboardPageElements.scoreValue).should('be.visible')
     
@@ -158,20 +143,13 @@ describe('MSSP Configuration', function() {
             cy.clearCookies()
             cy.clearLocalStorage()
         })
-
     })
 
     describe('Search company by [Customer] param, check expanded info', function() {
-
         it('Sign in', function() {
             cy.visit(signInLink)
-            cy.url().should('eq', signInLink)
-    
             let formattedToken = generateToken(formattedKeyFirst)
-            cy.log('Google OTP is:', formattedToken)
             let array = Array.from(formattedToken)
-            cy.log(array)
-    
             cy.signIn(emailFirst, passwordFirst)
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5])
         })
@@ -203,20 +181,13 @@ describe('MSSP Configuration', function() {
             cy.clearCookies()
             cy.clearLocalStorage()
         })
-
     })
 
     describe('Search company by [Email] param & switch context to this company', function() {
-
         it('Sign in', function() {
             cy.visit(signInLink)
-            cy.url().should('eq', signInLink)
-    
             let formattedToken = generateToken(formattedKeySecond)
-            cy.log('Google OTP is:', formattedToken)
             let array = Array.from(formattedToken)
-            cy.log(array)
-    
             cy.signIn(emailSecond, passwordSecond)
             cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5])
         })
@@ -248,7 +219,6 @@ describe('MSSP Configuration', function() {
             cy.clearCookies()
             cy.clearLocalStorage()
         })
-
     })
 
 })
