@@ -3,7 +3,7 @@ FROM cypress/browsers:node14.16.0-chrome90-ff88
 WORKDIR /app
 
 RUN apt update && apt upgrade -y
-
+RUN apt install default-jre -y
 ENV CI=1
 ENV QT_X11_NO_MITSHM=1
 ENV _X11_NO_MITSHM=1
