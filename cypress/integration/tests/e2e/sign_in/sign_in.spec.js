@@ -8,6 +8,7 @@ const {generateToken} = require('authenticator')
 
 describe('Sign In', function() {
 
+    const baseUrl       = Cypress.config().baseUrl
     const signInLink    = Cypress.env('urls').signIn
     const dashboardLink = Cypress.env('urls').dashboard
     const email         = Cypress.env('users').first.email
@@ -33,7 +34,6 @@ describe('Sign In', function() {
     })
  
     it('Sign in & logout via Navbar', function() {
-
         cy.visit(signInLink)
         cy.url().should('eq', signInLink)
 
@@ -71,7 +71,6 @@ describe('Sign In', function() {
 
     it('Validate errors for empty [Email] & [Password] fields', function() {
         cy.visit(signInLink)
-        cy.url().should('eq', signInLink)
 
         cy.get(signInPageElements.loginField).click()
         cy.clickOutside()
@@ -85,7 +84,6 @@ describe('Sign In', function() {
 
     it('Sign in with invalid password', function() {
         cy.visit(signInLink)
-        cy.url().should('eq', signInLink)
         
         cy.signIn(email, 'invalidPassword')
         cy.wait('@cognito-idp').its('response.statusCode').should('eq', 200)
@@ -102,7 +100,6 @@ describe('Sign In', function() {
 
     it('Sign in with SPACES in [Login] field', function() {
         cy.visit(signInLink)
-        cy.url().should('eq', signInLink)
 
         cy.get(signInPageElements.loginField).clear().type(' ' + email + ' ')
         cy.get(signInPageElements.passwordField).clear().type(password)
@@ -122,12 +119,9 @@ describe('Sign In', function() {
     }) 
 
     it('Sign in with invalid OTP', function() {
-
         cy.visit(signInLink)
-        cy.url().should('eq', signInLink)
 
         let array = Array.from('000000')
-
         cy.signIn(email, password)
 
         cy.wait('@cognito-idp').its('response.statusCode').should('eq', 200)
@@ -143,6 +137,14 @@ describe('Sign In', function() {
                 expect(value.response.body.__type).to.eq(signInPageData.errors.codeMismatchException)
             })
         })
-    })   
+    })
+    
+    it('Sign in with unexisting company URL', function() {
+        const url = baseUrl + '/non-valid-url' + '/sign-in'
+        
+        cy.visit(url)
+        cy.signIn(email, password)
+        cy.wait('@auth-cognito').its('response.statusCode').should('eq', 404)
+    }) 
 
 })
