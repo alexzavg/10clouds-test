@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="cypress-xpath" />
 /// <reference types="@shelex/cypress-allure-plugin" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
