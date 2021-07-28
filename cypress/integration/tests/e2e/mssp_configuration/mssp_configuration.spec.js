@@ -206,7 +206,7 @@ describe('MSSP Configuration', function() {
             cy.get(msspPageElements.searchField).type(companyEmail+'{enter}').then(() => {
                 cy.get(signUpPageElements.spinner).should('not.exist').then(() => {
                     cy.wait('@customer-search').its('response.statusCode').should('eq', 200)
-                    cy.contains('tr', companyEmail).parent().within(() => {
+                    cy.contains('tr', companyName).parent().within(() => {
                         cy.get(msspPageElements.switchContextBtn).click()
                     })
                 })
