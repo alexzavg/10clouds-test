@@ -35,7 +35,9 @@ export const swaggerLinks = {
   'search-customer-alert-events': '/api/#/alert-events/searchCustomerAlertsEvents',
   'get-customer-alert-event-by-id': '/api/#/alert-events/getCustomerAlertEventById',
   'services': '/api/#/services',
-  'get-all-customer-services': '/api/#/services/getAllCustomerServices'
+  'get-all-customer-services': '/api/#/services/getAllCustomerServices',
+  'order-service-licenses': '/api/#/service-licenses/orderServiceLicenses',
+  'setup-service-policies': '/api/#/service-licenses/setupServicePolicies'
 }
 
 export const endpoints = {
@@ -76,5 +78,9 @@ export const endpoints = {
   'services': {
     'services': '/services',
     'services-customer': '/services/customer'
+  },
+  'service_licenses': {
+    'service-licenses-order': '/service-licenses/order',
+    'setup-service-policies': '/service-licenses/policies'
   }
 }

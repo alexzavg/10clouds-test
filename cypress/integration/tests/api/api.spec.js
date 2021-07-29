@@ -890,6 +890,81 @@ describe('API', function() {
         })
     })
 
+    describe('service licenses', function() {  
+        it(`Get service licenses order ${baseUrl}${swaggerLinks['order-service-licenses']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.post,
+                    url: baseUrl + endpoints.service_licenses['service-licenses-order'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'services': [
+                          {
+                            'serviceType': 'EDP',
+                            'totalCapacity': 100,
+                            'duration': {
+                              'unit': 'DAY',
+                              'value': 1
+                            }
+                          }
+                        ],
+                        'orderId': 'string',
+                        'autoRenewal': false,
+                        'trial': false
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(201)
+            })
+        })
+
+        it(`Setup service policies ${baseUrl}${swaggerLinks['setup-service-policies']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.patch,
+                    url: baseUrl + endpoints.service_licenses['setup-service-policies'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'targetCustomerId': customerId,
+                        'services': {
+                          'EDP': {
+                            'policy': 'HIGH'
+                          },
+                          'MAIL': {
+                            'cloudProvider': 'Gsuite',
+                            'customerDomains': 'test.com',
+                            'cloudEnvironment': 'EU',
+                            'smtpServers': 'qmasters-co.mail.protection.outlook.com'
+                          },
+                          'CLOUD_STORAGE': {
+                            'cloudProvider': 'Gsuite',
+                            'customerDomains': 'test.com',
+                            'cloudEnvironment': 'EU',
+                            'storageProviders': [
+                              'Google Drive'
+                            ]
+                          }
+                        }
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+    })
+
     describe('sign out', function() {
         it(`Sign out ${baseUrl}${swaggerLinks['sign-out']}`, function() {
             cy.request(
