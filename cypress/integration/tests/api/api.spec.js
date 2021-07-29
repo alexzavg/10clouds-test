@@ -873,7 +873,7 @@ describe('API', function() {
         it(`Get services info ${baseUrl}${swaggerLinks['get-all-customer-services']}`, function() {
             cy.request(
                 {
-                    method: requestTypes.get,
+                    method: requestTypes.post,
                     url: baseUrl + endpoints.services['services-customer'] + '/' + customerId,
                     auth: {
                         'bearer': this.accessToken
@@ -884,7 +884,7 @@ describe('API', function() {
                     }
                 }
             ).should((response) => {
-                expect(response.status).to.eq(200)
+                expect(response.status).to.eq(201)
                 expect(response.body).to.deep.eq(this.services_customer)
             })
         })
