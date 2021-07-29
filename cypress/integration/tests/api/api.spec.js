@@ -990,7 +990,7 @@ describe('API', function() {
             })
         })
 
-        it.only(`Search customer service license ${baseUrl}${swaggerLinks['search-customer-service-licenses']}`, function() {
+        it(`Search customer service license ${baseUrl}${swaggerLinks['search-customer-service-licenses']}`, function() {
             cy.request(
                 {
                     method: requestTypes.post,
