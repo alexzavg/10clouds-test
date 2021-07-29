@@ -35,7 +35,13 @@ export const swaggerLinks = {
   'search-customer-alert-events': '/api/#/alert-events/searchCustomerAlertsEvents',
   'get-customer-alert-event-by-id': '/api/#/alert-events/getCustomerAlertEventById',
   'services': '/api/#/services',
-  'get-all-customer-services': '/api/#/services/getAllCustomerServices'
+  'get-all-customer-services': '/api/#/services/getAllCustomerServices',
+  'order-service-licenses': '/api/#/service-licenses/orderServiceLicenses',
+  'setup-service-policies': '/api/#/service-licenses/setupServicePolicies',
+  'activate-trial-service-license': '/api/#/service-licenses/activateTrialServiceLicense',
+  'search-customer-service-licenses': '/api/#/service-licenses/searchCustomerServiceLicenses',
+  'search-customer-children-service-licenses': '/api/#/service-licenses/searchCustomerChildrenServiceLicenses',
+  'get-service-license': '/api/#/service-licenses/getServiceLicense'
 }
 
 export const endpoints = {
@@ -76,5 +82,13 @@ export const endpoints = {
   'services': {
     'services': '/services',
     'services-customer': '/services/customer'
+  },
+  'service_licenses': {
+    'service-licenses-order': '/service-licenses/order',
+    'setup-service-policies': '/service-licenses/policies',
+    'service-license-activate-trial': '/service-licenses/activateTrial',
+    'service-licenses-search': '/service-licenses/search',
+    'service-licenses-children-search': '/service-licenses/search/children',
+    'get-service-license': '/service-licenses'
   }
 }
