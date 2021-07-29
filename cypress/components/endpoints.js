@@ -37,7 +37,9 @@ export const swaggerLinks = {
   'services': '/api/#/services',
   'get-all-customer-services': '/api/#/services/getAllCustomerServices',
   'order-service-licenses': '/api/#/service-licenses/orderServiceLicenses',
-  'setup-service-policies': '/api/#/service-licenses/setupServicePolicies'
+  'setup-service-policies': '/api/#/service-licenses/setupServicePolicies',
+  'activate-trial-service-license': '/api/#/service-licenses/activateTrialServiceLicense',
+  'search-customer-service-licenses': '/api/#/service-licenses/searchCustomerServiceLicenses'
 }
 
 export const endpoints = {
@@ -81,6 +83,8 @@ export const endpoints = {
   },
   'service_licenses': {
     'service-licenses-order': '/service-licenses/order',
-    'setup-service-policies': '/service-licenses/policies'
+    'setup-service-policies': '/service-licenses/policies',
+    'service-license-activate-trial': '/service-licenses/activateTrial',
+    'service-licenses-search': '/service-licenses/search'
   }
 }

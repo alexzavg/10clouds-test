@@ -963,6 +963,119 @@ describe('API', function() {
                 expect(response.status).to.eq(200)
             })
         })
+
+        // todo find service license ID with trial
+        it.skip(`Activate trial service license ${baseUrl}${swaggerLinks['activate-trial-service-license']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.patch,
+                    url: baseUrl + endpoints.service_licenses['service-license-activate-trial'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'totalCapacity': 100,
+                        'duration': {
+                          'unit': 'DAY',
+                          'value': 1
+                        }
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        it.only(`Search customer service license ${baseUrl}${swaggerLinks['search-customer-service-licenses']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.post,
+                    url: baseUrl + endpoints.service_licenses['service-licenses-search'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'pagination': {
+                          'skip': 0,
+                          'take': 100
+                        },
+                        'fullTextSearch': {
+                          'fields': [
+                            '_id',
+                            'customerId',
+                            'serviceType',
+                            'serviceProvider',
+                            'servicePolicy',
+                            'totalCapacity',
+                            'usedCapacity',
+                            'status',
+                            'duration',
+                            'startDate',
+                            'expirationDate',
+                            'autoRenewal',
+                            'orderedBy',
+                            'orderId',
+                            'trial',
+                            'licenseKeyType',
+                            'licenseKey',
+                            'serviceAccounts',
+                            'createdAt',
+                            'amountBeforeContractPeriodDiscount',
+                            'amountBeforeNoServicesDiscount',
+                            'amountBeforeQuantityDiscount',
+                            'amountBeforeVat',
+                            'contractPeriodDiscount',
+                            'contractPeriodDiscountAmount',
+                            'finalAmount',
+                            'noServicesDiscount',
+                            'noServicesDiscountAmount',
+                            'quantityDiscount',
+                            'quantityDiscountAmount',
+                            'paymentType',
+                            'salesPrice',
+                            'subscriptionPlan',
+                            'vat',
+                            'vatAmount',
+                            'updatedAt',
+                            'usedBankLicenses',
+                            'usedServiceAccounts',
+                            'buyer',
+                            'seller'
+                          ],
+                          'value': 'phrase'
+                        },
+                        'licenseKeyType': [
+                          'VOLUME'
+                        ],
+                        'status': [
+                          'TRIAL_REQUESTED'
+                        ],
+                        'serviceProvider': [
+                          'CARBON_BLACK'
+                        ],
+                        'serviceType': [
+                          'EDP'
+                        ],
+                        'autoRenewal': false,
+                        'trial': false,
+                        'expirationDate': {
+                          'startDate': '2020-04-24T10:48:00.000Z',
+                          'endDate': '2020-04-24T10:48:30.000Z'
+                        }
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
     })
 
     describe('sign out', function() {
