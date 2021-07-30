@@ -1313,7 +1313,7 @@ describe('API', function() {
             })
         })
 
-        // current response "Requested action is not available in current service account state DELETED"
+        // * current response "Requested action is not available in current service account state DELETED"
         // todo: need new service account ID for active service account
         it.skip(`Service account action ${baseUrl}${swaggerLinks['service-account-action']}`, function() {
             cy.request(
@@ -1335,6 +1335,46 @@ describe('API', function() {
                           'policy': 'HIGH'
                         }
                       }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+    })
+
+    describe('service statistics', function() {
+        it(`Get customer service statistics ${baseUrl}${swaggerLinks['get-customer-service-statistics']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.service_statistics['get-customer-service-statistics'] + '/' + customerId,
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+    })
+
+    describe('protection scores', function() {
+        it(`Get protection scores ${baseUrl}${swaggerLinks['get-protection-scores']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.protection_scores['get-protection-scores'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
                 }
             ).should((response) => {
                 expect(response.status).to.eq(200)

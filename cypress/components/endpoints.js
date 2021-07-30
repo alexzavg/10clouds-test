@@ -45,7 +45,9 @@ export const swaggerLinks = {
   'setup-service-account': '/api/#/service-accounts/setupServiceAccount',
   'search-customer-service-accounts': '/api/#/service-accounts/searchCustomerServiceAccounts',
   'get-service-account': '/api/#/service-accounts/getServiceAccount',
-  'service-account-action': '/api/#/service-accounts/serviceAccountAction'
+  'service-account-action': '/api/#/service-accounts/serviceAccountAction',
+  'get-customer-service-statistics': '/api/#/services-statistics/getCustomerServicesStatistics',
+  'get-protection-scores': '/api/#/protection-scores/getProtectionScores'
 }
 
 export const endpoints = {
@@ -100,5 +102,11 @@ export const endpoints = {
     'service-accounts-search': '/service-accounts/search',
     'get-service-account': '/service-accounts',
     'service-accounts-action': '/service-accounts/action'
+  },
+  'service_statistics': {
+    'get-customer-service-statistics': '/services-statistics'
+  },
+  'protection_scores': {
+    'get-protection-scores': '/protection-scores'
   }
 }
