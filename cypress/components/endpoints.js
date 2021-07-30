@@ -41,7 +41,11 @@ export const swaggerLinks = {
   'activate-trial-service-license': '/api/#/service-licenses/activateTrialServiceLicense',
   'search-customer-service-licenses': '/api/#/service-licenses/searchCustomerServiceLicenses',
   'search-customer-children-service-licenses': '/api/#/service-licenses/searchCustomerChildrenServiceLicenses',
-  'get-service-license': '/api/#/service-licenses/getServiceLicense'
+  'get-service-license': '/api/#/service-licenses/getServiceLicense',
+  'setup-service-account': '/api/#/service-accounts/setupServiceAccount',
+  'search-customer-service-accounts': '/api/#/service-accounts/searchCustomerServiceAccounts',
+  'get-service-account': '/api/#/service-accounts/getServiceAccount',
+  'service-account-action': '/api/#/service-accounts/serviceAccountAction'
 }
 
 export const endpoints = {
@@ -90,5 +94,11 @@ export const endpoints = {
     'service-licenses-search': '/service-licenses/search',
     'service-licenses-children-search': '/service-licenses/search/children',
     'get-service-license': '/service-licenses'
+  },
+  'service_accounts': {
+    'setup-service-account': '/service-accounts/setup',
+    'service-accounts-search': '/service-accounts/search',
+    'get-service-account': '/service-accounts',
+    'service-accounts-action': '/service-accounts/action'
   }
 }

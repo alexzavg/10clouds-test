@@ -118,6 +118,11 @@
             "serviceLicenseId": "de347460-5689-11eb-9957-93051f103eed",
             "serviceAccountId": "bdaacb50-be20-11eb-90f5-7548d68e111e",
             "paymentProvider": "AuthorizeNet",
+            "devices": {
+                "first": {
+                    "id": "59f87900-db43-11eb-b6d8-f77ac09cca4d"
+                }
+            },
             "users": {
                 "first": {
                     "id": "12b668dc-ea3e-44d2-865e-3f35dd42a42d",
@@ -138,6 +143,10 @@
                     "id": "d9ed51bf-bc0f-426a-a8c0-2f72a18f17c2",
                     "email": "me41zavgorodnii+67@gmail.com",
                     "password": "wa12aszx34WA_"
+                },
+                "fourth": {
+                    "id": "c3089aed-eef0-4a4e-972e-54e297394643",
+                    "email": "pciwkqjc@sharklasers.com"
                 }
             }
         }
