@@ -1559,8 +1559,10 @@ describe('API', function() {
             })
         })
 
-        // todo need to create new customer, get his ID & only then delete
-        it.skip(`Delete company ${baseUrl}${swaggerLinks['delete-company']}`, function() {
+        // todo: need to create new customer via https://develop-api.qfortress.ai/api/#/auth/signUp
+        // then get his ID
+        // then delete via script from https://qfortress.atlassian.net/browse/FORT-496
+        it.skip(`Add & Delete company ${baseUrl}${swaggerLinks['delete-company']}`, function() {
             cy.request(
                 {
                     method: requestTypes.delete,
