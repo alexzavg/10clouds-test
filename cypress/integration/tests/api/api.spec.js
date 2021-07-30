@@ -6,38 +6,42 @@ import {emailsData} from '../../../components/emailsData.js'
 
 const {generateToken} = require('authenticator')
 
-const baseUrl           = Cypress.env('apiSuite').baseUrl
-const signInLink        = Cypress.env('urls').signIn
-const email             = Cypress.env('apiSuite').users.first.email
-const password          = Cypress.env('apiSuite').users.first.password
-const id                = Cypress.env('apiSuite').users.first.id
-const firstName         = Cypress.env('apiSuite').users.first.firstName
-const lastName          = Cypress.env('apiSuite').users.first.lastName
-const phoneNumber       = Cypress.env('apiSuite').users.first.phoneNumber
-const status            = Cypress.env('apiSuite').users.first.status
-const formattedKey      = Cypress.env('apiSuite').users.first.formattedKey
-const resetMfaUserId    = Cypress.env('apiSuite').users.third.id
-const customerId        = Cypress.env('apiSuite').customerId
-const alertIdEdp        = Cypress.env('apiSuite').alertIds.edp
-const alertIdMail       = Cypress.env('apiSuite').alertIds.mail
-const alertEventId      = Cypress.env('apiSuite').alertEventId
-const roleId            = Cypress.env('apiSuite').roleId
-const siteUrl           = Cypress.env('apiSuite').siteUrl
-const serviceLicenseId  = Cypress.env('apiSuite').serviceLicenseId
-const serverId          = Cypress.env('MAILOSAUR_SERVER_ID')
-const emailDomain       = Cypress.env('email_domain')
-const alertActions      = ['ALERT_DISMISS', 'ALERT_UNDISMISS']
-const serviceTypes      = ['EDP', 'WEB', 'MAIL', 'CLOUD_STORAGE', 'BACKUP', 'VMDR', 'MOBILE', 'AWARENESS', 'ASK_THE_ANALYST']
-const aggregate         = ['alerts', 'endpoints', 'users']
-const statuses          = ['OPEN', 'CLOSED', 'DISMISSED', 'QUARANTINED']
-const comment           = 'cypress_autotest'
-const name              = getRandomCharLength(30)
-const description       = getRandomCharLength(30)
-const permission        = 'GET_PROTECTION_SCORE'
-const nameNew           = getRandomCharLength(30)
-const descriptionNew    = getRandomCharLength(30)
-const permissionNew     = 'USER_SEARCH'
-const currentTime       = getCurrentTimeISO()
+const baseUrl                   = Cypress.env('apiSuite').baseUrl
+const signInLink                = Cypress.env('urls').signIn
+const email                     = Cypress.env('apiSuite').users.first.email
+const password                  = Cypress.env('apiSuite').users.first.password
+const id                        = Cypress.env('apiSuite').users.first.id
+const firstName                 = Cypress.env('apiSuite').users.first.firstName
+const lastName                  = Cypress.env('apiSuite').users.first.lastName
+const phoneNumber               = Cypress.env('apiSuite').users.first.phoneNumber
+const status                    = Cypress.env('apiSuite').users.first.status
+const formattedKey              = Cypress.env('apiSuite').users.first.formattedKey
+const resetMfaUserId            = Cypress.env('apiSuite').users.third.id
+const customerId                = Cypress.env('apiSuite').customerId
+const alertIdEdp                = Cypress.env('apiSuite').alertIds.edp
+const alertIdMail               = Cypress.env('apiSuite').alertIds.mail
+const alertEventId              = Cypress.env('apiSuite').alertEventId
+const roleId                    = Cypress.env('apiSuite').roleId
+const siteUrl                   = Cypress.env('apiSuite').siteUrl
+const serviceLicenseId          = Cypress.env('apiSuite').serviceLicenseId
+const serviceAccountUserId      = Cypress.env('apiSuite').users.fourth.id
+const serviceAccountUserEmail   = Cypress.env('apiSuite').users.fourth.email
+const serviceAccountDeviceId    = Cypress.env('apiSuite').devices.first.id
+const serviceAccountId          = Cypress.env('apiSuite').serviceAccountId
+const serverId                  = Cypress.env('MAILOSAUR_SERVER_ID')
+const emailDomain               = Cypress.env('email_domain')
+const alertActions              = ['ALERT_DISMISS', 'ALERT_UNDISMISS']
+const serviceTypes              = ['EDP', 'WEB', 'MAIL', 'CLOUD_STORAGE', 'BACKUP', 'VMDR', 'MOBILE', 'AWARENESS', 'ASK_THE_ANALYST']
+const aggregate                 = ['alerts', 'endpoints', 'users']
+const statuses                  = ['OPEN', 'CLOSED', 'DISMISSED', 'QUARANTINED']
+const comment                   = 'cypress_autotest'
+const name                      = getRandomCharLength(30)
+const description               = getRandomCharLength(30)
+const permission                = 'GET_PROTECTION_SCORE'
+const nameNew                   = getRandomCharLength(30)
+const descriptionNew            = getRandomCharLength(30)
+const permissionNew             = 'USER_SEARCH'
+const currentTime               = getCurrentTimeISO()
 
 let formattedToken
 
@@ -1180,6 +1184,399 @@ describe('API', function() {
                 }
             ).should((response) => {
                 expect(response.status).to.eq(200)
+            })
+        })
+    })
+
+    describe('service accounts', function() {
+        it(`Setup service account ${baseUrl}${swaggerLinks['setup-service-account']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.post,
+                    url: baseUrl + endpoints.service_accounts['setup-service-account'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'firstName': 'John',
+                        'lastName': 'Doe',
+                        'email': 'john.doe@example.com',
+                        'serviceType': 'EDP',
+                        'deviceId': serviceAccountDeviceId,
+                        'userId': serviceAccountUserId
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(201)
+            })
+        })
+
+        // ! due to 503 https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1627647305006100
+        it.skip(`Search service account ${baseUrl}${swaggerLinks['search-customer-service-accounts']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.post,
+                    url: baseUrl + endpoints.service_accounts['service-accounts-search'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'pagination': {
+                          'skip': 0,
+                          'take': 100
+                        },
+                        'fullTextSearch': {
+                          'fields': [
+                            '_id',
+                            'customerId',
+                            'serviceLicense',
+                            'user',
+                            'device',
+                            'serviceType',
+                            'serviceProvider',
+                            'servicePolicy',
+                            'firstName',
+                            'lastName',
+                            'originalEmail',
+                            'status',
+                            'allActions',
+                            'availableActions',
+                            'actionBy',
+                            'adminActionBy',
+                            'actionStatus',
+                            'activationCode',
+                            'emailCode',
+                            'activationCodeExpireTime',
+                            'syncDate',
+                            'state',
+                            'createdAt'
+                          ],
+                          'value': 'phrase'
+                        },
+                        'status': [
+                          'PENDING_INSTALLATION'
+                        ],
+                        'serviceProvider': [
+                          'CARBON_BLACK'
+                        ],
+                        'serviceType': [
+                          'EDP'
+                        ],
+                        'autoRenewal': false,
+                        'user': serviceAccountUserId,
+                        'device': serviceAccountDeviceId,
+                        'originalEmail': serviceAccountUserEmail,
+                        'firstName': 'string',
+                        'lastName': 'string',
+                        'activationCode': 'string',
+                        'availableActions': [
+                          'EDP_ENABLE'
+                        ],
+                        'syncDate': {
+                          'startDate': '2020-04-24T10:48:00.000Z',
+                          'endDate': '2020-04-24T10:48:30.000Z'
+                        },
+                        'createdAt': {
+                          'startDate': '2020-04-24T10:48:00.000Z',
+                          'endDate': '2020-04-24T10:48:30.000Z'
+                        }
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        it(`Get service account ${baseUrl}${swaggerLinks['get-service-account']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.service_accounts['get-service-account'] + '/' + serviceAccountId,
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        // * current response "Requested action is not available in current service account state DELETED"
+        // todo: need new service account ID for active service account
+        it.skip(`Service account action ${baseUrl}${swaggerLinks['service-account-action']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.patch,
+                    url: baseUrl + endpoints.service_accounts['service-accounts-action'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'id': serviceAccountId,
+                        'action': 'EDP_CHANGE_POLICY',
+                        'options': {
+                          'sensorVersion': 'string',
+                          'policy': 'HIGH'
+                        }
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+    })
+
+    describe('service statistics', function() {
+        it(`Get customer service statistics ${baseUrl}${swaggerLinks['get-customer-service-statistics']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.service_statistics['get-customer-service-statistics'] + '/' + customerId,
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+    })
+
+    describe('protection scores', function() {
+        it(`Get protection scores ${baseUrl}${swaggerLinks['get-protection-scores']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.protection_scores['get-protection-scores'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+    })
+
+    describe('customer', function() {
+        it(`Get customer status ${baseUrl}${swaggerLinks['get-customer-status']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.customer['get-customer-status'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        it(`Get customer status ${baseUrl}${swaggerLinks['get-customer-by-id']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.customer['get-customer-by-id'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        it(`Update customer ${baseUrl}${swaggerLinks['update-customer']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.put,
+                    url: baseUrl + endpoints.customer['update-customer'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'firstName': 'Ben',
+                        'lastName': 'Sar',
+                        'companyName': 'Fortress MSSP',
+                        'taxNumber': '874470121140',
+                        'address': 'sarb@qfortress.ai',
+                        'city': 'Tel-Aviv',
+                        'state': 'Tel-Aviv',
+                        'zip': '60001',
+                        'email': 'sarb@qfortress.ai',
+                        'companyWebAddress': 'fortress-mssp.ai',
+                        'numberOfUsers': 58,
+                        'country': 'Israel',
+                        'providerFirstName': 'Ben',
+                        'providerLastName': 'Sar',
+                        'providerEmail': 'sarb@qfortress.ai',
+                        'currency': 'CAD',
+                        'paymentFPEmail': 'sarb@qfortress.ai',
+                        'phoneNumber': '+48500123451'
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        // ! due to issue https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1627679519008700
+        it.skip(`Search for companies ${baseUrl}${swaggerLinks['search-for-companies']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.post,
+                    url: baseUrl + endpoints.customer['customer-search'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'pagination': {
+                          'skip': 0,
+                          'take': 100
+                        },
+                        'fullTextSearch': {
+                          'fields': [
+                            '_id',
+                            'nanoId',
+                            'publicId',
+                            'firstName',
+                            'lastName',
+                            'companyName',
+                            'taxNumber',
+                            'address',
+                            'city',
+                            'state',
+                            'zip',
+                            'email',
+                            'phoneNumber',
+                            'companyWebAddress',
+                            'numberOfUsers',
+                            'country',
+                            'siteUrl',
+                            'status',
+                            'services',
+                            'parentCustomerId',
+                            'parentCustomerName',
+                            'customerType',
+                            'childLevel',
+                            'activationDate',
+                            'createdAt',
+                            'updatedAt'
+                          ],
+                          'value': 'phrase'
+                        },
+                        'firstName': 'John',
+                        'lastName': 'Doe',
+                        'taxNumber': 'fortress.co',
+                        'phoneNumber': '+441231812412',
+                        'companyWebAddress': 'www.fortress.co',
+                        'services': [
+                          'EDP'
+                        ],
+                        'siteUrl': 'fortress',
+                        'nanoId': 'AOUICPUS',
+                        'publicId': '40XW05YT',
+                        'parentCustomerId': '4983d030-0fb3-11eb-b005-9d97076f9672',
+                        'parentCustomerName': 'Qmasters',
+                        'companyName': 'Fortress',
+                        'email': 'example@domain.com',
+                        'country': 'Poland',
+                        'city': 'Krakow',
+                        'address': 'Street 12/2',
+                        'state': 'Malopolska',
+                        'zip': '12-231',
+                        'status': [
+                          'ACTIVE'
+                        ],
+                        'customerType': [
+                          'REGULAR'
+                        ],
+                        'numberOfUsers': {
+                          'min': 1,
+                          'max': 10
+                        },
+                        'childLevel': {
+                          'min': 1,
+                          'max': 10
+                        },
+                        'activationDate': {
+                          'startDate': '2020-04-24T10:48:00.000Z',
+                          'endDate': '2020-04-24T10:48:30.000Z'
+                        },
+                        'createdAt': {
+                          'startDate': '2020-04-24T10:48:00.000Z',
+                          'endDate': '2020-04-24T10:48:30.000Z'
+                        },
+                        'updatedAt': {
+                          'startDate': '2020-04-24T10:48:00.000Z',
+                          'endDate': '2020-04-24T10:48:30.000Z'
+                        }
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        // todo: need to create new customer (can get URL & body from sign up flow)
+        // then get his ID
+        // then delete via script from https://qfortress.atlassian.net/browse/FORT-496
+        it.skip(`Add & Delete company ${baseUrl}${swaggerLinks['delete-company']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.delete,
+                    url: baseUrl + endpoints.customer['delete-company'] + '/' + customerId,
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(204)
             })
         })
     })
