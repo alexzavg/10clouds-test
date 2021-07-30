@@ -1382,6 +1382,203 @@ describe('API', function() {
         })
     })
 
+    describe('customer', function() {
+        it(`Get customer status ${baseUrl}${swaggerLinks['get-customer-status']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.customer['get-customer-status'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        it(`Get customer status ${baseUrl}${swaggerLinks['get-customer-by-id']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.customer['get-customer-by-id'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        it(`Update customer ${baseUrl}${swaggerLinks['update-customer']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.put,
+                    url: baseUrl + endpoints.customer['update-customer'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'firstName': 'Ben',
+                        'lastName': 'Sar',
+                        'companyName': 'Fortress MSSP',
+                        'taxNumber': '874470121140',
+                        'address': 'sarb@qfortress.ai',
+                        'city': 'Tel-Aviv',
+                        'state': 'Tel-Aviv',
+                        'zip': '60001',
+                        'email': 'sarb@qfortress.ai',
+                        'companyWebAddress': 'fortress-mssp.ai',
+                        'numberOfUsers': 58,
+                        'country': 'Israel',
+                        'providerFirstName': 'Ben',
+                        'providerLastName': 'Sar',
+                        'providerEmail': 'sarb@qfortress.ai',
+                        'currency': 'CAD',
+                        'paymentFPEmail': 'sarb@qfortress.ai',
+                        'phoneNumber': '+48500123451'
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        // ! due to issue https://fortress-kok8877.slack.com/archives/C01EAKQB36H/p1627679519008700
+        it.skip(`Search for companies ${baseUrl}${swaggerLinks['search-for-companies']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.post,
+                    url: baseUrl + endpoints.customer['customer-search'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'pagination': {
+                          'skip': 0,
+                          'take': 100
+                        },
+                        'fullTextSearch': {
+                          'fields': [
+                            '_id',
+                            'nanoId',
+                            'publicId',
+                            'firstName',
+                            'lastName',
+                            'companyName',
+                            'taxNumber',
+                            'address',
+                            'city',
+                            'state',
+                            'zip',
+                            'email',
+                            'phoneNumber',
+                            'companyWebAddress',
+                            'numberOfUsers',
+                            'country',
+                            'siteUrl',
+                            'status',
+                            'services',
+                            'parentCustomerId',
+                            'parentCustomerName',
+                            'customerType',
+                            'childLevel',
+                            'activationDate',
+                            'createdAt',
+                            'updatedAt'
+                          ],
+                          'value': 'phrase'
+                        },
+                        'firstName': 'John',
+                        'lastName': 'Doe',
+                        'taxNumber': 'fortress.co',
+                        'phoneNumber': '+441231812412',
+                        'companyWebAddress': 'www.fortress.co',
+                        'services': [
+                          'EDP'
+                        ],
+                        'siteUrl': 'fortress',
+                        'nanoId': 'AOUICPUS',
+                        'publicId': '40XW05YT',
+                        'parentCustomerId': '4983d030-0fb3-11eb-b005-9d97076f9672',
+                        'parentCustomerName': 'Qmasters',
+                        'companyName': 'Fortress',
+                        'email': 'example@domain.com',
+                        'country': 'Poland',
+                        'city': 'Krakow',
+                        'address': 'Street 12/2',
+                        'state': 'Malopolska',
+                        'zip': '12-231',
+                        'status': [
+                          'ACTIVE'
+                        ],
+                        'customerType': [
+                          'REGULAR'
+                        ],
+                        'numberOfUsers': {
+                          'min': 1,
+                          'max': 10
+                        },
+                        'childLevel': {
+                          'min': 1,
+                          'max': 10
+                        },
+                        'activationDate': {
+                          'startDate': '2020-04-24T10:48:00.000Z',
+                          'endDate': '2020-04-24T10:48:30.000Z'
+                        },
+                        'createdAt': {
+                          'startDate': '2020-04-24T10:48:00.000Z',
+                          'endDate': '2020-04-24T10:48:30.000Z'
+                        },
+                        'updatedAt': {
+                          'startDate': '2020-04-24T10:48:00.000Z',
+                          'endDate': '2020-04-24T10:48:30.000Z'
+                        }
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        // todo need to create new customer, get his ID & only then delete
+        it.skip(`Delete company ${baseUrl}${swaggerLinks['delete-company']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.delete,
+                    url: baseUrl + endpoints.customer['delete-company'] + '/' + customerId,
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(204)
+            })
+        })
+    })
+
     describe('sign out', function() {
         it(`Sign out ${baseUrl}${swaggerLinks['sign-out']}`, function() {
             cy.request(

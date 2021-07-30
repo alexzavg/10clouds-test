@@ -47,7 +47,12 @@ export const swaggerLinks = {
   'get-service-account': '/api/#/service-accounts/getServiceAccount',
   'service-account-action': '/api/#/service-accounts/serviceAccountAction',
   'get-customer-service-statistics': '/api/#/services-statistics/getCustomerServicesStatistics',
-  'get-protection-scores': '/api/#/protection-scores/getProtectionScores'
+  'get-protection-scores': '/api/#/protection-scores/getProtectionScores',
+  'get-customer-status': '/api/#/customer/getCustomerStatus',
+  'get-customer-by-id': '/api/#/customer/getCustomerById',
+  'update-customer': '/api/#/customer/updateCustomer',
+  'search-for-companies': '/api/#/customer/searchForCompanies',
+  'delete-company': '/api/#/customer/deleteCompany'
 }
 
 export const endpoints = {
@@ -108,5 +113,12 @@ export const endpoints = {
   },
   'protection_scores': {
     'get-protection-scores': '/protection-scores'
+  },
+  'customer': {
+    'get-customer-status': '/customer/status',
+    'get-customer-by-id': '/customer',
+    'update-customer': '/customer',
+    'customer-search': '/customer/search',
+    'delete-company': '/customer'
   }
 }
