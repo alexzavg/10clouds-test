@@ -1559,7 +1559,7 @@ describe('API', function() {
             })
         })
 
-        // todo: need to create new customer via https://develop-api.qfortress.ai/api/#/auth/signUp
+        // todo: need to create new customer (can get URL & body from sign up flow)
         // then get his ID
         // then delete via script from https://qfortress.atlassian.net/browse/FORT-496
         it.skip(`Add & Delete company ${baseUrl}${swaggerLinks['delete-company']}`, function() {
