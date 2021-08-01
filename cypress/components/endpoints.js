@@ -52,7 +52,11 @@ export const swaggerLinks = {
   'get-customer-by-id': '/api/#/customer/getCustomerById',
   'update-customer': '/api/#/customer/updateCustomer',
   'search-for-companies': '/api/#/customer/searchForCompanies',
-  'delete-company': '/api/#/customer/deleteCompany'
+  'delete-company': '/api/#/customer/deleteCompany',
+  'add-company': '/api/#/Customer%20Invitations/addCompany',
+  'invite-company': '/api/#/Customer%20Invitations/inviteCompany',
+  'get-company-invitation': '/api/#/Customer%20Invitations/getCompanyInvitation',
+  'cancel-company-invitation': '/api/#/Customer%20Invitations/cancelCompanyInvitation'
 }
 
 export const endpoints = {
@@ -120,5 +124,11 @@ export const endpoints = {
     'update-customer': '/customer',
     'customer-search': '/customer/search',
     'delete-company': '/customer'
+  },
+  'customer_invitations': {
+    'add-company': '/customer-invitations/company',
+    'invite-company': '/customer-invitations',
+    'get-company-invitation': '/customer-invitations',
+    'cancel-company-invitation': '/customer-invitations'
   }
 }
