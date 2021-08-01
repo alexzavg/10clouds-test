@@ -1558,15 +1558,127 @@ describe('API', function() {
                 expect(response.status).to.eq(200)
             })
         })
+    })
 
-        // todo: need to create new customer (can get URL & body from sign up flow)
-        // then get his ID
-        // then delete via script from https://qfortress.atlassian.net/browse/FORT-496
-        it.skip(`Add & Delete company ${baseUrl}${swaggerLinks['delete-company']}`, function() {
+    describe('customer invitations', function() {
+        it(`Invite company ${baseUrl}${swaggerLinks['invite-company']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.post,
+                    url: baseUrl + endpoints.customer_invitations['invite-company'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'email': 'example@example.com',
+                        'customerType': 'REGULAR'
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(201)
+                cy.wrap(response.body.invitationToken).as('invitationToken')
+            })
+        })
+
+        // ! due to https://qfortress.atlassian.net/browse/FORT-788
+        it.skip(`Get company invitation ${baseUrl}${swaggerLinks['get-company-invitation']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.customer_invitations['get-company-invitation'] + '/' + this.invitationToken,
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+
+        // ! due to https://qfortress.atlassian.net/browse/FORT-787
+        it.skip(`Cancel company invitation ${baseUrl}${swaggerLinks['cancel-company-invitation']}`, function() {
             cy.request(
                 {
                     method: requestTypes.delete,
-                    url: baseUrl + endpoints.customer['delete-company'] + '/' + customerId,
+                    url: baseUrl + endpoints.customer_invitations['cancel-company-invitation'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'invitationToken': this.invitationToken
+                    }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(204)
+            })
+        })
+    })
+
+    // todo: delete customer via script from https://qfortress.atlassian.net/browse/FORT-496
+    describe.skip('Create & Delete customer', function() {
+        const randomString  = getRandomCharLength(30)
+        const email         = randomString + '@gmail.com'
+        const phoneNumber   = '+4415' + getRandomNumberLength(8)
+
+        it(`Add company ${baseUrl}${swaggerLinks['add-company']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.post,
+                    url: baseUrl + endpoints.customer_invitations['add-company'],
+                    auth: {
+                        'bearer': this.accessToken
+                    },
+                    headers: {
+                        'x-customer-id': customerId,
+                        'x-id-token': this.idToken
+                    },
+                    body: {
+                        'companyName': randomString,
+                        'customerType': 'REGULAR',
+                        'taxNumber': 'Fortress',
+                        'numberOfUsers': 5,
+                        'companyWebAddress': 'www.fortress.com',
+                        'siteUrl': randomString,
+                        'firstName': 'John',
+                        'lastName': 'Doe',
+                        'email': email,
+                        'phoneNumber': '+447002333001',
+                        'country': phoneNumber,
+                        'state': '',
+                        'city': 'London',
+                        'zip': 'M2134211',
+                        'address': 'street 1/2',
+                        'currency': 'EUR',
+                        'paymentFPEmail': email,
+                        'paymentType': 'NA',
+                        'MSSPDefaultPaymentMethod': 'NA',
+                        'providerEmail': email,
+                        'serviceSetupAssistance': true
+                      }
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(201)
+                cy.wrap(response.body._id).as('newCustomerId')
+            })
+        })
+
+        it(`Delete company ${baseUrl}${swaggerLinks['delete-company']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.delete,
+                    url: baseUrl + endpoints.customer['delete-company'] + '/' + this.newCustomerId,
                     auth: {
                         'bearer': this.accessToken
                     },
