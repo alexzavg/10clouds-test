@@ -1626,7 +1626,7 @@ describe('API', function() {
         })
     })
 
-    // todo: delete via script from https://qfortress.atlassian.net/browse/FORT-496
+    // todo: delete customer via script from https://qfortress.atlassian.net/browse/FORT-496
     describe.skip('Create & Delete customer', function() {
         const randomString  = getRandomCharLength(30)
         const email         = randomString + '@gmail.com'
