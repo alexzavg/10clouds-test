@@ -12,6 +12,7 @@ const email             = Cypress.env('users').seventh.email
 const password          = Cypress.env('users').seventh.password
 const formattedKey      = Cypress.env('users').seventh.formattedKey
 
+const taxNumber         = getRandomNumberLength(12)
 const firstName         = getRandomCharLength(10)
 const lastName          = getRandomCharLength(10)
 const adminEmail        = getRandomCharLength(10) + '@gmail.com'
@@ -52,6 +53,7 @@ describe('Company Info', function() {
         cy.contains('button', 'Edit').click()
         cy.contains('button', 'Save').should('be.visible')
 
+        cy.get('[formcontrolname="taxNumber"]').clear().type(taxNumber).should('have.value', taxNumber)
         cy.get('[formcontrolname="firstName"]').clear().type(firstName).should('have.value', firstName)
         cy.get('[formcontrolname="lastName"]').clear().type(lastName).should('have.value', lastName)
         cy.xpath('//div[text() = \'Admin Mail\']/following-sibling::input[@formcontrolname="email"]').clear().type(adminEmail).should('have.value', adminEmail)
@@ -64,7 +66,7 @@ describe('Company Info', function() {
 
         cy.get('[formcontrolname="providerFirstName"]').clear().type(firstName).should('have.value', firstName)
         cy.get('[formcontrolname="providerLastName"]').clear().type(lastName).should('have.value', lastName)
-        cy.xpath('//div[text() = \'Mail\']/following-sibling::input[@formcontrolname="email"]').clear().type(email).should('have.value', email)
+        cy.xpath('//div[text() = \'Mail\']/following-sibling::input[@formcontrolname="email"]').clear().type(adminEmail).should('have.value', adminEmail)
         cy.get('[formcontrolname="address"]').clear().type(adminEmail).should('have.value', adminEmail)
 
         cy.get('[formcontrolname="country"]').clear().type(country).should('have.value', country)
@@ -89,7 +91,24 @@ describe('Company Info', function() {
         cy.reload()
         cy.wait('@customer').then(val => {
             expect(val.response.statusCode).to.eq(200)
+            expect(val.response.body.taxNumber).to.eq(taxNumber)
             expect(val.response.body.firstName).to.eq(firstName)
+            expect(val.response.body.lastName).to.eq(lastName)
+            expect(val.response.body.email).to.eq(adminEmail)
+            expect(val.response.body.paymentFPEmail).to.eq(adminEmail)
+            expect(val.response.body.providerEmail).to.eq(adminEmail)
+            expect(val.response.body.currency).to.eq(currency)
+            expect(val.response.body.providerFirstName).to.eq(firstName)
+            expect(val.response.body.providerLastName).to.eq(lastName)
+            expect(val.response.body.providerEmail).to.eq(adminEmail)
+            expect(val.response.body.address).to.eq(adminEmail)
+            expect(val.response.body.country).to.eq(country)
+            expect(val.response.body.state).to.eq(state)
+            expect(val.response.body.city).to.eq(city)
+            expect(val.response.body.zip).to.eq(zip)
+            expect(val.response.body.phoneNumber).to.eq(phoneNumber)
+            expect(val.response.body.companyWebAddress).to.eq(companyWebAddress)
+            expect(val.response.body.numberOfUsers).to.eq(numberOfUsers)
         })
         cy.get('[formcontrolname="firstName"]').should('have.value', firstName)
     })
