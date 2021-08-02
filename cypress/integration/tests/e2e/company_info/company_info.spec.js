@@ -1,5 +1,6 @@
 import {dashboardPageElements} from '../../../../components/dashboard.js'
 import {signUpPageElements} from '../../../../components/sign-up.js'
+import {companyInfoPageElements, companyInfoPageData} from '../../../../components/companyInfo.js'
 import {requests} from '../../../../components/requests.js'
 import { getRandomCharLength } from '../../../../support/dataGenerator.js'
 
