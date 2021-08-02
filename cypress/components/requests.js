@@ -25,5 +25,6 @@ export const requests = {
     'services-statistics': '**/services-statistics/**',
     'user-password-reset': '/user/password/reset',
     'user-password-change': '/user/password/change',
-    'sign-up-api': '**signup-api**'
+    'sign-up-api': '**signup-api**',
+    'customer': '/customer'
 }
