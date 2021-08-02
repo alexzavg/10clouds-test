@@ -62,7 +62,8 @@
             "edp": "https://dev.qfortress.ai/fortress-mssp/services/EDP",
             "mail": "https://dev.qfortress.ai/fortress-mssp/services/MAIL",
             "cloudStorage": "https://dev.qfortress.ai/fortress-mssp/services/CLOUD_STORAGE",
-            "mssp": "https://dev.qfortress.ai/fortress-mssp/mssp"
+            "mssp": "https://dev.qfortress.ai/fortress-mssp/mssp",
+            "companyInfo": "https://dev.qfortress.ai/fortress-mssp/company-settings/info"
         },
         "customers": {
             "first": {
@@ -103,6 +104,11 @@
                 "email": "physical-solar@u9eitg8h.mailosaur.net",
                 "firstName": "Autotest",
                 "lastName": "Do Not Remove"
+            },
+            "seventh": {
+                "email": "me41zavgorodnii+70@gmail.com",
+                "password": "WA12aszx34_",
+                "formattedKey": "JAXURPUMBNT37GEIQUT6CNMDN7G5SZLUTGI2RVUR56W4SPHP3JGA"
             }
         },
         "apiSuite": {
