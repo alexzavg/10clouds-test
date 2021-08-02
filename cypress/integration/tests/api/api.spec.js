@@ -1626,6 +1626,19 @@ describe('API', function() {
         })
     })
 
+    describe('customer public', function() {
+        it(`Get company public info ${baseUrl}${swaggerLinks['get-customer-public-info']}`, function() {
+            cy.request(
+                {
+                    method: requestTypes.get,
+                    url: baseUrl + endpoints.customer_public['get-customer-public-info'] + '/' + siteUrl
+                }
+            ).should((response) => {
+                expect(response.status).to.eq(200)
+            })
+        })
+    })
+
     // todo: delete customer via script from https://qfortress.atlassian.net/browse/FORT-496
     describe.skip('Create & Delete customer', function() {
         const randomString  = getRandomCharLength(30)

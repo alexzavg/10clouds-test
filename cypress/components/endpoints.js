@@ -56,7 +56,8 @@ export const swaggerLinks = {
   'add-company': '/api/#/Customer%20Invitations/addCompany',
   'invite-company': '/api/#/Customer%20Invitations/inviteCompany',
   'get-company-invitation': '/api/#/Customer%20Invitations/getCompanyInvitation',
-  'cancel-company-invitation': '/api/#/Customer%20Invitations/cancelCompanyInvitation'
+  'cancel-company-invitation': '/api/#/Customer%20Invitations/cancelCompanyInvitation',
+  'get-customer-public-info': '/api/#/customer-public/getCustomerPublicInfo'
 }
 
 export const endpoints = {
@@ -130,5 +131,8 @@ export const endpoints = {
     'invite-company': '/customer-invitations',
     'get-company-invitation': '/customer-invitations',
     'cancel-company-invitation': '/customer-invitations'
+  },
+  'customer_public': {
+    'get-customer-public-info': '/customer-public'
   }
 }
