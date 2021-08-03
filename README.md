@@ -36,7 +36,7 @@ Table of contents
 3. **Execute commands:**
     - :fast_forward: `npm install`
     - :fast_forward: `npm install -g "cypress@8.1.0"`
-    - :fast_forward: `npm install --save-dev "cypress@8.1.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@cypress/skip-test" cypress-localstorage-commands cypress-parallel eslint eslint-plugin-chai-friendly eslint-plugin-cypress "@shelex/cypress-allure-plugin" allure-commandline del`
+    - :fast_forward: `npm install --save-dev "cypress@8.1.0" cypress-multi-reporters mocha mochawesome mochawesome-merge mochawesome-report-generator cypress-mailosaur cypress-commands cypress-dark "@cypress/skip-test" cypress-localstorage-commands cypress-parallel eslint eslint-plugin-chai-friendly eslint-plugin-cypress "@shelex/cypress-allure-plugin" allure-commandline del cypress-xpath`
 
 ---
 ## Open Cypress test runner for manual test selection
