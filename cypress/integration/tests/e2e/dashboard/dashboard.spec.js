@@ -28,13 +28,22 @@ describe('Dashboard', function() {
         cy.fillOtp(array[0], array[1], array[2], array[3], array[4], array[5])
         cy.get(signUpPageElements.spinner).should('not.exist')
         cy.get(dashboardPageElements.scoreValue).should('be.visible')
+        cy.saveLocalStorage()
+    })
+
+    beforeEach(() => {
+        cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics')
+        cy.intercept(requests['customer-statistics']).as('customer-statistics')
+        cy.intercept(requests['protection-scores']).as('protection-scores')
+        cy.intercept(requests['service-statistics']).as('service-statistics')
+        cy.intercept(requests['device-search']).as('device-search')
+        cy.intercept(requests['alert-search']).as('alert-search')
+        cy.restoreLocalStorage()
     })
 
     describe('Collapsed Top Menu', function() {
 
         beforeEach(() => {
-            cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics')
-            cy.intercept(requests['customer-statistics']).as('customer-statistics')
             cy.get(dashboardPageElements.topMenuBlock).invoke('attr', 'class').then((value) => {
                 if(value == 'top-menu opened'){
                     cy.get(dashboardPageElements.topMenuOpenBtn).click()
@@ -310,8 +319,6 @@ describe('Dashboard', function() {
     describe('Expanded Top Menu', function() {
 
         beforeEach(() => {
-            cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics')
-            cy.intercept(requests['customer-statistics']).as('customer-statistics')
             cy.get(dashboardPageElements.topMenuBlock).invoke('attr', 'class').then((value) => {
                 if(value == 'top-menu'){
                     cy.get(dashboardPageElements.topMenuOpenBtn).click()
@@ -584,11 +591,12 @@ describe('Dashboard', function() {
 
     })
 
-    describe('Top Right [Time Range] Dropdown', function() {
-
-        beforeEach(() => {
-            cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics')
-            cy.intercept(requests['customer-statistics']).as('customer-statistics')
+    // ! due to https://qfortress.atlassian.net/browse/FORT-797
+    describe.skip('Top Right [Time Range] Dropdown', function() {
+        before(() => {
+            cy.reload()
+            cy.get(signUpPageElements.spinner).should('not.exist')
+            cy.get(dashboardPageElements.scoreValue).should('be.visible')
         })
 
         it('[Top Right Dropdown] - check statistics for [Last 1 hour] option', function() {
@@ -757,15 +765,6 @@ describe('Dashboard', function() {
     })
 
     describe('Right [Top Statistics] Menu', function() {
-
-        beforeEach(() => {
-            cy.intercept(requests['customer-top-statistics']).as('customer-top-statistics')
-            cy.intercept(requests['protection-scores']).as('protection-scores')
-            cy.intercept(requests['service-statistics']).as('service-statistics')
-            cy.intercept(requests['device-search']).as('device-search')
-            cy.intercept(requests['alert-search']).as('alert-search')
-        })
-
         it('[Right Menu] - open & close [Regulation]', function() {
             cy.contains(dashboardPageElements.rightMenuCategory, dashboardPageData.regulation).click()
             cy.contains(dashboardPageElements.rightMenuCategoryTitleOpen, dashboardPageData.regulation).should('be.visible')
