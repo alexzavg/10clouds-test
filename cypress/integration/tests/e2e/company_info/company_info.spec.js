@@ -28,7 +28,8 @@ const numberOfUsers     = getRandomNumberLength(3)
 
 let formattedToken
 
-describe('Company Info', function() {
+// ! due to performance issue
+describe.skip('Company Info', function() {
 
     before(() => {
         // sign in
