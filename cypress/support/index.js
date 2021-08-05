@@ -18,7 +18,6 @@
 // Alternatively you can use CommonJS syntax:
 require('./commands')
 require('cypress-commands')
-require('cypress-dark')
 require('@shelex/cypress-allure-plugin')
 require('cypress-xpath')
 
