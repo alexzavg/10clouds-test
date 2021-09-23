@@ -15,12 +15,11 @@
   "author": "Oleksandr Zavhorodnii",
   "license": "ISC",
   "devDependencies": {
-    "@shelex/cypress-allure-plugin": "^2.15.0",
+    "@shelex/cypress-allure-plugin": "^2.16.0",
     "allure-commandline": "^2.13.8",
     "cypress": "^8.4.1",
     "cypress-commands": "^1.1.0",
     "cypress-localstorage-commands": "^1.5.0",
-    "cypress-multi-reporters": "^1.5.0",
     "cypress-xpath": "^1.6.2",
     "eslint": "^4.19.1",
     "eslint-plugin-chai-friendly": "^0.7.2",

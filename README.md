@@ -18,7 +18,7 @@ Table of contents
 1. **Execute commands:**
     - :fast_forward: `npm install`
     - :fast_forward: `npm install -g "cypress@8.4.1"`
-    - :fast_forward: `npm install --save-dev "cypress@8.4.1" cypress-multi-reporters cypress-commands cypress-localstorage-commands eslint eslint-plugin-chai-friendly eslint-plugin-cypress "@shelex/cypress-allure-plugin" allure-commandline cypress-xpath`
+    - :fast_forward: `npm install --save-dev "cypress@8.4.1" cypress-commands cypress-localstorage-commands eslint eslint-plugin-chai-friendly eslint-plugin-cypress "@shelex/cypress-allure-plugin" allure-commandline cypress-xpath`
 
 ---
 ## Open Cypress test runner for manual test selection
