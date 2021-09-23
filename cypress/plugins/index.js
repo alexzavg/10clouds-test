@@ -11,7 +11,6 @@
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
 const allureWriter = require('@shelex/cypress-allure-plugin/writer')
-const del = require('del')
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
@@ -47,11 +46,5 @@ module.exports = (on, config) => {
       return launchOptions
     }
   })
-  // delete video if test passes
-  // on('after:spec', (spec, results) => {
-  //   if (results && results.stats.failures === 0 && results.video) {
-  //     return del(results.video)
-  //   }
-  // })
   return config
 }
